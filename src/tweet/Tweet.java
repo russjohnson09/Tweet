@@ -15,35 +15,49 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
-public class Post {
+/*
+ * This class contains the methods for interacting with twitter.
+ */
+public class Tweet {
 
-	public final static String CONSUMER_KEY = "yNBLlBrsFHz89PyCfjrAw";
-	public final static String CONSUMER_KEY_SECRET = "8SIq5OXfeIKabtB3B2CBHJVIkrjQbSPloHoTmxtis4";
+	// twitter account
+	public Twitter twitter;
 
-	public void start() {
+	public Tweet() {
+		twitter = start();
+	}
+
+	/*
+	 * Sends tweet.
+	 * 
+	 * @return boolean tweet success
+	 */
+	public boolean tweet(Twitter twitter, String str) {
+		try {
+			twitter.updateStatus(str);
+			return true;
+		} catch (TwitterException e) {
+			return false;
+		}
+
+	}
+
+	/*
+	 * Sets up the user for tweets. If user is not authorized use pin to
+	 * authorize.
+	 */
+	private Twitter start() {
 		Twitter twitter = new TwitterFactory().getInstance();
-		twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_KEY_SECRET);
+		twitter.setOAuthConsumer(Info.CONSUMER_KEY, Info.CONSUMER_KEY_SECRET);
 
 		try {
 			twitter.setOAuthAccessToken(getOathAccessToken(twitter));
-		} catch (TwitterException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					System.in));
-			System.out.print("Status update: ");
-			twitter.updateStatus(br.readLine());
-
 		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
+
+		return twitter;
 	}
 
 	private AccessToken getOathAccessToken(Twitter twitter)
@@ -104,7 +118,7 @@ public class Post {
 
 	}
 
-	public String getAccessToken() {
+	private String getAccessToken() {
 		JSONParser parser = new JSONParser();
 		try {
 
@@ -119,7 +133,7 @@ public class Post {
 		}
 	}
 
-	public String getAccessTokenSecret() {
+	private String getAccessTokenSecret() {
 		JSONParser parser = new JSONParser();
 		try {
 
@@ -132,10 +146,5 @@ public class Post {
 		} catch (Throwable e) {
 			return null;
 		}
-	}
-
-	public static void main(String[] args) {
-		new Post().start();
-
 	}
 }
