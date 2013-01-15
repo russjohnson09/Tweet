@@ -8,19 +8,19 @@ Current Features
 
 Pending Features
 ----------------
-*basic info (name, screen name, description, location, image)
-*update status
-*delete status
-*get follower's status/images/info
-*location
-*account settings changes
-*upload images
-*search followers
-*search for following
-*trending topics list/searching
-*interactions feed
-*mentions feed
-*alerts for interactions/mentions
+* basic info (name, screen name, description, location, image)
+* update status
+* delete status
+* get follower's status/images/info
+* location
+* account settings changes
+* upload images
+* search followers
+* search for following
+* trending topics list/searching
+* interactions feed
+* mentions feed
+* alerts for interactions/mentions
 
 Contributors
 ------------
