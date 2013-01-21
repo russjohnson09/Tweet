@@ -1,10 +1,8 @@
 package tweet;
 
-import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,10 +19,29 @@ import twitter4j.auth.RequestToken;
 public class Tweet {
 
 	// twitter account
-	public Twitter twitter;
+	private Twitter twitter;
+	private RequestToken requestToken;
 
-	public Tweet() {
-		twitter = start();
+	public Twitter getTwitter() {
+		return twitter;
+	}
+
+	public void setTwitter(Twitter twitter) throws TwitterException {
+		this.twitter = twitter;
+	}
+
+	public Tweet() throws TwitterException {
+		twitter = new TwitterFactory().getInstance();
+		twitter.setOAuthConsumer(Info.CONSUMER_KEY, Info.CONSUMER_KEY_SECRET);
+
+		String token = getAccessToken();
+		String tokenSecret = getAccessTokenSecret();
+		if (token != null && tokenSecret != null) {
+			twitter.setOAuthAccessToken(new AccessToken(token, tokenSecret));
+			requestToken = null;
+		} else {
+			requestToken = twitter.getOAuthRequestToken();
+		}
 	}
 
 	/*
@@ -32,7 +49,7 @@ public class Tweet {
 	 * 
 	 * @return boolean tweet success
 	 */
-	public boolean tweet(Twitter twitter, String str) {
+	public boolean tweet(String str) {
 		try {
 			twitter.updateStatus(str);
 			return true;
@@ -42,63 +59,20 @@ public class Tweet {
 
 	}
 
-	/*
-	 * Sets up the user for tweets. If user is not authorized use pin to
-	 * authorize.
-	 */
-	private Twitter start() {
-		Twitter twitter = new TwitterFactory().getInstance();
-		twitter.setOAuthConsumer(Info.CONSUMER_KEY, Info.CONSUMER_KEY_SECRET);
+	public String getAuthUrl() {
+		return requestToken.getAuthorizationURL();
 
-		try {
-			twitter.setOAuthAccessToken(getOathAccessToken(twitter));
-		} catch (TwitterException e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		return twitter;
 	}
 
-	private AccessToken getOathAccessToken(Twitter twitter)
-			throws TwitterException {
-		String token = getAccessToken();
-		String tokenSecret = getAccessTokenSecret();
-		if (token == null || tokenSecret == null) {
-			return setAccessToken(twitter);
-		}
-		return new AccessToken(token, tokenSecret);
-	}
-
-	private AccessToken setAccessToken(Twitter twitter) throws TwitterException {
-		RequestToken requestToken = twitter.getOAuthRequestToken();
-		System.out.println("Authorization URL: \n"
-				+ requestToken.getAuthorizationURL());
-
+	public void setUpUser(String pin) {
 		AccessToken accessToken = null;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		while (null == accessToken) {
-			try {
-				System.out.print("Input PIN here: ");
-				String pin = br.readLine();
+		try {
+			accessToken = twitter.getOAuthAccessToken(requestToken, pin);
 
-				accessToken = twitter.getOAuthAccessToken(requestToken, pin);
-
-			} catch (TwitterException te) {
-
-				System.out.println("Failed to get access token, caused by: "
-						+ te.getMessage());
-
-				System.out.println("Retry input PIN");
-
-			} catch (IOException e) {
-				System.out.println("Retry input PIN");
-			}
+		} catch (TwitterException te) {
+			te.printStackTrace();
 		}
-
 		addToFile(accessToken);
-
-		return accessToken;
 	}
 
 	private void addToFile(AccessToken accessToken) {
