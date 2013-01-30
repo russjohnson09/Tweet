@@ -2,16 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/russ/Dropbox/library/json_simple-1.1-all/lib/json_simple-1.1.jar" sourcepath="/home/russ/Dropbox/library/json_simple-1.1-all/src">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/home/russ/Dropbox/library/json_simple-1.1-all/doc/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/russ/Dropbox/library/twitter4j-3.0.3/lib/twitter4j-core-3.0.3.jar" sourcepath="/home/russ/Dropbox/library/twitter4j-3.0.3/twitter4j-core/src">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/home/russ/Dropbox/library/twitter4j-3.0.3/twitter4j-core/javadoc/"/>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/russ/Dropbox/library/twitter4j-3.0.3/twitter4j-core"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/easymock-3.1/easymock-3.1.jar" sourcepath="lib/easymock-3.1/easymock-3.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/json_simple-1.1-all/lib/json_simple-1.1.jar" sourcepath="lib/json_simple-1.1-all/src"/>
+	<classpathentry kind="lib" path="lib/twitter4j-3.0.3/lib/twitter4j-core-3.0.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
