@@ -115,14 +115,14 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		headerImage = controller.getHeaderImage();
 
 		profilePanel.setAlignmentX(CENTER_ALIGNMENT);
-		// JLabel dispN = new JLabel(displayName);
-		// dispN.setAlignmentX(CENTER_ALIGNMENT);
-		// profilePanel.add(dispN);
+
 		profilePanel.add(new JLabel(displayName));
 		profilePanel.add(new JLabel(twitterName));
 		profilePanel.add(new JLabel(description));
 		profilePanel.add(new JLabel(location));
 		profilePanel.add(new JLabel(website));
+
+		profilePanel.add(new JLabel("", profileImage, JLabel.CENTER));
 
 	}
 

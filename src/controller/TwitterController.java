@@ -4,6 +4,7 @@ import java.awt.*;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -94,7 +95,13 @@ public class TwitterController {
 	public ImageIcon getProfileImage() {
 		try {
 			User user = twitter.showUser(twitter.getId());
-			String url = user.getProfileImageURL();
+			URL url = null;
+			try {
+				url = new URL(user.getProfileImageURL());
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			ImageIcon img = new ImageIcon(url);
 
 			return img;
