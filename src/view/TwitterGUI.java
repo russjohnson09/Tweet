@@ -122,7 +122,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		profilePanel.add(new JLabel(location));
 		profilePanel.add(new JLabel(website));
 
-		profilePanel.add(new JLabel("", profileImage, JLabel.CENTER));
+		profilePanel.add(new JLabel(profileImage));
 
 	}
 
