@@ -5,7 +5,11 @@ import java.awt.event.*;
 import javax.swing.*;
 import controller.TwitterController;
 
-
+/***********************************************************************
+ * 
+ * Twittter GUI
+ * 
+ **********************************************************************/
 public class TwitterGUI extends JFrame implements ActionListener {
 	
 	private TwitterController controller;
@@ -21,7 +25,8 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	private JTabbedPane tabbedPane;
 	
 	String displayName, twitterName, description, location, website;
-	Image profileImage, headerImage;
+	ImageIcon profileImage;
+	Image headerImage;
 	
 		
 
@@ -52,48 +57,114 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	
 	
 	//TODO
-		private void createTweetPanel() {
+	private void createTweetPanel() {
+			tweetPanel = new JPanel();
+			tweetPanel.setBackground(Color.WHITE);
 			
-			
-			
-		}
+	}
 		
-		private void createFollowersPanel() {
+	private void createFollowersPanel() {
+		followersPanel = new JPanel();
+		followersPanel.setBackground(Color.WHITE);
 			
 			
-			
-		}
+	}
 		
-		private void createFollowingPanel() {
+	private void createFollowingPanel() {
+		followingPanel = new JPanel();
+		followingPanel.setBackground(Color.WHITE);
+
 			
+	}
+		
+	
+	/*******************************************
+	 * Nick O is working on this method 
+	 ******************************************/	
+	private void createProfilePanel() {
+		profilePanel = new JPanel();
+		profilePanel.setLayout(new BorderLayout());
+		
+		/************************ INFO PANEL ***************************/
+		JPanel infoPanel = new JPanel();
+		infoPanel.setBackground(Color.WHITE);
+		infoPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.NONE;
 			
-			
-		}
+		// Get User Information
+		displayName = controller.getDisplayName();
+		twitterName = controller.getTwitterName();
+		description = controller.getDescription();
+		location = controller.getLocation();
+		website = controller.getWebsite();
+		profileImage = controller.getProfileImage();
+		headerImage = controller.getHeaderImage();
+		
+		c.gridy = 0;
+		//add profile image here
 		
 		
-		private void createProfilePanel() {
-			profilePanel = new JPanel();
-			profilePanel.setBackground(Color.WHITE);
-			profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.Y_AXIS));
+		// Display Name
+		c.ipady = 5;
+		c.gridy = 1;
+		JLabel displayNameLbl = new JLabel(displayName);
+		displayNameLbl.setFont(new Font("arial", Font.BOLD, 24));
+		infoPanel.add(displayNameLbl, c);
 			
-			displayName = controller.getDisplayName();
-			twitterName = controller.getTwitterName();
-			description = controller.getDescription();
-			location = controller.getLocation();
-			website = controller.getWebsite();
-			profileImage = controller.getProfileImage();
-			headerImage = controller.getHeaderImage();
-			
-			profilePanel.setAlignmentX(CENTER_ALIGNMENT);
-			//JLabel dispN = new JLabel(displayName);
-			//dispN.setAlignmentX(CENTER_ALIGNMENT);
-			//profilePanel.add(dispN);
-			profilePanel.add(new JLabel(displayName));
-			profilePanel.add(new JLabel(twitterName));
-			profilePanel.add(new JLabel(description));
-			profilePanel.add(new JLabel(location));
-			profilePanel.add(new JLabel(website));
-			
+		// Twitter Name
+		c.gridy = 2;
+		JLabel twitterNameLbl = new JLabel(twitterName);		
+		twitterNameLbl.setFont(new Font("arial", Font.PLAIN, 15));
+		infoPanel.add(twitterNameLbl, c);
+		
+		c.ipady =  15;	//more space in between
+		
+		//Description
+		c.gridy = 3;
+		JLabel descriptionLbl = new JLabel(description);
+		descriptionLbl.setFont(new Font("arial", Font.PLAIN, 15));
+		infoPanel.add(descriptionLbl, c);	
+		
+		c.ipady = 5; //less space in between
+		
+		// Location
+		c.gridy = 4;
+		JLabel locationLbl = new JLabel(location);
+		locationLbl.setFont(new Font("arial", Font.BOLD, 15));
+		infoPanel.add(locationLbl, c);
+		
+		
+		//Website
+		c.gridy = 5;
+		JLabel websiteLbl = new JLabel(website);
+		websiteLbl.setFont(new Font("arial", Font.PLAIN, 14));
+		infoPanel.add(websiteLbl, c);
+		
+		
+		
+		
+		/***************************** COUNT PANEL ***********************************/
+		JPanel countPanel = new JPanel();
+		countPanel.setLayout(new BoxLayout(countPanel, BoxLayout.X_AXIS));
+
+		countPanel.setBackground(Color.WHITE);
+		JLabel numTweets = new JLabel(controller.getNumberTweets() + " Tweets    ");
+		JLabel numFollowing = new JLabel(controller.getNumberFollowing() + " Following    ");
+		JLabel numFollowers = new JLabel(controller.getNumberFollowers() + " Followers    ");
+		
+		countPanel.add(numTweets);
+		countPanel.add(numFollowing);
+		countPanel.add(numFollowers);
+		
+		
+		
+		
+		/**************************** PROFILE PANEL **********************************/
+		profilePanel.add(infoPanel, BorderLayout.CENTER);
+		profilePanel.add(countPanel, BorderLayout.SOUTH);
+
+		
 			
 			
 		}
@@ -174,10 +245,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		add(tabbedPane);
 	}
 	
-	
-	private void profilePane() {
-		
-	}
+
 
 	/**
 	 * This is where all actions should be delegated and sent to the controller

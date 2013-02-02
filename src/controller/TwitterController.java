@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.*;
 import java.util.*;
+import javax.swing.*;
 import model.TwitterModel;
  
 
@@ -18,7 +19,8 @@ public class TwitterController {
 	
 	
 /**
- * Methods that will be called by the GUI
+ * Methods that will be called by the GUI. 
+ * They are currently returning bogus values for GUI testing purposes
  */
 	
 	public String getDisplayName() {
@@ -27,7 +29,7 @@ public class TwitterController {
 	
 	
 	public String getTwitterName() {
-		return "Twitter name";
+		return "@TwitterName";
 	}
 	
 	
@@ -42,12 +44,12 @@ public class TwitterController {
 	
 	
 	public String getLocation() {
-		return null;
+		return "Allendale, MI";
 	}
 	
 	
-	public Image getProfileImage () {
-		Image tmp = null; 
+	public ImageIcon getProfileImage () {
+		ImageIcon tmp = null; 
 		return tmp;
 	}
 	
@@ -55,6 +57,18 @@ public class TwitterController {
 	public Image getHeaderImage () {
 		Image tmp = null; 
 		return tmp;
+	}
+	
+	public int getNumberTweets() {
+		return 10;
+	}
+	
+	public int getNumberFollowers() {
+		return 123;
+	}
+	
+	public int getNumberFollowing() {
+		return 456;
 	}
 	
 	
