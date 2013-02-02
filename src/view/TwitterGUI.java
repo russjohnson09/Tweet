@@ -20,10 +20,14 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	// Tabbed Pane
 	private JTabbedPane tabbedPane;
 	
+	// Profile Panel
 	String displayName, twitterName, description, location, website;
 	Image profileImage, headerImage;
 	
-		
+	// Tweet Panel
+	JButton cancel, tweetSubmit, tweetShow;
+	JLabel tweetTotal;
+	JTextArea tweetText;
 
 	public TwitterGUI() {
 		controller = new TwitterController();
@@ -45,19 +49,28 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 	
-	
-	
-	
-	
-	
-	
-	//TODO
-		private void createTweetPanel() {
-			
-			
-			
-		}
+	private void createTweetPanel() {
+		tweetPanel = new JPanel();
+		tweetPanel.setBackground(Color.WHITE);
+		tweetPanel.setLayout(new BoxLayout(tweetPanel, BoxLayout.Y_AXIS));
 		
+		// Instantiate vars
+		cancel = new JButton("Cancel");
+		tweetSubmit = new JButton("Tweet");
+		tweetShow = new JButton("Show Tweets");
+		tweetText = new JTextArea();
+		
+		tweetTotal = new JLabel(controller.getTweetTotal() + " Tweets");
+		tweetTotal.setSize(450, 300);
+		
+		tweetPanel.add(tweetTotal);
+		tweetPanel.add(cancel);
+		tweetPanel.add(tweetSubmit);
+		tweetPanel.add(tweetShow);
+		tweetPanel.add(tweetText);
+	}
+		
+		//TODO
 		private void createFollowersPanel() {
 			
 			
