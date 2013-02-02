@@ -30,6 +30,8 @@ public class TwitterController {
 	private Twitter twitter;
 	private RequestToken requestToken;
 
+	private User user;
+
 	public final static String CONSUMER_KEY = "yNBLlBrsFHz89PyCfjrAw";
 	public final static String CONSUMER_KEY_SECRET = "8SIq5OXfeIKabtB3B2CBHJVIkrjQbSPloHoTmxtis4";
 
@@ -45,7 +47,19 @@ public class TwitterController {
 
 		if (token != null && tokenSecret != null) {
 			twitter.setOAuthAccessToken(new AccessToken(token, tokenSecret));
+
+			try {
+				user = twitter.showUser(twitter.getId());
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TwitterException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			isSetUp = true;
+
 		} else {
 			try {
 				requestToken = twitter.getOAuthRequestToken();
@@ -62,34 +76,23 @@ public class TwitterController {
 	 */
 
 	public String getDisplayName() {
-		// TODO not sure about difference between name and twitter name. Can't
-		// find method to call for real name.
-		return "Name";
+		return user.getName();
 	}
 
 	public String getTwitterName() {
-		try {
-			return twitter.getScreenName();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		return user.getScreenName();
 	}
 
 	public String getDescription() {
-		return "Description...........................................................";
+		return user.getDescription();
 	}
 
 	public String getWebsite() {
-		return "www.website.com";
+		return user.getURL();
 	}
 
 	public String getLocation() {
-		return null;
+		return user.getLocation();
 	}
 
 	public ImageIcon getProfileImage() {
@@ -152,6 +155,8 @@ public class TwitterController {
 		AccessToken accessToken = null;
 		try {
 			accessToken = twitter.getOAuthAccessToken(requestToken, pin);
+
+			user = twitter.showUser(twitter.getId());
 
 		} catch (TwitterException te) {
 			te.printStackTrace();
