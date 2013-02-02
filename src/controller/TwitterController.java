@@ -96,32 +96,18 @@ public class TwitterController {
 	}
 
 	public ImageIcon getProfileImage() {
-		try {
-			User user = twitter.showUser(twitter.getId());
-			URL url = null;
-			try {
-				url = new URL(user.getProfileImageURL());
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			ImageIcon img = new ImageIcon(url);
 
-			return img;
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		try {
+			return new ImageIcon(new URL(user.getBiggerProfileImageURL()));
+		} catch (MalformedURLException e) {
+			return null;
 		}
-		return null;
 	}
 
 	/** return null if user doesn't have one */
-	public Image getHeaderImage() {
-		Image tmp = null;
-		return tmp;
+	// TODO I don't know what this is
+	public ImageIcon getHeaderImage() {
+		return null;
 	}
 
 	public boolean tweet(String str) {

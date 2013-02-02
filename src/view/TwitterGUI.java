@@ -27,7 +27,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	String displayName, twitterName, description, location, website;
 	ImageIcon profileImage;
 
-	Image headerImage;
+	ImageIcon headerImage;
 
 	// Tweet Panel
 	JButton cancel, tweetSubmit, tweetShow;
@@ -116,11 +116,11 @@ public class TwitterGUI extends JFrame implements ActionListener {
 
 		profilePanel.setAlignmentX(CENTER_ALIGNMENT);
 
-		profilePanel.add(new JLabel(displayName));
-		profilePanel.add(new JLabel(twitterName));
-		profilePanel.add(new JLabel(description));
-		profilePanel.add(new JLabel(location));
-		profilePanel.add(new JLabel(website));
+		profilePanel.add(new JLabel("Name: " + displayName));
+		profilePanel.add(new JLabel("Screen Name: " + twitterName));
+		profilePanel.add(new JLabel("Description: " + description));
+		profilePanel.add(new JLabel("Location: " + location));
+		profilePanel.add(new JLabel("Website: " + website));
 
 		profilePanel.add(new JLabel(profileImage));
 
