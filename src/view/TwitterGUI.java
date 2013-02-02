@@ -90,6 +90,8 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		tweetPanel.add(tweetSubmit);
 		tweetPanel.add(tweetShow);
 		tweetPanel.add(tweetText);
+
+		tweetSubmit.addActionListener(this);
 	}
 
 	// TODO
@@ -206,6 +208,15 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		if (source == exit) {
 			System.exit(0);
 		}
+
+		if (source == tweetSubmit) {
+			if (!controller.tweet(tweetText.getText())) {
+				JOptionPane
+						.showMessageDialog(null, "Status could not be sent.");
+			}
+			return;
+		}
+
 	}
 
 	public static void main(String[] args) {

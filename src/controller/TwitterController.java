@@ -88,7 +88,8 @@ public class TwitterController {
 	}
 
 	public String getWebsite() {
-		return user.getURL();
+		String str = user.getURL();
+		return (str == null) ? "" : str;
 	}
 
 	public String getLocation() {
@@ -121,15 +122,15 @@ public class TwitterController {
 	}
 
 	public int getTweetTotal() {
-		return 86;
+		return user.getStatusesCount();
 	}
 
 	public int getFriendsCount() {
-		return 34;
+		return user.getFriendsCount();
 	}
 
 	public int getFollowersCount() {
-		return 32;
+		return user.getFollowersCount();
 	}
 
 	public String getAuthUrl() {
