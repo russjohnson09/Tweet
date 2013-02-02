@@ -1,14 +1,13 @@
 package view;
-import java.awt.Dimension;
-import java.awt.Event;
+
+import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
-
 import controller.TwitterController;
 
 
 public class TwitterGUI extends JFrame implements ActionListener {
+	
 	private TwitterController controller;
 	private JFrame frame;
 	private JPanel profilePanel, tweetPanel, followingPanel, followersPanel;
@@ -20,22 +19,98 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	
 	// Tabbed Pane
 	private JTabbedPane tabbedPane;
+	
+	String displayName, twitterName, description, location, website;
+	Image profileImage, headerImage;
+	
 		
+
 	public TwitterGUI() {
 		controller = new TwitterController();
 		
-		frame = new JFrame("Desktop Tweets");
+		frame = new JFrame ("Desktop Tweets");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		
-		// Import other panels
-		menu();
-		tabbedPane();
+		// Create components
+		createProfilePanel();
+		createTweetPanel();
+		createFollowingPanel();
+		createFollowersPanel();
+		
+		createMenu();
+		createTabbedPane();
 		
 		setSize(700, 450);
+		setLocation(500, 250);
 		setVisible(true);
 	}
 	
-	private void menu() {
+	
+	
+	
+	
+	
+	
+	//TODO
+		private void createTweetPanel() {
+			
+			
+			
+		}
+		
+		private void createFollowersPanel() {
+			
+			
+			
+		}
+		
+		private void createFollowingPanel() {
+			
+			
+			
+		}
+		
+		
+		private void createProfilePanel() {
+			profilePanel = new JPanel();
+			profilePanel.setBackground(Color.WHITE);
+			profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.Y_AXIS));
+			
+			displayName = controller.getDisplayName();
+			twitterName = controller.getTwitterName();
+			description = controller.getDescription();
+			location = controller.getLocation();
+			website = controller.getWebsite();
+			profileImage = controller.getProfileImage();
+			headerImage = controller.getHeaderImage();
+			
+			profilePanel.setAlignmentX(CENTER_ALIGNMENT);
+			//JLabel dispN = new JLabel(displayName);
+			//dispN.setAlignmentX(CENTER_ALIGNMENT);
+			//profilePanel.add(dispN);
+			profilePanel.add(new JLabel(displayName));
+			profilePanel.add(new JLabel(twitterName));
+			profilePanel.add(new JLabel(description));
+			profilePanel.add(new JLabel(location));
+			profilePanel.add(new JLabel(website));
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	private void createMenu() {
 		menuBar = new JMenuBar();
 		
 		// File Menu
@@ -88,16 +163,17 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		setJMenuBar(menuBar);
 	}
 	
-	private void tabbedPane() {
+	private void createTabbedPane() {
 		tabbedPane = new JTabbedPane();
 		
 		tabbedPane.addTab("Profile", profilePanel);
 		tabbedPane.addTab("Tweet", tweetPanel);
-		tabbedPane.addTab("Following", followersPanel);
+		tabbedPane.addTab("Followers", followersPanel);
 		tabbedPane.addTab("Following", followingPanel);
 		
 		add(tabbedPane);
 	}
+	
 	
 	private void profilePane() {
 		
