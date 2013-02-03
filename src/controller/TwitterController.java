@@ -17,7 +17,6 @@ import org.json.simple.parser.JSONParser;
 import twitter4j.*;
 import twitter4j.auth.*;
 
-
 import model.TwitterModel;
 
 public class TwitterController {
@@ -90,11 +89,8 @@ public class TwitterController {
 	}
 
 	public String getLocation() {
-
-		return "Allendale, MI";
+		return user.getLocation();
 	}
-	
-
 
 	public ImageIcon getProfileImage() {
 
@@ -104,7 +100,6 @@ public class TwitterController {
 			return null;
 		}
 	}
-
 
 	// This is the image that shows up behind the users profile
 	public Image getHeaderImage() {
@@ -121,7 +116,6 @@ public class TwitterController {
 
 	}
 
-	
 	public int getTweetCount() {
 		return user.getStatusesCount();
 	}
