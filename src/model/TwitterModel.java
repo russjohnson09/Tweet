@@ -1,17 +1,9 @@
 package model;
 
-
-
 public class TwitterModel {
 
+	public TwitterModel() {
 
-	public static void main(String[] args) {
-
-		
 	}
 
-	
-	
-	
-	
 }
