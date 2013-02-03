@@ -22,19 +22,6 @@ import model.TwitterModel;
 
 public class TwitterController {
 
-	/** instance variables */
-
-	public static void main (String[] args) {
-		//model = new TwitterModel();         	**This gives me an error, I'm not sure why**
-	}
-	
-	
-	
-/**
- * Methods that will be called by the GUI. 
- * They are currently returning bogus values for GUI testing purposes
- */
-
 	private static TwitterModel model = new TwitterModel();
 
 	private boolean isSetUp = false;
@@ -63,10 +50,8 @@ public class TwitterController {
 			try {
 				user = twitter.showUser(twitter.getId());
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (TwitterException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -76,7 +61,6 @@ public class TwitterController {
 			try {
 				requestToken = twitter.getOAuthRequestToken();
 			} catch (TwitterException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -92,7 +76,7 @@ public class TwitterController {
 	}
 
 	public String getTwitterName() {
-		return user.getScreenName();
+		return "@" + user.getScreenName();
 
 	}
 

@@ -74,6 +74,9 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		}
 	}
 	
+	
+	
+	
 	private void createFollowersPanel() {
 		followersPanel = new JPanel();
 		followersPanel.setBackground(Color.WHITE);
@@ -85,7 +88,6 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		followingPanel = new JPanel();
 		followingPanel.setBackground(Color.WHITE);	
 	}
-	
 	
 
 	private void createTweetPanel() {
@@ -117,8 +119,6 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	 * Nick O is working on this method 
 	 ******************************************/	
 	private void createProfilePanel() {
-		profilePanel = new JPanel();
-		profilePanel.setLayout(new BorderLayout());
 		
 		/************************ INFO PANEL ***************************/
 		JPanel infoPanel = new JPanel();
@@ -136,8 +136,14 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		profileImage = controller.getProfileImage();
 		headerImage = controller.getHeaderImage();
 		
+		// Profile Image
 		c.gridy = 0;
-		//add profile image here
+		JButton profImgBtn = new JButton();
+		profImgBtn.setBackground(Color.WHITE);
+		profImgBtn.setBorderPainted(false);
+		profImgBtn.setFocusable(false);
+		profImgBtn.setIcon(controller.getProfileImage());
+		infoPanel.add(profImgBtn, c);
 		
 		
 		// Display Name
@@ -152,16 +158,14 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		JLabel twitterNameLbl = new JLabel(twitterName);		
 		twitterNameLbl.setFont(new Font("arial", Font.PLAIN, 15));
 		infoPanel.add(twitterNameLbl, c);
-		
-		c.ipady =  15;	//more space in between
+		c.ipady =  50;	//more padding
 		
 		//Description
 		c.gridy = 3;
 		JLabel descriptionLbl = new JLabel(description);
 		descriptionLbl.setFont(new Font("arial", Font.PLAIN, 15));
 		infoPanel.add(descriptionLbl, c);	
-		
-		c.ipady = 5; //less space in between
+		c.ipady = 5; //less padding
 		
 		// Location
 		c.gridy = 4;
@@ -180,24 +184,25 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		/***************************** COUNT PANEL ***********************************/
 		JPanel countPanel = new JPanel();
 		countPanel.setLayout(new BoxLayout(countPanel, BoxLayout.X_AXIS));
-
 		countPanel.setBackground(Color.WHITE);
+		
+		Font f = new Font("Arial", Font.ITALIC, 12);
 		JLabel numTweets = new JLabel(controller.getTweetCount() + " Tweets    ");
+		numTweets.setFont(f); 
 		JLabel numFollowing = new JLabel(controller.getFriendsCount() + " Following    ");
+		numFollowing.setFont(f);
 		JLabel numFollowers = new JLabel(controller.getFollowersCount() + " Followers    ");
+		numFollowers.setFont(f);
 		
 		countPanel.add(numTweets);
 		countPanel.add(numFollowing);
 		countPanel.add(numFollowers);
 		
-		
 		/**************************** PROFILE PANEL **********************************/
+		profilePanel = new JPanel();
+		profilePanel.setLayout(new BorderLayout());
 		profilePanel.add(infoPanel, BorderLayout.CENTER);
 		profilePanel.add(countPanel, BorderLayout.SOUTH);
-
-		
-			
-			
 		}
 		
 
