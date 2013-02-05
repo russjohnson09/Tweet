@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import static org.junit.Assert.*;
 
@@ -17,7 +17,6 @@ import view.TwitterGUI;
 public class ControllerTest {
 	
 	private TwitterController c;
-	private TwitterGUI gui;
 	
 	private User user;
 	
@@ -28,15 +27,21 @@ public class ControllerTest {
 		t = EasyMock.createMock(Twitter.class);
 		user = EasyMock.createMock(User.class);
 		c = new TwitterController();
+		c.setUser(user);
 	}
 
 	@Test
 	public void displayName() {
 		expect(user.getName()).andReturn("Carl");
 		replay(user);
-	    // Setting up the expected value of the method call calc
-		c.setUser(user);
 		assertEquals(c.getDisplayName(),"Carl");
+	}
+	
+	@Test
+	public void twitterName() {
+		expect(user.getScreenName()).andReturn("carl");
+		replay(user);
+		assertEquals(c.getTwitterName(),"@carl");	
 	}
 
 }
