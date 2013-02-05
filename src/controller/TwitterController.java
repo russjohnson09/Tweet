@@ -28,6 +28,7 @@ public class TwitterController {
 	private Twitter twitter;
 	private RequestToken requestToken;
 
+	/* Current user of the app. */
 	private User user;
 
 	public final static String CONSUMER_KEY = "yNBLlBrsFHz89PyCfjrAw";
@@ -198,6 +199,10 @@ public class TwitterController {
 
 	public boolean getIsSetUp() {
 		return isSetUp;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
