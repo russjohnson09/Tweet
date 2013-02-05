@@ -6,11 +6,11 @@ import java.awt.event.*;
 import javax.swing.*;
 import controller.TwitterController;
 
-/***********************************************************************
- * 
+/**
  * Twitter GUI
- * 
- **********************************************************************/
+ * @author Nick, Vincenzo, Corey, Russ
+ *
+ */
 public class TwitterGUI extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -28,14 +28,14 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	private JTabbedPane tabbedPane;
 
 	// Profile Panel
-	String displayName, twitterName, description, location, website;
-	ImageIcon profileImage;
-	Image headerImage;
+	private String displayName, twitterName, description, location, website;
+	private ImageIcon profileImage;
+	private Image headerImage;
 
 	// Tweet Panel
-	JButton cancel, tweetSubmit, tweetShow;
-	JLabel tweetTotal;
-	JTextArea tweetText;
+	private JButton cancel, tweetSubmit, tweetShow;
+	private JLabel tweetTotal;
+	private JTextArea tweetText;
 
 	public TwitterGUI() {
 		frame = new JFrame("Desktop Tweets");
@@ -272,9 +272,10 @@ public class TwitterGUI extends JFrame implements ActionListener {
 
 
 	/**
-	 * This is where all actions should be delegated and sent to the controller
+	 * This is where all actions should be delegated and 
+	 * sent to the controller
 	 * 
-	 * @param ActionEvent
+	 * @param e
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
