@@ -14,6 +14,11 @@ import twitter4j.Twitter;
 import twitter4j.User;
 import view.TwitterGUI;
 
+/**
+ * Tests the controller for twitter.
+ * @author Corey
+ *
+ */
 public class ControllerTest {
 	
 	private TwitterController c;
