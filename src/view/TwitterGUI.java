@@ -4,13 +4,15 @@ import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.*;
 import javax.swing.*;
+
+import twitter4j.TwitterException;
 import controller.TwitterController;
 
-/**
+/**********************************************************************
  * Twitter GUI
+ * 
  * @author Nick, Vincenzo, Corey, Russ
- *
- */
+ *********************************************************************/
 public class TwitterGUI extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -37,10 +39,9 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	private JLabel tweetTotal;
 	private JTextArea tweetText;
 
-	public TwitterGUI() {
+	public TwitterGUI() throws TwitterException {
 		frame = new JFrame("Desktop Tweets");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
 
 		setUpController();
 
@@ -49,12 +50,14 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		createTweetPanel();
 		createFollowingPanel();
 		createFollowersPanel();
-
 		createMenu();
 		createTabbedPane();
 
+		
+		
 		setSize(700, 450);
-		setLocation(500, 250);
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
 	
 	private void setUpController() {
@@ -76,20 +79,34 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	
 	
 	
-	
-	private void createFollowersPanel() {
+	//TODO
+	// Use "FriendsFollowersResources" class from API
+	private void createFollowersPanel() throws TwitterException {
 		followersPanel = new JPanel();
 		followersPanel.setBackground(Color.WHITE);
+	    JScrollPane jsp = new JScrollPane(followersPanel);  
+	    jsp.createVerticalScrollBar();
+	    jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	    frame.setContentPane(jsp);
+	    
+	    long[] followers = controller.getFollowersIDs();
+	    
+	    //test this method
+	    for (int i = 0; i < followers.length; i++) {
+	    	JLabel tmp = new JLabel("" + followers[i]);
+	    	followersPanel.add(tmp);
+	    }
+	    
 	}
 	
 
-	
-	private void createFollowingPanel() {
+	//TODO
+	private void createFollowingPanel() throws TwitterException {
 		followingPanel = new JPanel();
 		followingPanel.setBackground(Color.WHITE);	
+		long[] followers = controller.getFriendsIDs();
 	}
 	
-
 	private void createTweetPanel() {
 		tweetPanel = new JPanel();
 		tweetPanel.setBackground(Color.WHITE);
@@ -112,12 +129,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 
 		tweetSubmit.addActionListener(this);
 	}
-
-		
 	
-	/*******************************************
-	 * Nick O is working on this method 
-	 ******************************************/	
 	private void createProfilePanel() {
 		
 		/************************ INFO PANEL ***************************/
@@ -137,7 +149,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		headerImage = controller.getHeaderImage();
 		
 		// Profile Image
-		c.gridy = 0;
+		c.gridy = 0; 
 		JButton profImgBtn = new JButton();
 		profImgBtn.setBackground(Color.WHITE);
 		profImgBtn.setBorderPainted(false);
@@ -205,7 +217,6 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		profilePanel.add(countPanel, BorderLayout.SOUTH);
 		}
 		
-
 	private void createMenu() {
 		menuBar = new JMenuBar();
 
@@ -270,12 +281,9 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		add(tabbedPane);
 	}
 
-
 	/**
 	 * This is where all actions should be delegated and 
 	 * sent to the controller
-	 * 
-	 * @param e
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -295,7 +303,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws TwitterException {
 		new TwitterGUI();
 	}
 }

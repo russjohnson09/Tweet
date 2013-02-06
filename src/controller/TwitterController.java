@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import twitter4j.*;
+import twitter4j.api.FriendsFollowersResources;
 import twitter4j.auth.*;
 
 import model.TwitterModel;
@@ -64,7 +65,6 @@ public class TwitterController {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	/**
@@ -114,15 +114,30 @@ public class TwitterController {
 		} catch (TwitterException e) {
 			return false;
 		}
-
 	}
 
 	public int getTweetCount() {
 		return user.getStatusesCount();
 	}
+	
+	public long[] getFriendsIDs() throws TwitterException {
+		try {
+			return twitter.getFriendsIDs(-1).getIDs();
+		} catch (TwitterException e) {
+			return null; 
+		}
+	}
 
 	public int getFriendsCount() {
 		return user.getFriendsCount();
+	}
+	
+	public long[] getFollowersIDs() throws TwitterException {
+		try{
+			return twitter.getFollowersIDs(-1).getIDs();
+		} catch (TwitterException e) {
+			return null; 
+		}
 	}
 
 	public int getFollowersCount() {
