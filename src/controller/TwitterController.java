@@ -77,7 +77,6 @@ public class TwitterController {
 
 	public String getTwitterName() {
 		return "@" + user.getScreenName();
-
 	}
 
 	public String getDescription() {
@@ -102,9 +101,12 @@ public class TwitterController {
 		}
 	}
 
-	// This is the image that shows up behind the users profile
-	public Image getHeaderImage() {
-		return null;
+	public Image getProfileBanner() {
+		try {
+			return (new ImageIcon(new URL(user.getProfileBannerURL())).getImage());
+		} catch (MalformedURLException e) {
+			return null;
+		}
 	}
 
 	public boolean tweet(String str) {
@@ -120,7 +122,7 @@ public class TwitterController {
 		return user.getStatusesCount();
 	}
 	
-	public long[] getFriendsIDs() throws TwitterException {
+	public long[] getFriendsIDs() {
 		try {
 			return twitter.getFriendsIDs(-1).getIDs();
 		} catch (TwitterException e) {
@@ -132,7 +134,7 @@ public class TwitterController {
 		return user.getFriendsCount();
 	}
 	
-	public long[] getFollowersIDs() throws TwitterException {
+	public long[] getFollowersIDs() {
 		try{
 			return twitter.getFollowersIDs(-1).getIDs();
 		} catch (TwitterException e) {
