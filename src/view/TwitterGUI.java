@@ -29,6 +29,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 
 	private JTabbedPane tabbedPane;
 
+	// Profile Panel
 	private String displayName, twitterName, description, location, website;
 	private ImageIcon profileImage;
 	private Image profileBanner;
@@ -41,7 +42,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	/****************************************************
 	 * GUI
 	 ***************************************************/
-	public TwitterGUI() throws TwitterException {
+	public TwitterGUI() { 
 		frame = new JFrame();
 		setTitle("Desktop Tweets");
 		setBackground(Color.WHITE);
@@ -51,7 +52,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		setMaximumSize(new Dimension (700, 450));
 		setMinimumSize(new Dimension (700, 450));
 		setResizable(false);
-		//setUndecorated(true); Something cool we might want to look into? (No Title Menu on Frame)
+		//setUndecorated(true); //Something cool we might want to look into? (No Title Menu on Frame)
 		setLocationRelativeTo(null);
 
 
@@ -63,7 +64,6 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		createMenu();
 		createTabbedPane();
 
-		
 		setVisible(true);
 	}
 	
@@ -84,7 +84,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	}
 	
 	
-	private void createFollowersPanel() throws TwitterException {
+	private void createFollowersPanel() {
 		followersPanel = new JPanel();
 		followersPanel.setBackground(Color.WHITE);
 	    JScrollPane jsp = new JScrollPane(followersPanel);  
@@ -95,8 +95,8 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	    long[] followers = controller.getFriendsIDs();
 	}
 	
-
-	private void createFollowingPanel() throws TwitterException {
+	
+	private void createFollowingPanel() {
 		followingPanel = new JPanel();
 		followingPanel.setBackground(Color.WHITE);	
 		/*
@@ -155,7 +155,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		c.fill = GridBagConstraints.NONE;
 			
 		// Profile Image
-		ImageIcon img = controller.getProfileImage();
+		ImageIcon img = profileImage;
 		c.gridy = 0; 
 		JButton profImgBtn = new JButton();
 		profImgBtn.setPreferredSize(new Dimension(img.getIconWidth()+1,img.getIconHeight()+1));
@@ -183,10 +183,15 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		
 		//Description
 		c.gridy = 3;
-		JLabel descriptionLbl = new JLabel(description);
-		descriptionLbl.setFont(new Font("arial", Font.PLAIN, 15));
-		descriptionLbl.setForeground(Color.WHITE);
-		infoPanel.add(descriptionLbl, c);	
+		if (description.length() < 71) {
+			JLabel descriptionLbl = new JLabel(description);
+			descriptionLbl.setFont(new Font("arial", Font.PLAIN, 15));
+			descriptionLbl.setForeground(Color.WHITE);
+			infoPanel.add(descriptionLbl, c);
+		}
+		else {
+			
+		}
 		c.ipady = 5; //less padding
 		
 		// Location
@@ -255,8 +260,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		aboutMenu = new JMenu("About");
 		about = new JMenuItem("About Desktop Tweets");
 		about.addActionListener(this);
-		about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
-				Event.CTRL_MASK));
+		about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
 		aboutMenu.add(about);
 
 		// Add To MenuBar
@@ -267,7 +271,12 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	}
 
 	private void createTabbedPane() {
-		tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setFocusable(false);
+		tabbedPane.setBackground(Color.WHITE);
+		tabbedPane.setForeground(Color.BLACK);
+		tabbedPane.setFont(new Font("arial", Font.BOLD, 14));
+		tabbedPane.setTabLayoutPolicy(JTabbedPane.CENTER);
 		tabbedPane.addTab("Profile", profilePanel);
 		tabbedPane.addTab("Tweet", tweetPanel);
 		tabbedPane.addTab("Followers", followersPanel);
@@ -283,17 +292,19 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 
-		if (source == exit) {
+		if (source == exit)
 			System.exit(0);
-		}
+		
+		if (source == newTweet)
+			tabbedPane.setSelectedComponent(tweetPanel);
 
 		if (source == tweetSubmit) {
-			if (!controller.tweet(tweetText.getText())) {
-				JOptionPane
-						.showMessageDialog(null, "Status could not be sent.");
-			}
+			if (!controller.tweet(tweetText.getText()))
+				JOptionPane.showMessageDialog(null, "Status could not be sent.");
 			return;
 		}
+		if (source == about)
+			JOptionPane.showMessageDialog(null,  "This is a desktop twitter application");
 	}
 
 	public static void main(String[] args) throws TwitterException {

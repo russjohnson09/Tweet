@@ -23,12 +23,11 @@ import model.TwitterModel;
 public class TwitterController {
 
 	private static TwitterModel model = new TwitterModel();
-
+	
 	private boolean isSetUp = false;
-
+	
 	private Twitter twitter;
-	private RequestToken requestToken;
-
+	private RequestToken requestToken; 
 	/* Current user of the app. */
 	private User user;
 
@@ -93,7 +92,6 @@ public class TwitterController {
 	}
 
 	public ImageIcon getProfileImage() {
-
 		try {
 			return new ImageIcon(new URL(user.getBiggerProfileImageURL()));
 		} catch (MalformedURLException e) {
@@ -102,11 +100,21 @@ public class TwitterController {
 	}
 
 	public Image getProfileBanner() {
+			Image img = null;
+			try {
+				img = (new ImageIcon(new URL(user.getProfileBannerURL())).getImage());
+			} catch (MalformedURLException e) {}
+			if (img == null)
+				img = (new ImageIcon("src/controller/banner.jpeg")).getImage();
+			return img;
+	}
+	
+	public Image getBackgroundImage() {
 		try {
-			return (new ImageIcon(new URL(user.getProfileBannerURL())).getImage());
+			return (new ImageIcon(new URL(user.getProfileBackgroundImageURL())).getImage());
 		} catch (MalformedURLException e) {
 			return null;
-		}
+		}				
 	}
 
 	public boolean tweet(String str) {
