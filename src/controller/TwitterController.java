@@ -15,7 +15,6 @@ import javax.swing.ImageIcon;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import twitter4j.*;
-import twitter4j.api.FriendsFollowersResources;
 import twitter4j.auth.*;
 
 import model.TwitterModel;
@@ -105,16 +104,23 @@ public class TwitterController {
 				img = (new ImageIcon(new URL(user.getProfileBannerURL())).getImage());
 			} catch (MalformedURLException e) {}
 			if (img == null)
-				img = (new ImageIcon("src/controller/banner.jpeg")).getImage();
+				img = (new ImageIcon("src/banner.jpeg")).getImage();
 			return img;
 	}
 	
+	public Color getTextColor() {
+		System.out.println(user.getProfileTextColor());
+		return Color.WHITE;
+	}
+	
 	public Image getBackgroundImage() {
-		try {
-			return (new ImageIcon(new URL(user.getProfileBackgroundImageURL())).getImage());
-		} catch (MalformedURLException e) {
-			return null;
-		}				
+		Image img = new ImageIcon("src/background.jpeg").getImage();
+		//try {
+		//	img = (new ImageIcon(new URL(user.getProfileBackgroundImageURL())).getImage());
+		//} catch (MalformedURLException e) {}
+		//if (img == null)
+		//	img = new ImageIcon("src/background.jpeg").getImage();
+		return img;
 	}
 
 	public boolean tweet(String str) {
