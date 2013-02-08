@@ -149,7 +149,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		/** INFO PANEL */
 		JPanel infoPanel = new JPanel() {
 			protected void paintComponent(Graphics g) {
-					g.drawImage(profileBanner, (FRAME_WIDTH/2)-profileBanner.getWidth(null)/2, 
+					g.drawImage(profileBanner, (FRAME_WIDTH/2)-profileBanner.getWidth(null)/2-8, 
 							FRAME_HEIGHT/3+10-profileBanner.getHeight(null)/2, null);
 				}
 		};
@@ -162,7 +162,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		// Profile Image
 		ImageIcon img = profileImage;
 		c.gridy = 0; 
-		JButton profImgBtn = getPlainButton();
+		JButton profImgBtn = getPlainButton(null, null);
 		profImgBtn.setPreferredSize(new Dimension(img.getIconWidth()+2,img.getIconHeight()+2));
 		profImgBtn.setBorder(new LineBorder(Color.WHITE, 4));
 		profImgBtn.setIcon(img);
@@ -214,19 +214,16 @@ public class TwitterGUI extends JFrame implements ActionListener {
 		countPanel.setOpaque(false);
 		//countPanel.setBackground(Color.WHITE);
 		
-		followersBtn = getPlainButton(); 
-		followersBtn.setText("<html>" + controller.getFollowersCount() + "<br/>Followers</html>");
+		followersBtn = getPlainButton(""+controller.getFollowersCount(), "Following"); 
 		followersBtn.addActionListener(this);
-		followingBtn = getPlainButton();
-		followingBtn.setText("<html>" + controller.getFriendsCount() + "<br/>Following</html>");
+		followingBtn = getPlainButton(""+controller.getFriendsCount(), "Following");
 		followingBtn.addActionListener(this);
-		tweetsBtn = getPlainButton();
-		tweetsBtn.setText("<html>" + controller.getTweetCount() + "<br/>Tweets</html>");
+		tweetsBtn = getPlainButton(""+controller.getTweetCount(), "Tweets");
 		
 		cpc.gridy = 0;
-		JButton blankBtn1 = getPlainButton();
+		JButton blankBtn1 = getPlainButton(null, null);
 		blankBtn1.setBorderPainted(false);
-		JButton blankBtn2 = getPlainButton();
+		JButton blankBtn2 = getPlainButton(null, null);
 		blankBtn2.setBorderPainted(false);
 		countPanel.add(followersBtn, cpc);
 		countPanel.add(new JLabel(" "), cpc);		
@@ -244,22 +241,26 @@ public class TwitterGUI extends JFrame implements ActionListener {
 				super.paintComponent(g);
 			}
 		};
-		profilePanel.setOpaque(false); // true -> hides the background image
+		profilePanel.setOpaque(false);
 		profilePanel.setLayout(new BorderLayout());
 		profilePanel.add(infoPanel, BorderLayout.CENTER);
 		profilePanel.add(countPanel, BorderLayout.SOUTH);
 	}
 
 	
-	private JButton getPlainButton() {
+	private JButton getPlainButton(String line1, String line2) {
+		String text = line1;
+		if (line2 != null)
+			text = ("<html><center><font size=6>" + line1 + "</font><br><i>" + line2 + "</i></center></html>");
 		JButton tmp= new JButton();
-		tmp.setFont(new Font("Arial", Font.ITALIC+Font.BOLD, 15));
+		tmp.setPreferredSize(new Dimension(120, 50));
+		tmp.setFont(new Font("Arial", Font.BOLD, 15));
+		tmp.setText(text);
 		tmp.setBackground(Color.WHITE);
 		tmp.setForeground(Color.DARK_GRAY);
 		tmp.setBorder(new LineBorder(Color.GRAY, 1, true));
 		tmp.setFocusable(false);
-		tmp.setFocusPainted(false); 
-		tmp.setRequestFocusEnabled(false);
+		tmp.setFocusPainted(false);
 		return tmp; 
 	}
 	private void createDescriptionPanel(JPanel panel, GridBagConstraints c) {
@@ -355,7 +356,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 
 	private void createTabbedPane() {
 		//UIManager.put("TabbedPane.selected",  Color.WHITE);
-		UIManager.put("TabbedPane.contentAreaColor", Color.WHITE);
+		//UIManager.put("TabbedPane.contentAreaColor", Color.WHITE);
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setFocusable(false);
 		tabbedPane.setBackground(Color.WHITE);
