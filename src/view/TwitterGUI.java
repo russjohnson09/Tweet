@@ -94,7 +94,7 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	    jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	    frame.setContentPane(jsp);
 	    
-	    long[] followers = controller.getFriendsIDs();
+	    //long[] followers = controller.getFriendsIDs();
 	}
 	
 	
@@ -276,9 +276,11 @@ public class TwitterGUI extends JFrame implements ActionListener {
 			
 			String[] w = description.split(" ");
 			int wMid = (w.length / 2) + 1;
+			System.out.println(""+wMid);
 			int dMid = description.length() / 2;
-			d1 = description.substring(0, description.indexOf(w[wMid], dMid));
-			d2 = description.substring(description.indexOf(w[wMid], dMid));
+			System.out.println(""+dMid);
+			d1 = description.substring(0, description.indexOf(w[wMid], dMid-1));
+			d2 = description.substring(description.indexOf(w[wMid], dMid-1));
 			
 			JLabel description1Lbl = new JLabel(d1);
 			JLabel description2Lbl = new JLabel(d2);
