@@ -84,7 +84,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 					.showInputDialog(
 							"Please follow this link to authenticate this App.\nEnter Pin:",
 							authUrl);
-			controller.setUpUser(pin);
 		}
 	}
 

@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.*;
+import java.awt.List;
 import java.util.*;
 import javax.swing.*;
 
@@ -17,18 +18,17 @@ import org.json.simple.parser.JSONParser;
 import twitter4j.*;
 import twitter4j.auth.*;
 
+import model.Tweets;
 import model.TwitterModel;
 
 public class TwitterController {
 
 	private static TwitterModel model = new TwitterModel();
-	
+
 	private boolean isSetUp = false;
-	
+
 	private Twitter twitter;
-	private RequestToken requestToken; 
-	/* Current user of the app. */
-	private User user;
+	private RequestToken requestToken;
 
 	public final static String CONSUMER_KEY = "yNBLlBrsFHz89PyCfjrAw";
 	public final static String CONSUMER_KEY_SECRET = "8SIq5OXfeIKabtB3B2CBHJVIkrjQbSPloHoTmxtis4";
@@ -46,14 +46,6 @@ public class TwitterController {
 		if (token != null && tokenSecret != null) {
 			twitter.setOAuthAccessToken(new AccessToken(token, tokenSecret));
 
-			try {
-				user = twitter.showUser(twitter.getId());
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (TwitterException e) {
-				e.printStackTrace();
-			}
-
 			isSetUp = true;
 
 		} else {
@@ -70,63 +62,114 @@ public class TwitterController {
 	 */
 
 	public String getDisplayName() {
-		String name="";
-		
 		try {
-			name = user.getName();
-		} catch (Exception e) {
+			return twitter.showUser(twitter.getId()).getName();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return name;
+
+		return null;
 	}
 
 	public String getTwitterName() {
-		return "@" + user.getScreenName();
+		try {
+			return "@" + twitter.showUser(twitter.getId()).getScreenName();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String getDescription() {
-		return user.getDescription();
+		try {
+			return twitter.showUser(twitter.getId()).getDescription();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String getWebsite() {
-		String str = user.getURL();
-		return (str == null) ? "" : str;
+		String str = null;
+		try {
+			str = twitter.showUser(twitter.getId()).getURL();
+			return str;
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public String getLocation() {
-		return user.getLocation();
+		try {
+			return twitter.showUser(twitter.getId()).getLocation();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public ImageIcon getProfileImage() {
 		try {
-			return new ImageIcon(new URL(user.getBiggerProfileImageURL()));
+			return new ImageIcon(new URL(twitter.showUser(twitter.getId())
+					.getBiggerProfileImageURL()));
 		} catch (MalformedURLException e) {
 			return null;
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+		return null;
 	}
 
 	public Image getProfileBanner() {
-			Image img = null;
-			try {
-				img = (new ImageIcon(new URL(user.getProfileBannerURL())).getImage());
-			} catch (MalformedURLException e) {}
-			if (img == null)
-				img = (new ImageIcon("src/banner.jpeg")).getImage();
-			return img;
+		Image img = null;
+		try {
+			img = (new ImageIcon(new URL(twitter.showUser(twitter.getId())
+					.getProfileBannerURL())).getImage());
+		} catch (MalformedURLException e) {
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (img == null)
+			img = (new ImageIcon("src/banner.jpeg")).getImage();
+		return img;
 	}
-	
+
 	public Color getTextColor() {
-		System.out.println(user.getProfileTextColor());
 		return Color.WHITE;
 	}
-	
+
 	public Image getBackgroundImage() {
 		Image img = new ImageIcon("src/background.jpeg").getImage();
-		//try {
-		//	img = (new ImageIcon(new URL(user.getProfileBackgroundImageURL())).getImage());
-		//} catch (MalformedURLException e) {}
-		//if (img == null)
-		//	img = new ImageIcon("src/background.jpeg").getImage();
 		return img;
 	}
 
@@ -140,49 +183,85 @@ public class TwitterController {
 	}
 
 	public int getTweetCount() {
-		return user.getStatusesCount();
+		try {
+			return twitter.showUser(twitter.getId()).getStatusesCount();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
-	
+
 	public long[] getFriendsIDs() {
 		try {
 			return twitter.getFriendsIDs(-1).getIDs();
 		} catch (TwitterException e) {
-			return null; 
+			return null;
 		}
 	}
 
 	public int getFriendsCount() {
-		return user.getFriendsCount();
+		try {
+			return twitter.showUser(twitter.getId()).getFriendsCount();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
-	
+
 	public long[] getFollowersIDs() {
-		try{
+		try {
 			return twitter.getFollowersIDs(-1).getIDs();
 		} catch (TwitterException e) {
-			return null; 
+			return null;
 		}
 	}
 
 	public int getFollowersCount() {
-		return user.getFollowersCount();
+		try {
+			return twitter.showUser(twitter.getId()).getFollowersCount();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	/**
+	 * First value is the
+	 * 
+	 * @return
+	 */
+	public Tweets getHomeTimeline() {
+		Tweets tweets = new Tweets();
+		ResponseList<Status> statuses = null;
+		try {
+			statuses = twitter.getHomeTimeline();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (statuses != null) {
+			for (Status s : statuses) {
+				tweets.add(s);
+			}
+		}
+		return tweets;
 	}
 
 	public String getAuthUrl() {
 		return requestToken.getAuthorizationURL();
 
-	}
-
-	public void setUpUser(String pin) {
-		AccessToken accessToken = null;
-		try {
-			accessToken = twitter.getOAuthAccessToken(requestToken, pin);
-
-			user = twitter.showUser(twitter.getId());
-
-		} catch (TwitterException te) {
-			te.printStackTrace();
-		}
-		addToFile(accessToken);
 	}
 
 	private void addToFile(AccessToken accessToken) {
@@ -237,10 +316,6 @@ public class TwitterController {
 
 	public boolean getIsSetUp() {
 		return isSetUp;
-	}
-	
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 }
