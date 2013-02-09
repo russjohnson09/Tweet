@@ -16,15 +16,16 @@ import view.TwitterGUI;
 
 /**
  * Tests the controller for twitter.
+ * 
  * @author Corey
- *
+ * 
  */
 public class ControllerTest {
-	
+
 	private TwitterController c;
-	
+
 	private User user;
-	
+
 	private Twitter t;
 
 	@Before
@@ -32,22 +33,20 @@ public class ControllerTest {
 		t = EasyMock.createMock(Twitter.class);
 		user = EasyMock.createMock(User.class);
 		c = new TwitterController();
-		c.setUser(user);
 	}
 
 	@Test
 	public void displayName() {
 		expect(user.getName()).andReturn("Carl");
 		replay(user);
-		assertEquals(c.getDisplayName(),"Carl");
+		assertEquals(c.getDisplayName(), "Carl");
 	}
-	
+
 	@Test
 	public void twitterName() {
 		expect(user.getScreenName()).andReturn("carl");
 		replay(user);
-		assertEquals(c.getTwitterName(),"@carl");	
+		assertEquals(c.getTwitterName(), "@carl");
 	}
-
 
 }
