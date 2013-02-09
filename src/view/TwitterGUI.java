@@ -17,9 +17,9 @@ import controller.TwitterController;
 public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	private static final long serialVersionUID = 1L;
-	
-	private final int FRAME_HEIGHT /*450*/= 450;
-	private final int FRAME_WIDTH /*700*/ = 700;
+
+	private final int FRAME_HEIGHT /* 450 */= 450;
+	private final int FRAME_WIDTH /* 700 */= 700;
 
 	private TwitterController controller;
 	private JFrame frame;
@@ -33,7 +33,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	// Profile Panel
 	private String displayName, twitterName, description, location, website;
-	private JButton followersBtn,followingBtn, tweetsBtn;
+	private JButton followersBtn, followingBtn, tweetsBtn;
 	private ImageIcon profileImage;
 	private Image profileBanner, backgroundImage;
 
@@ -47,19 +47,19 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	/****************************************************
 	 * GUI
 	 ***************************************************/
-	public TwitterGUI() { 
+	public TwitterGUI() {
 		frame = new JFrame();
 		setTitle("Desktop Tweets");
 		setBackground(Color.WHITE);
 		setUpController();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		setMaximumSize(new Dimension (FRAME_WIDTH, FRAME_HEIGHT));
-		setMinimumSize(new Dimension (FRAME_WIDTH, FRAME_HEIGHT));
+		setMaximumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+		setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 		setResizable(false);
-		//setUndecorated(true); //Something cool we might want to look into? (No Title Menu on Frame)
+		// setUndecorated(true); //Something cool we might want to look into?
+		// (No Title Menu on Frame)
 		setLocationRelativeTo(null);
-
 
 		// Create components
 		createProfilePanel();
@@ -71,7 +71,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		setVisible(true);
 	}
-	
+
 	private void setUpController() {
 		controller = new TwitterController();
 
@@ -80,59 +80,56 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			// copy to clipboard
 			Toolkit.getDefaultToolkit().getSystemClipboard()
 					.setContents(new StringSelection(authUrl), null);
-			String pin = JOptionPane.showInputDialog(
+			String pin = JOptionPane
+					.showInputDialog(
 							"Please follow this link to authenticate this App.\nEnter Pin:",
 							authUrl);
 			controller.setUpUser(pin);
 		}
 	}
-	
-	
+
 	private void createFollowersPanel() {
 		followersPanel = new JPanel();
 		followersPanel.setBackground(Color.WHITE);
-	    JScrollPane jsp = new JScrollPane(followersPanel);  
-	    jsp.createVerticalScrollBar();
-	    jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-	    frame.setContentPane(jsp);
-	    
-	    //long[] followers = controller.getFriendsIDs();
+		JScrollPane jsp = new JScrollPane(followersPanel);
+		jsp.createVerticalScrollBar();
+		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		frame.setContentPane(jsp);
+
+		// long[] followers = controller.getFriendsIDs();
 	}
-	
-	
+
 	private void createFollowingPanel() {
 		followingPanel = new JPanel();
-		followingPanel.setBackground(Color.WHITE);	
+		followingPanel.setBackground(Color.WHITE);
 		/*
-		long[] followers = controller.getFriendsIDs();
-		if (followers.length > 0)
-			followingPanel.add(new JLabel(Integer.toString(followers.length)));
-		else
-			followingPanel.add(new JLabel(" Not > 0 "));
-		*/
+		 * long[] followers = controller.getFriendsIDs(); if (followers.length >
+		 * 0) followingPanel.add(new
+		 * JLabel(Integer.toString(followers.length))); else
+		 * followingPanel.add(new JLabel(" Not > 0 "));
+		 */
 	}
-	
+
 	private void createTweetPanel() {
 		tweetPanel = new JPanel();
 		tweetPanel.setBackground(Color.WHITE);
 		tweetPanel.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
-		
-		
+
 		// Instantiate vars
 		cancel = new JButton("Cancel");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		tweetPanel.add(cancel, gbc);
-		
+
 		tweetSubmit = new JButton("Send Tweet");
 		tweetSubmit.addActionListener(this);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 1;
 		gbc.ipady = 0;
 		tweetPanel.add(tweetSubmit, gbc);
-		
+
 		tweetText = new JTextArea();
 		tweetText.addKeyListener(this);
 		tweetText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -141,22 +138,22 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		tweetText.setRows(8);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
-		gbc.gridy = 1; 
+		gbc.gridy = 1;
 		gbc.gridwidth = 3;
 		tweetPanel.add(tweetText, gbc);
-		
+
 		charsRemaining = new JLabel("" + remaining + "", JLabel.RIGHT);
 		gbc.gridx = 2;
 		gbc.gridy = 2;
 		tweetPanel.add(charsRemaining, gbc);
-		
+
 		tweetTotal = new JButton(controller.getTweetCount() + " Tweets");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.gridwidth = 1;
 		tweetPanel.add(tweetTotal, gbc);
-		
+
 		tweetShow = new JButton("Show Tweets");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 1;
@@ -165,7 +162,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		gbc.anchor = GridBagConstraints.PAGE_END;
 		tweetPanel.add(tweetShow, gbc);
 	}
-	
+
 	@SuppressWarnings("serial")
 	private void createProfilePanel() {
 		// Get User Information
@@ -175,32 +172,35 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		location = controller.getLocation();
 		website = controller.getWebsite();
 		profileImage = controller.getProfileImage();
-		profileBanner = controller.getProfileBanner();	
+		profileBanner = controller.getProfileBanner();
 		backgroundImage = controller.getBackgroundImage();
-		
-		
+
 		/** INFO PANEL */
 		JPanel infoPanel = new JPanel() {
 			protected void paintComponent(Graphics g) {
-					g.drawImage(profileBanner, (FRAME_WIDTH/2)-profileBanner.getWidth(null)/2-8, 
-							FRAME_HEIGHT/3+10-profileBanner.getHeight(null)/2, null);
-				}
+				g.drawImage(profileBanner,
+						(FRAME_WIDTH / 2) - profileBanner.getWidth(null) / 2
+								- 8,
+						FRAME_HEIGHT / 3 + 10 - profileBanner.getHeight(null)
+								/ 2, null);
+			}
 		};
 		infoPanel.setOpaque(false);
 		infoPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		infoPanel.paintComponents(null);
 		c.fill = GridBagConstraints.NONE;
-			
+
 		// Profile Image
 		ImageIcon img = profileImage;
-		c.gridy = 0; 
+		c.gridy = 0;
 		JButton profImgBtn = getPlainButton(null, null);
-		profImgBtn.setPreferredSize(new Dimension(img.getIconWidth()+2,img.getIconHeight()+2));
+		profImgBtn.setPreferredSize(new Dimension(img.getIconWidth() + 2, img
+				.getIconHeight() + 2));
 		profImgBtn.setBorder(new LineBorder(Color.WHITE, 4));
 		profImgBtn.setIcon(img);
 		infoPanel.add(profImgBtn, c);
-		
+
 		// Display Name
 		c.ipady = 5;
 		c.gridy = 1;
@@ -208,65 +208,65 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		displayNameLbl.setFont(new Font("arial", Font.BOLD, 24));
 		displayNameLbl.setForeground(Color.WHITE);
 		infoPanel.add(displayNameLbl, c);
-			
+
 		// Twitter Name
 		c.gridy = 2;
-		JLabel twitterNameLbl = new JLabel(twitterName);		
+		JLabel twitterNameLbl = new JLabel(twitterName);
 		twitterNameLbl.setFont(new Font("arial", Font.PLAIN, 15));
 		twitterNameLbl.setForeground(Color.WHITE);
 		infoPanel.add(twitterNameLbl, c);
-		c.ipady =  30;	//more padding
-		
-		//Description
-		c.gridy = 3; 
+		c.ipady = 30; // more padding
+
+		// Description
+		c.gridy = 3;
 		c.ipady = 0;
-		createDescriptionPanel(infoPanel, c); 
-		
-		// Location		
-		c.ipady = 5; 
+		createDescriptionPanel(infoPanel, c);
+
+		// Location
+		c.ipady = 5;
 		c.gridy = 6;
 		JLabel locationLbl = new JLabel(location);
 		locationLbl.setFont(new Font("arial", Font.BOLD, 15));
 		locationLbl.setForeground(Color.WHITE);
 		infoPanel.add(locationLbl, c);
-		
-		// Website 
+
+		// Website
 		c.gridy = 7;
 		JLabel websiteLbl = new JLabel(website);
 		websiteLbl.setFont(new Font("arial", Font.PLAIN, 14));
 		websiteLbl.setForeground(Color.WHITE);
 		infoPanel.add(websiteLbl, c);
-		
-		
+
 		/** COUNT PANEL */
 		JPanel countPanel = new JPanel();
 		countPanel.setLayout(new GridBagLayout());
 		GridBagConstraints cpc = new GridBagConstraints();
 		cpc.fill = GridBagConstraints.NONE;
-		cpc.ipadx = 30; 
+		cpc.ipadx = 30;
 		countPanel.setOpaque(false);
-		//countPanel.setBackground(Color.WHITE);
-		
-		followersBtn = getPlainButton(""+controller.getFollowersCount(), "Following"); 
+		// countPanel.setBackground(Color.WHITE);
+
+		followersBtn = getPlainButton("" + controller.getFollowersCount(),
+				"Following");
 		followersBtn.addActionListener(this);
-		followingBtn = getPlainButton(""+controller.getFriendsCount(), "Following");
+		followingBtn = getPlainButton("" + controller.getFriendsCount(),
+				"Following");
 		followingBtn.addActionListener(this);
-		tweetsBtn = getPlainButton(""+controller.getTweetCount(), "Tweets");
-		
+		tweetsBtn = getPlainButton("" + controller.getTweetCount(), "Tweets");
+
 		cpc.gridy = 0;
 		JButton blankBtn1 = getPlainButton(null, null);
 		blankBtn1.setBorderPainted(false);
 		JButton blankBtn2 = getPlainButton(null, null);
 		blankBtn2.setBorderPainted(false);
 		countPanel.add(followersBtn, cpc);
-		countPanel.add(new JLabel(" "), cpc);		
+		countPanel.add(new JLabel(" "), cpc);
 		countPanel.add(followingBtn, cpc);
 		countPanel.add(new JLabel(" "), cpc);
 		countPanel.add(tweetsBtn, cpc);
 		cpc.gridy = 1;
 		countPanel.add(new JLabel(" "), cpc);
-		
-		
+
 		/** PROFILE PANEL */
 		profilePanel = new JPanel() {
 			protected void paintComponent(Graphics g) {
@@ -280,12 +280,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		profilePanel.add(countPanel, BorderLayout.SOUTH);
 	}
 
-	
 	private JButton getPlainButton(String line1, String line2) {
 		String text = line1;
 		if (line2 != null)
-			text = ("<html><center><font size=6>" + line1 + "</font><br><i>" + line2 + "</i></center></html>");
-		JButton tmp= new JButton();
+			text = ("<html><center><font size=6>" + line1 + "</font><br><i>"
+					+ line2 + "</i></center></html>");
+		JButton tmp = new JButton();
 		tmp.setPreferredSize(new Dimension(120, 50));
 		tmp.setFont(new Font("Arial", Font.BOLD, 15));
 		tmp.setText(text);
@@ -294,8 +294,24 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		tmp.setBorder(new LineBorder(Color.GRAY, 1, true));
 		tmp.setFocusable(false);
 		tmp.setFocusPainted(false);
-		return tmp; 
+		return tmp;
 	}
+
+	private void setPlainButton(String line1, String line2, JButton j) {
+		String text = line1;
+		if (line2 != null)
+			text = ("<html><center><font size=6>" + line1 + "</font><br><i>"
+					+ line2 + "</i></center></html>");
+		j.setPreferredSize(new Dimension(120, 50));
+		j.setFont(new Font("Arial", Font.BOLD, 15));
+		j.setText(text);
+		j.setBackground(Color.WHITE);
+		j.setForeground(Color.DARK_GRAY);
+		j.setBorder(new LineBorder(Color.GRAY, 1, true));
+		j.setFocusable(false);
+		j.setFocusPainted(false);
+	}
+
 	private void createDescriptionPanel(JPanel panel, GridBagConstraints c) {
 
 		if (description.length() < 55) {
@@ -303,18 +319,18 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			descriptionLbl.setFont(new Font("arial", Font.PLAIN, 14));
 			descriptionLbl.setForeground(Color.WHITE);
 			panel.add(descriptionLbl, c);
-		}
-		else  if (description.length() < 110) {
+		} else if (description.length() < 110) {
 			String d1, d2;
-			
+
 			String[] w = description.split(" ");
 			int wMid = (w.length / 2) + 1;
-			System.out.println(""+wMid);
+			System.out.println("" + wMid);
 			int dMid = description.length() / 2;
-			System.out.println(""+dMid);
-			d1 = description.substring(0, description.indexOf(w[wMid], dMid-1));
-			d2 = description.substring(description.indexOf(w[wMid], dMid-1));
-			
+			System.out.println("" + dMid);
+			d1 = description.substring(0,
+					description.indexOf(w[wMid], dMid - 1));
+			d2 = description.substring(description.indexOf(w[wMid], dMid - 1));
+
 			JLabel description1Lbl = new JLabel(d1);
 			JLabel description2Lbl = new JLabel(d2);
 			description1Lbl.setFont(new Font("arial", Font.PLAIN, 14));
@@ -324,18 +340,19 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			panel.add(description1Lbl, c);
 			c.gridy = 4;
 			panel.add(description2Lbl, c);
-		}
-		else {		
-			String d1, d2, d3; 
+		} else {
+			String d1, d2, d3;
 			String[] w = description.split(" ");
 			int wThird = (w.length / 3) + 1;
 			int dThird = description.length() / 3;
-			
-			d1 = description.substring(0, description.indexOf(w[wThird], dThird));
+
+			d1 = description.substring(0,
+					description.indexOf(w[wThird], dThird));
 			d2 = description.substring(description.indexOf(w[wThird], dThird),
-									   description.indexOf(w[wThird*2], dThird*2));
-			d3 = description.substring(description.indexOf(w[wThird*2], dThird*2));
-			
+					description.indexOf(w[wThird * 2], dThird * 2));
+			d3 = description.substring(description.indexOf(w[wThird * 2],
+					dThird * 2));
+
 			JLabel description1Lbl = new JLabel(d1);
 			description1Lbl.setFont(new Font("arial", Font.PLAIN, 14));
 			description1Lbl.setForeground(Color.WHITE);
@@ -345,7 +362,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			JLabel description3Lbl = new JLabel(d3);
 			description3Lbl.setFont(new Font("arial", Font.PLAIN, 14));
 			description3Lbl.setForeground(Color.WHITE);
-			
+
 			panel.add(description1Lbl, c);
 			c.gridy = 4;
 			panel.add(description2Lbl, c);
@@ -353,7 +370,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			panel.add(description3Lbl, c);
 		}
 	}
-	
+
 	private void createMenu() {
 		menuBar = new JMenuBar();
 
@@ -361,17 +378,20 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		fileMenu = new JMenu("File");
 		exit = new JMenuItem("Exit");
 		exit.addActionListener(this);
-		exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,Event.CTRL_MASK));
+		exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+				Event.CTRL_MASK));
 		fileMenu.add(exit);
 
 		// Tweet Menu
 		tweetMenu = new JMenu("Tweet");
 		newTweet = new JMenuItem("New Tweet");
 		newTweet.addActionListener(this);
-		newTweet.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
+		newTweet.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+				Event.CTRL_MASK));
 		delete = new JMenuItem("Delete");
 		delete.addActionListener(this);
-		delete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, Event.CTRL_MASK));
+		delete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
+				Event.CTRL_MASK));
 		tweetMenu.add(newTweet);
 		tweetMenu.add(delete);
 
@@ -379,7 +399,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		aboutMenu = new JMenu("About");
 		about = new JMenuItem("About Desktop Tweets");
 		about.addActionListener(this);
-		about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
+		about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
+				Event.CTRL_MASK));
 		aboutMenu.add(about);
 
 		// Add To MenuBar
@@ -390,8 +411,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	}
 
 	private void createTabbedPane() {
-		//UIManager.put("TabbedPane.selected",  Color.WHITE);
-		//UIManager.put("TabbedPane.contentAreaColor", Color.WHITE);
+		// UIManager.put("TabbedPane.selected", Color.WHITE);
+		// UIManager.put("TabbedPane.contentAreaColor", Color.WHITE);
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setFocusable(false);
 		tabbedPane.setBackground(Color.WHITE);
@@ -406,8 +427,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	}
 
 	/**
-	 * This is where all actions should be delegated and 
-	 * sent to the controller
+	 * This is where all actions should be delegated and sent to the controller
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -415,22 +435,38 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		if (source == exit)
 			System.exit(0);
-		
-		if (source == newTweet)
+
+		if (source == newTweet || source == tweetsBtn)
 			tabbedPane.setSelectedComponent(tweetPanel);
 
-		if (source == tweetSubmit)
-			if (!controller.tweet(tweetText.getText()))
-				JOptionPane.showMessageDialog(null, "Status could not be sent.");
-		
+		if (source == tweetSubmit) {
+			if (controller.tweet(tweetText.getText())) {
+				setPlainButton("" + controller.getTweetCount(), "Tweets",
+						tweetsBtn);
+				tweetTotal.setText(controller.getTweetCount() + " Tweets");
+				JOptionPane.showMessageDialog(null, "Status sent.");
+			} else {
+				JOptionPane
+						.showMessageDialog(null, "Status could not be sent.");
+			}
+		}
+
 		if (source == about)
-			JOptionPane.showMessageDialog(null,  "This is a desktop twitter application");
-		
+			JOptionPane.showMessageDialog(null,
+					"This is a desktop twitter application");
+
 		if (source == followersBtn)
 			tabbedPane.setSelectedComponent(followersPanel);
-		
+
 		if (source == followingBtn)
 			tabbedPane.setSelectedComponent(followingPanel);
+
+		if (source == cancel)
+			tweetText.setText("");
+
+		// if (source == tweetShow) {
+		// new DialogTweets(this, controller.getHomeTimeline());
+		// }
 	}
 
 	public static void main(String[] args) {
@@ -440,18 +476,18 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
