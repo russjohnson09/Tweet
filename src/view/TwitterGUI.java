@@ -117,6 +117,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		// Instantiate vars
 		cancel = new JButton("Cancel");
+		cancel.addActionListener(this);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -253,6 +254,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 				"Following");
 		followingBtn.addActionListener(this);
 		tweetsBtn = getPlainButton("" + controller.getTweetCount(), "Tweets");
+		tweetsBtn.addActionListener(this);
 
 		cpc.gridy = 0;
 		JButton blankBtn1 = getPlainButton(null, null);
@@ -441,9 +443,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		if (source == tweetSubmit) {
 			if (controller.tweet(tweetText.getText())) {
-				setPlainButton("" + controller.getTweetCount(), "Tweets",
-						tweetsBtn);
-				tweetTotal.setText(controller.getTweetCount() + " Tweets");
+				updateTweetCount();
 				JOptionPane.showMessageDialog(null, "Status sent.");
 			} else {
 				JOptionPane
@@ -470,7 +470,15 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			for (long l : x.getRemoveList()) {
 				controller.destroyStatus(l);
 			}
+			updateTweetCount();
+
 		}
+	}
+
+	private void updateTweetCount() {
+		setPlainButton("" + controller.getTweetCount(), "Tweets", tweetsBtn);
+		tweetTotal.setText(controller.getTweetCount() + " Tweets");
+
 	}
 
 	public static void main(String[] args) {
