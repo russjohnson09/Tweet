@@ -70,7 +70,14 @@ public class TwitterController {
 	 */
 
 	public String getDisplayName() {
-		return user.getName();
+		String name="";
+		
+		try {
+			name = user.getName();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return name;
 	}
 
 	public String getTwitterName() {

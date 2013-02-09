@@ -14,7 +14,7 @@ import controller.TwitterController;
  * 
  * @author Nick, Vincenzo, Corey, Russ
  *********************************************************************/
-public class TwitterGUI extends JFrame implements ActionListener {
+public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -38,8 +38,10 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	private Image profileBanner, backgroundImage;
 
 	// Tweet Panel
-	private JButton cancel, tweetSubmit, tweetShow;
-	private JLabel tweetTotal;
+	private GridBagConstraints gbc;
+	private int remaining = 140;
+	private JButton cancel, tweetSubmit, tweetShow, tweetTotal;
+	private JLabel charsRemaining;
 	private JTextArea tweetText;
 
 	/****************************************************
@@ -113,24 +115,55 @@ public class TwitterGUI extends JFrame implements ActionListener {
 	private void createTweetPanel() {
 		tweetPanel = new JPanel();
 		tweetPanel.setBackground(Color.WHITE);
-		tweetPanel.setLayout(new BoxLayout(tweetPanel, BoxLayout.Y_AXIS));
-
+		tweetPanel.setLayout(new GridBagLayout());
+		gbc = new GridBagConstraints();
+		
+		
 		// Instantiate vars
 		cancel = new JButton("Cancel");
-		tweetSubmit = new JButton("Tweet");
-		tweetShow = new JButton("Show Tweets");
-		tweetText = new JTextArea();
-
-		tweetTotal = new JLabel(controller.getTweetCount() + " Tweets");
-		tweetTotal.setSize(450, 300);
-
-		tweetPanel.add(tweetTotal);
-		tweetPanel.add(cancel);
-		tweetPanel.add(tweetSubmit);
-		tweetPanel.add(tweetShow);
-		tweetPanel.add(tweetText);
-
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		tweetPanel.add(cancel, gbc);
+		
+		tweetSubmit = new JButton("Send Tweet");
 		tweetSubmit.addActionListener(this);
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 1;
+		gbc.ipady = 0;
+		tweetPanel.add(tweetSubmit, gbc);
+		
+		tweetText = new JTextArea();
+		tweetText.addKeyListener(this);
+		tweetText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		tweetText.setFocusable(true);
+		tweetText.setColumns(30);
+		tweetText.setRows(8);
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridy = 1; 
+		gbc.gridwidth = 3;
+		tweetPanel.add(tweetText, gbc);
+		
+		charsRemaining = new JLabel("" + remaining + "", JLabel.RIGHT);
+		gbc.gridx = 2;
+		gbc.gridy = 2;
+		tweetPanel.add(charsRemaining, gbc);
+		
+		tweetTotal = new JButton(controller.getTweetCount() + " Tweets");
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.gridwidth = 1;
+		tweetPanel.add(tweetTotal, gbc);
+		
+		tweetShow = new JButton("Show Tweets");
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 1;
+		gbc.gridy = 3;
+		gbc.gridwidth = 1;
+		gbc.anchor = GridBagConstraints.PAGE_END;
+		tweetPanel.add(tweetShow, gbc);
 	}
 	
 	@SuppressWarnings("serial")
@@ -402,5 +435,23 @@ public class TwitterGUI extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		new TwitterGUI();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
