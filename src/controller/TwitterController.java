@@ -237,6 +237,15 @@ public class TwitterController {
 		return 0;
 	}
 
+	public void destroyStatus(Long l) {
+		try {
+			twitter.destroyStatus(l);
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * First value is the
 	 * 

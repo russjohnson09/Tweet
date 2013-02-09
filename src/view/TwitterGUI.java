@@ -465,7 +465,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			tweetText.setText("");
 
 		if (source == tweetShow) {
-			new DialogTweets(this, controller.getHomeTimeline());
+			DialogTweets x = new DialogTweets(this,
+					controller.getHomeTimeline());
+			for (long l : x.getRemoveList()) {
+				controller.destroyStatus(l);
+			}
 		}
 	}
 

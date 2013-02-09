@@ -44,4 +44,11 @@ public class Tweets extends AbstractListModel<String> {
 		tweets.add(s);
 	}
 
+	public long remove(int index) {
+		long l = tweets.get(index).getId();
+		tweets.remove(index);
+		return l;
+
+	}
+
 }
