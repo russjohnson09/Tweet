@@ -88,6 +88,19 @@ public class TwitterController {
 		return null;
 	}
 
+	public String getTwitterName(long l) {
+		try {
+			return "@" + twitter.showUser(l).getScreenName();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public String getDescription() {
 		try {
 			return twitter.showUser(twitter.getId()).getDescription();
@@ -224,6 +237,24 @@ public class TwitterController {
 		}
 	}
 
+	public long[] getFollowingIDs() {
+		try {
+			return twitter.getFriendsIDs(-1).getIDs();
+		} catch (TwitterException e) {
+			return null;
+		}
+	}
+
+	public User showUser(long l) {
+		try {
+			return twitter.showUser(l);
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public int getFollowersCount() {
 		try {
 			return twitter.showUser(twitter.getId()).getFollowersCount();
@@ -247,7 +278,6 @@ public class TwitterController {
 	}
 
 	/**
-	 * First value is the
 	 * 
 	 * @return
 	 */

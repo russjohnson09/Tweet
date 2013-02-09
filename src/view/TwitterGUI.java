@@ -1,12 +1,41 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Event;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
-import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
+import javax.swing.border.LineBorder;
 
+import model.Users;
+import twitter4j.User;
 import controller.TwitterController;
 
 /**********************************************************************
@@ -90,23 +119,47 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	private void createFollowersPanel() {
 		followersPanel = new JPanel();
 		followersPanel.setBackground(Color.WHITE);
-		JScrollPane jsp = new JScrollPane(followersPanel);
-		jsp.createVerticalScrollBar();
-		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		frame.setContentPane(jsp);
 
-		// long[] followers = controller.getFriendsIDs();
+		followingPanel.setLayout(new BorderLayout());
+
+		ArrayList<User> userList = new ArrayList<User>();
+
+		long[] list = controller.getFollowersIDs();
+
+		for (long l : list) {
+			userList.add(controller.showUser(l));
+		}
+
+		Users followers = new Users(userList);
+
+		JList<String> jlist = new JList<String>(followers);
+
+		JScrollPane scrollpane = new JScrollPane(jlist);
+
+		followingPanel.add(scrollpane);
 	}
 
 	private void createFollowingPanel() {
 		followingPanel = new JPanel();
 		followingPanel.setBackground(Color.WHITE);
-		/*
-		 * long[] followers = controller.getFriendsIDs(); if (followers.length >
-		 * 0) followingPanel.add(new
-		 * JLabel(Integer.toString(followers.length))); else
-		 * followingPanel.add(new JLabel(" Not > 0 "));
-		 */
+
+		followingPanel.setLayout(new BorderLayout());
+
+		ArrayList<User> userList = new ArrayList<User>();
+
+		long[] list = controller.getFollowingIDs();
+
+		for (long l : list) {
+			userList.add(controller.showUser(l));
+		}
+
+		Users following = new Users(userList);
+
+		JList<String> jlist = new JList<String>(following);
+
+		JScrollPane scrollpane = new JScrollPane(jlist);
+
+		followingPanel.add(scrollpane);
 	}
 
 	private void createTweetPanel() {
