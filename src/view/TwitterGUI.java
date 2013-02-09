@@ -154,6 +154,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		tweetPanel.add(tweetTotal, gbc);
 
 		tweetShow = new JButton("Show Tweets");
+		tweetShow.addActionListener(this);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 1;
 		gbc.gridy = 3;
@@ -246,7 +247,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		// countPanel.setBackground(Color.WHITE);
 
 		followersBtn = getPlainButton("" + controller.getFollowersCount(),
-				"Following");
+				"Followers");
 		followersBtn.addActionListener(this);
 		followingBtn = getPlainButton("" + controller.getFriendsCount(),
 				"Following");
