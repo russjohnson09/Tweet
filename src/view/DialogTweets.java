@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class DialogTweets extends JDialog implements ActionListener {
 	public DialogTweets(JFrame parent, Tweets tweets) {
 		super(parent, true);
 
+		setLayout(new BorderLayout());
+
 		this.tweets = tweets;
 
 		setTitle("Tweets");
@@ -35,11 +38,12 @@ public class DialogTweets extends JDialog implements ActionListener {
 		list = new JList<String>(tweets);
 
 		JScrollPane scrollpane = new JScrollPane(list);
-		add(scrollpane);
+		add(scrollpane, BorderLayout.CENTER);
 
 		remove = new JButton("Remove");
+		remove.addActionListener(this);
 
-		add(remove);
+		add(remove, BorderLayout.SOUTH);
 
 		pack();
 		setVisible(true);
@@ -51,6 +55,7 @@ public class DialogTweets extends JDialog implements ActionListener {
 		if (e.getSource() == remove) {
 			int i = list.getSelectedIndex();
 			removeList.add(tweets.remove(i));
+			// dispose();
 		}
 
 	}

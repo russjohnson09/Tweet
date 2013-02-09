@@ -47,6 +47,7 @@ public class Tweets extends AbstractListModel<String> {
 	public long remove(int index) {
 		long l = tweets.get(index).getId();
 		tweets.remove(index);
+		fireIntervalRemoved(this, 0, tweets.size());
 		return l;
 
 	}
