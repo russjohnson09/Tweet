@@ -298,6 +298,27 @@ public class TwitterController {
 		return tweets;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public Tweets getUserTimeline() {
+		Tweets tweets = new Tweets();
+		ResponseList<Status> statuses = null;
+		try {
+			statuses = twitter.getUserTimeline();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (statuses != null) {
+			for (Status s : statuses) {
+				tweets.add(s);
+			}
+		}
+		return tweets;
+	}
+
 	public String getAuthUrl() {
 		return requestToken.getAuthorizationURL();
 
