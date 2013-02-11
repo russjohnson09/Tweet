@@ -508,6 +508,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			for (long l : x.getRemoveList()) {
 				controller.unfollow(l);
 			}
+			updateFollowingCount();
 		}
 		// tabbedPane.setSelectedComponent(followingPanel);
 
@@ -523,6 +524,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			updateTweetCount();
 
 		}
+	}
+
+	private void updateFollowingCount() {
+		setPlainButton("" + controller.getFriendsCount(), "Following",
+				followingBtn);
+
 	}
 
 	private void updateTweetCount() {
