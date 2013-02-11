@@ -120,7 +120,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		followersPanel = new JPanel();
 		followersPanel.setBackground(Color.WHITE);
 
-		followingPanel.setLayout(new BorderLayout());
+		followersPanel.setLayout(new BorderLayout());
 
 		ArrayList<User> userList = new ArrayList<User>();
 
@@ -145,17 +145,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		followingPanel.setLayout(new BorderLayout());
 
-		ArrayList<User> userList = new ArrayList<User>();
-
-		long[] list = controller.getFollowingIDs();
-
-		for (long l : list) {
-			userList.add(controller.showUser(l));
-		}
-
-		Users following = new Users(userList);
-
-		JList<String> jlist = new JList<String>(following);
+		JList<String> jlist = new JList<String>(new Users(
+				controller.getFollowing()));
 
 		JScrollPane scrollpane = new JScrollPane(jlist);
 
@@ -511,8 +502,14 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		if (source == followersBtn)
 			tabbedPane.setSelectedComponent(followersPanel);
 
-		if (source == followingBtn)
-			tabbedPane.setSelectedComponent(followingPanel);
+		if (source == followingBtn) {
+			DialogFollowing x = new DialogFollowing(this, new Users(
+					controller.getFollowing()));
+			for (long l : x.getRemoveList()) {
+				controller.unfollow(l);
+			}
+		}
+		// tabbedPane.setSelectedComponent(followingPanel);
 
 		if (source == cancel)
 			tweetText.setText("");

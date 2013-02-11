@@ -10,16 +10,16 @@ public class Users extends AbstractListModel<String> {
 
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<User> followers;
+	private ArrayList<User> users;
 
 	public Users(ArrayList<User> f) {
 		super();
-		followers = f;
+		users = f;
 	}
 
 	@Override
 	public String getElementAt(int i) {
-		User u = followers.get(i);
+		User u = users.get(i);
 
 		String str = "Name: ";
 		str += u.getName();
@@ -31,17 +31,17 @@ public class Users extends AbstractListModel<String> {
 
 	@Override
 	public int getSize() {
-		return followers.size();
+		return users.size();
 	}
 
 	public void add(User u) {
-		followers.add(u);
+		users.add(u);
 	}
 
 	public long remove(int index) {
-		long l = followers.get(index).getId();
-		followers.remove(index);
-		fireIntervalRemoved(this, 0, followers.size());
+		long l = users.get(index).getId();
+		users.remove(index);
+		fireIntervalRemoved(this, 0, users.size());
 		return l;
 
 	}

@@ -237,12 +237,45 @@ public class TwitterController {
 		}
 	}
 
+	public ArrayList<User> getFollowers() {
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			long[] list = twitter.getFollowersIDs(-1).getIDs();
+			for (long l : list) {
+				users.add(twitter.showUser(l));
+			}
+		} catch (TwitterException e) {
+		}
+		return users;
+	}
+
 	public long[] getFollowingIDs() {
 		try {
 			return twitter.getFriendsIDs(-1).getIDs();
 		} catch (TwitterException e) {
 			return null;
 		}
+	}
+
+	public ArrayList<User> getFollowing() {
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			long[] list = twitter.getFriendsIDs(-1).getIDs();
+			for (long l : list) {
+				users.add(twitter.showUser(l));
+			}
+		} catch (TwitterException e) {
+		}
+		return users;
+	}
+
+	public boolean unfollow(long l) {
+		try {
+			twitter.destroyFriendship(l);
+			return true;
+		} catch (TwitterException e) {
+		}
+		return false;
 	}
 
 	public User showUser(long l) {
