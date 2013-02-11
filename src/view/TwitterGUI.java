@@ -80,7 +80,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		frame = new JFrame();
 		setTitle("Desktop Tweets");
 		setBackground(Color.WHITE);
-		setUpController();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setMaximumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
@@ -89,6 +88,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		// setUndecorated(true); //Something cool we might want to look into?
 		// (No Title Menu on Frame)
 		setLocationRelativeTo(null);
+
+		setUpController();
 
 		// Create components
 		createProfilePanel();
@@ -113,6 +114,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 					.showInputDialog(
 							"Please follow this link to authenticate this App.\nEnter Pin:",
 							authUrl);
+			controller.setUp(pin);
 		}
 	}
 

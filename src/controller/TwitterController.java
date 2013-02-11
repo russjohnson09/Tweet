@@ -411,4 +411,16 @@ public class TwitterController {
 		return isSetUp;
 	}
 
+	public void setUp(String pin) {
+		AccessToken accessToken = null;
+		try {
+			accessToken = twitter.getOAuthAccessToken(requestToken, pin);
+
+		} catch (TwitterException te) {
+			te.printStackTrace();
+		}
+		addToFile(accessToken);
+
+	}
+
 }
