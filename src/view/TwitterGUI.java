@@ -109,7 +109,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			String authUrl = controller.getAuthUrl();
 			// copy to clipboard
 			Toolkit.getDefaultToolkit().getSystemClipboard()
-					.setContents(new StringSelection(authUrl), null);
+			.setContents(new StringSelection(authUrl), null);
 			String pin = JOptionPane
 					.showInputDialog(
 							"Please follow this link to authenticate this App.\nEnter Pin:",
@@ -228,9 +228,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			protected void paintComponent(Graphics g) {
 				g.drawImage(profileBanner,
 						(FRAME_WIDTH / 2) - profileBanner.getWidth(null) / 2
-								- 8,
+						- 8,
 						FRAME_HEIGHT / 3 + 10 - profileBanner.getHeight(null)
-								/ 2, null);
+						/ 2, null);
 			}
 		};
 		infoPanel.setOpaque(false);
@@ -487,13 +487,15 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		if (source == newTweet || source == tweetsBtn)
 			tabbedPane.setSelectedComponent(tweetPanel);
-		
+
 		if (source == delete || source == tweetsBtn){
-			DialogTweets x = new DialogTweets(this,
-					controller.getUserTimeline());
+
+			DialogTweets x = new DialogTweets(this,controller.getUserTimeline());
+
 			for (long l : x.getRemoveList()) {
 				controller.destroyStatus(l);
 			}
+
 			updateTweetCount();
 		}
 
@@ -503,7 +505,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 				JOptionPane.showMessageDialog(null, "Status sent.");
 			} else {
 				JOptionPane
-						.showMessageDialog(null, "Status could not be sent.");
+				.showMessageDialog(null, "Status could not be sent.");
 			}
 		}
 

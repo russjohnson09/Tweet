@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 import model.Tweets;
@@ -54,7 +55,11 @@ public class DialogTweets extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == remove) {
 			int i = list.getSelectedIndex();
-			removeList.add(tweets.remove(i));
+			if(i>=0){
+				removeList.add(tweets.remove(i));
+			}
+			else
+				JOptionPane.showMessageDialog(null, "Please first select a tweet.");
 			// dispose();
 		}
 
