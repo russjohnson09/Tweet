@@ -138,7 +138,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		JScrollPane scrollpane = new JScrollPane(jlist);
 
-		followingPanel.add(scrollpane);
+		followersPanel.add(scrollpane);
 	}
 
 	private void createFollowingPanel() {
