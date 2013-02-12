@@ -503,6 +503,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			if (controller.tweet(tweetText.getText())) {
 				updateTweetCount();
 				JOptionPane.showMessageDialog(null, "Status sent.");
+				tweetText.setText(""); // MY CODE******************************************
 			} else {
 				JOptionPane
 				.showMessageDialog(null, "Status could not be sent.");
