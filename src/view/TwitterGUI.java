@@ -182,6 +182,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		tweetText.setFocusable(true);
 		tweetText.setColumns(30);
 		tweetText.setRows(8);
+		tweetText.setLineWrap(true);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
