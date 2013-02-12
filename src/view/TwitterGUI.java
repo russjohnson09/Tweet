@@ -156,8 +156,13 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	}
 
 	private void createTweetPanel() {
-		tweetPanel = new JPanel();
-		tweetPanel.setBackground(Color.WHITE);
+		tweetPanel = new JPanel() {
+			protected void paintComponent(Graphics g) {
+				g.drawImage(backgroundImage, 0, 0, null);
+				super.paintComponent(g);
+			}
+		};
+		tweetPanel.setOpaque(false);
 		tweetPanel.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 
@@ -502,8 +507,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		if (source == tweetSubmit) {
 			if (controller.tweet(tweetText.getText())) {
 				updateTweetCount();
-				JOptionPane.showMessageDialog(null, "Status sent.");
-				tweetText.setText(""); // MY CODE******************************************
+				JOptionPane.showMessageDialog(null, "Tweet Sent.", "Confirmation", JOptionPane.PLAIN_MESSAGE);
+				tweetText.setText("");
 			} else {
 				JOptionPane
 				.showMessageDialog(null, "Status could not be sent.");

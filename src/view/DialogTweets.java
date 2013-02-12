@@ -59,7 +59,8 @@ public class DialogTweets extends JDialog implements ActionListener {
 				removeList.add(tweets.remove(i));
 			}
 			else
-				JOptionPane.showMessageDialog(null, "Please first select a tweet.");
+				JOptionPane.showMessageDialog(null, "Please first select a tweet", 
+						"Oops!", JOptionPane.PLAIN_MESSAGE);
 			// dispose();
 		}
 
