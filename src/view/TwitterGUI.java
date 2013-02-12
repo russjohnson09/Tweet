@@ -487,6 +487,15 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		if (source == newTweet || source == tweetsBtn)
 			tabbedPane.setSelectedComponent(tweetPanel);
+		
+		if (source == delete || source == tweetsBtn){
+			DialogTweets x = new DialogTweets(this,
+					controller.getUserTimeline());
+			for (long l : x.getRemoveList()) {
+				controller.destroyStatus(l);
+			}
+			updateTweetCount();
+		}
 
 		if (source == tweetSubmit) {
 			if (controller.tweet(tweetText.getText())) {
