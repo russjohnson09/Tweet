@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -49,6 +50,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	private final int FRAME_HEIGHT /* 450 */= 450;
 	private final int FRAME_WIDTH /* 700 */= 700;
+	private final int CHAR_LIMIT /* 140 */= 140;
 
 	private TwitterController controller;
 	private JFrame frame;
@@ -507,7 +509,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		if (source == tweetSubmit) {
 
-			if (tweetText.getText().length()>140)
+			if (tweetText.getText().length()>CHAR_LIMIT)
 				JOptionPane.showMessageDialog(null, "Tweet is too long.", 
 						"Oops", JOptionPane.PLAIN_MESSAGE);
 			else{
