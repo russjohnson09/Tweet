@@ -508,31 +508,23 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		if (source == tweetSubmit) {
 
 			if (tweetText.getText().length()>140)
-				JOptionPane.showMessageDialog(null, "Tweet is too long.", "Oops", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Tweet is too long.", 
+						"Oops", JOptionPane.PLAIN_MESSAGE);
 			else{
 				if (controller.tweet(tweetText.getText())) {
 					updateTweetCount();
-					JOptionPane.showMessageDialog(null, "Tweet Sent.", "Confirmation", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Tweet Sent.", 
+							"Confirmation", JOptionPane.PLAIN_MESSAGE);
 					tweetText.setText("");
 				} else {
-					JOptionPane.showMessageDialog(null, "Tweet could not be sent.", "Oops", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Tweet could not be sent.", 
+							"Oops", JOptionPane.PLAIN_MESSAGE);
 				}
 			}
 
 
 		}
-
-
-		//		if (source == tweetSubmit) {
-		//			if (controller.tweet(tweetText.getText())) {
-		//				updateTweetCount();
-		//				JOptionPane.showMessageDialog(null, "Tweet Sent.", "Confirmation", JOptionPane.PLAIN_MESSAGE);
-		//				tweetText.setText("");
-		//			} else {
-		//				JOptionPane.showMessageDialog(null, "Tweet could not be sent.", "Oops", JOptionPane.PLAIN_MESSAGE);
-		//			}
-		//		}
-
+		
 		if (source == about)
 			JOptionPane.showMessageDialog(null,
 					"This is a desktop twitter application");
