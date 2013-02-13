@@ -193,6 +193,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		unfollow.addActionListener(this);
 		finggbc.gridx = 0;
 		finggbc.gridy = 1;
+		finggbc.gridwidth = 1;
 		followingPanel.add(unfollow, finggbc);
 		
 		followingTotal = new JLabel(" Following " + controller.getFriendsCount());
