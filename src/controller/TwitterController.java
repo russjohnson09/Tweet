@@ -220,21 +220,11 @@ public class TwitterController {
 		try {
 			return twitter.showUser(twitter.getId()).getFriendsCount();
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0;
-	}
-
-	public long[] getFollowersIDs() {
-		try {
-			return twitter.getFollowersIDs(-1).getIDs();
-		} catch (TwitterException e) {
-			return null;
-		}
 	}
 
 	public ArrayList<User> getFollowers() {
@@ -249,13 +239,6 @@ public class TwitterController {
 		return users;
 	}
 
-	public long[] getFollowingIDs() {
-		try {
-			return twitter.getFriendsIDs(-1).getIDs();
-		} catch (TwitterException e) {
-			return null;
-		}
-	}
 
 	public ArrayList<User> getFollowing() {
 		ArrayList<User> users = new ArrayList<User>();

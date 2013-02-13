@@ -90,6 +90,16 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		setLocationRelativeTo(null);
 
 		setUpController();
+		
+		// Get User Information
+		displayName = controller.getDisplayName();
+		twitterName = controller.getTwitterName();
+		description = controller.getDescription();
+		location = controller.getLocation();
+		website = controller.getWebsite();
+		profileImage = controller.getProfileImage();
+		profileBanner = controller.getProfileBanner();
+		backgroundImage = controller.getBackgroundImage();		
 
 		// Create components
 		createProfilePanel();
@@ -124,14 +134,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		followersPanel.setLayout(new BorderLayout());
 
-		ArrayList<User> userList = new ArrayList<User>();
-
-		long[] list = controller.getFollowersIDs();
-
-		for (long l : list) {
-			userList.add(controller.showUser(l));
-		}
-
+		ArrayList<User> userList = controller.getFollowers();
 		Users followers = new Users(userList);
 
 		JList<String> jlist = new JList<String>(followers);
@@ -142,17 +145,29 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	}
 
 	private void createFollowingPanel() {
-		followingPanel = new JPanel();
-		followingPanel.setBackground(Color.WHITE);
-
+		followingPanel = new JPanel() {
+			protected void paintComponent(Graphics g) {
+				g.drawImage(backgroundImage, 0, 0, null);
+				super.paintComponent(g);
+			}
+		};
+		//followingPanel.setBackground(Color.BLUE);
+		//followingPanel.setVisible(true);
+		followingPanel.setOpaque(false);
 		followingPanel.setLayout(new BorderLayout());
 
+		JPanel centerPnl= new JPanel();
+		centerPnl.setBackground(Color.WHITE);
+		centerPnl.setPreferredSize(new Dimension(300, 200));
+		
 		JList<String> jlist = new JList<String>(new Users(
 				controller.getFollowing()));
 
-		JScrollPane scrollpane = new JScrollPane(jlist);
+		//JScrollPane scrollpane = new JScrollPane(jlist);
 
-		followingPanel.add(scrollpane);
+		//centerPnl.add(scrollpane);
+
+		followingPanel.add(centerPnl, BorderLayout.CENTER);
 	}
 
 	private void createTweetPanel() {
@@ -162,6 +177,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 				super.paintComponent(g);
 			}
 		};
+		
 		tweetPanel.setOpaque(false);
 		tweetPanel.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -218,16 +234,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	@SuppressWarnings("serial")
 	private void createProfilePanel() {
-		// Get User Information
-		displayName = controller.getDisplayName();
-		twitterName = controller.getTwitterName();
-		description = controller.getDescription();
-		location = controller.getLocation();
-		website = controller.getWebsite();
-		profileImage = controller.getProfileImage();
-		profileBanner = controller.getProfileBanner();
-		backgroundImage = controller.getBackgroundImage();
-
 		/** INFO PANEL */
 		JPanel infoPanel = new JPanel() {
 			protected void paintComponent(Graphics g) {
