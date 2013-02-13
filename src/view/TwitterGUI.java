@@ -182,17 +182,20 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		// Instantiate vars
 		cancel = new JButton("Cancel");
+		cancel.setFocusable(false);
 		cancel.addActionListener(this);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.ipady = 10;		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		tweetPanel.add(cancel, gbc);
 
 		tweetSubmit = new JButton("Send Tweet");
+		tweetSubmit.setFocusable(false);
 		tweetSubmit.addActionListener(this);
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 1;
-		gbc.ipady = 0;
+
 		tweetPanel.add(tweetSubmit, gbc);
 
 		tweetText = new JTextArea();
@@ -202,7 +205,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		tweetText.setColumns(30);
 		tweetText.setRows(8);
 		tweetText.setLineWrap(true);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 1;
 		gbc.gridwidth = 3;
@@ -214,15 +216,14 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		tweetPanel.add(charsRemaining, gbc);
 
 		tweetTotal = new JLabel(controller.getTweetCount() + " Tweets");
-		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 3;
 		gbc.gridwidth = 1;
 		tweetPanel.add(tweetTotal, gbc);
 
 		tweetShow = new JButton("Show Tweets");
+		tweetShow.setFocusable(false);
 		tweetShow.addActionListener(this);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 1;
 		gbc.gridy = 3;
 		gbc.gridwidth = 1;
@@ -230,7 +231,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		tweetPanel.add(tweetShow, gbc);
 	}
 
-	@SuppressWarnings("serial")
 	private void createProfilePanel() {
 		/** INFO PANEL */
 		JPanel infoPanel = new JPanel() {
