@@ -189,7 +189,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		centerPnl.add(jlistFollowing);
 		followingPanel.add(centerPnl, finggbc);
 		
-		unfollow = new JButton("UNFOLLOW");
+		unfollow = new JButton("Unfollow");
 		unfollow.addActionListener(this);
 		finggbc.gridx = 0;
 		finggbc.gridy = 1;
@@ -572,12 +572,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			tabbedPane.setSelectedComponent(followersPanel);
 
 		if (source == followingBtn) {
-			DialogFollowing x = new DialogFollowing(this, new Users(
-					controller.getFollowing()));
-			for (long l : x.getRemoveList()) {
-				controller.unfollow(l);
-			}
-			updateFollowingCount();
+			tabbedPane.setSelectedComponent(followingPanel);
 		}
 		// tabbedPane.setSelectedComponent(followingPanel);
 
