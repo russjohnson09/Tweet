@@ -78,8 +78,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	// Followers Panel
 	
 	// Following Panel
+	private JList<String> jlistFollowing;
 	private JButton unfollow;
+	private Users following;
 	private GridBagConstraints finggbc;
+	
 
 	/****************************************************
 	 * GUI
@@ -172,14 +175,16 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		centerPnl.setBackground(Color.WHITE);
 		centerPnl.setPreferredSize(new Dimension(450, 300));
 		
-		JList<String> jlist = new JList<String>(new Users(controller.getFollowing()));
-		JScrollPane scrollpane = new JScrollPane(jlist);
+		following = new Users(controller.getFollowing());
+		
+		jlistFollowing = new JList<String>(following);
+		JScrollPane scrollpane = new JScrollPane(jlistFollowing);
 		
 		finggbc.fill = GridBagConstraints.HORIZONTAL;
 		finggbc.gridx = 0;
 		finggbc.gridy = 0;
 		finggbc.gridwidth = 3;
-		centerPnl.add(jlist);
+		centerPnl.add(jlistFollowing);
 		followingPanel.add(centerPnl, finggbc);
 		
 		unfollow = new JButton("UNFOLLOW");
@@ -582,7 +587,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		}
 		
 		if (source == unfollow){
-			System.out.println("Test test 123");
+			
+			long l = following.remove(jlistFollowing.getSelectedIndex());
+			
+			controller.unfollow(l);
+			
 		}
 	}
 
