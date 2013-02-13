@@ -69,8 +69,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	// Tweet Panel
 	private GridBagConstraints gbc;
 	private int remaining = 140;
-	private JButton cancel, tweetSubmit, tweetShow, tweetTotal;
-	private JLabel charsRemaining;
+	private JButton cancel, tweetSubmit, tweetShow;
+	private JLabel charsRemaining, tweetTotal;
 	private JTextArea tweetText;
 
 	/****************************************************
@@ -199,7 +199,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		gbc.gridy = 2;
 		tweetPanel.add(charsRemaining, gbc);
 
-		tweetTotal = new JButton(controller.getTweetCount() + " Tweets");
+		tweetTotal = new JLabel(controller.getTweetCount() + " Tweets");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 3;
