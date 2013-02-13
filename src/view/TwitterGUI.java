@@ -129,19 +129,23 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	}
 
 	private void createFollowersPanel() {
-		followersPanel = new JPanel();
-		followersPanel.setBackground(Color.WHITE);
+		followersPanel = new JPanel() {
+			protected void paintComponent(Graphics g) {
+				g.drawImage(backgroundImage, 0, 0, null);
+				super.paintComponent(g);
+			}
+		};
+		followersPanel.setOpaque(false);
+		followersPanel.setLayout(new GridBagLayout());
 
-		followersPanel.setLayout(new BorderLayout());
-
-		ArrayList<User> userList = controller.getFollowers();
-		Users followers = new Users(userList);
-
-		JList<String> jlist = new JList<String>(followers);
-
+		JPanel centerPnl= new JPanel();
+		centerPnl.setBackground(Color.WHITE);
+		centerPnl.setPreferredSize(new Dimension(450, 300));
+		JList<String> jlist = new JList<String>(new Users(
+				controller.getFollowers()));
 		JScrollPane scrollpane = new JScrollPane(jlist);
-
-		followersPanel.add(scrollpane);
+		centerPnl.add(jlist);
+		followersPanel.add(centerPnl);
 	}
 
 	private void createFollowingPanel() {
@@ -151,23 +155,17 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 				super.paintComponent(g);
 			}
 		};
-		//followingPanel.setBackground(Color.BLUE);
-		//followingPanel.setVisible(true);
 		followingPanel.setOpaque(false);
-		followingPanel.setLayout(new BorderLayout());
+		followingPanel.setLayout(new GridBagLayout());
 
 		JPanel centerPnl= new JPanel();
 		centerPnl.setBackground(Color.WHITE);
-		centerPnl.setPreferredSize(new Dimension(300, 200));
-		
+		centerPnl.setPreferredSize(new Dimension(450, 300));
 		JList<String> jlist = new JList<String>(new Users(
 				controller.getFollowing()));
-
-		//JScrollPane scrollpane = new JScrollPane(jlist);
-
-		//centerPnl.add(scrollpane);
-
-		followingPanel.add(centerPnl, BorderLayout.CENTER);
+		JScrollPane scrollpane = new JScrollPane(jlist);
+		centerPnl.add(jlist);
+		followingPanel.add(centerPnl);
 	}
 
 	private void createTweetPanel() {
