@@ -71,8 +71,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	// Tweet Panel
 	private GridBagConstraints gbc;
 	private int remaining = 140;
-	private JButton cancel, tweetSubmit, tweetShow, tweetTotal;
-	private JLabel charsRemaining;
+	private JButton cancel, tweetSubmit, tweetShow;
+	private JLabel charsRemaining, tweetTotal;
 	private JTextArea tweetText;
 
 	/****************************************************
@@ -92,6 +92,16 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		setLocationRelativeTo(null);
 
 		setUpController();
+		
+		// Get User Information
+		displayName = controller.getDisplayName();
+		twitterName = controller.getTwitterName();
+		description = controller.getDescription();
+		location = controller.getLocation();
+		website = controller.getWebsite();
+		profileImage = controller.getProfileImage();
+		profileBanner = controller.getProfileBanner();
+		backgroundImage = controller.getBackgroundImage();		
 
 		// Create components
 		createProfilePanel();
@@ -121,40 +131,43 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	}
 
 	private void createFollowersPanel() {
-		followersPanel = new JPanel();
-		followersPanel.setBackground(Color.WHITE);
+		followersPanel = new JPanel() {
+			protected void paintComponent(Graphics g) {
+				g.drawImage(backgroundImage, 0, 0, null);
+				super.paintComponent(g);
+			}
+		};
+		followersPanel.setOpaque(false);
+		followersPanel.setLayout(new GridBagLayout());
 
-		followersPanel.setLayout(new BorderLayout());
-
-		ArrayList<User> userList = new ArrayList<User>();
-
-		long[] list = controller.getFollowersIDs();
-
-		for (long l : list) {
-			userList.add(controller.showUser(l));
-		}
-
-		Users followers = new Users(userList);
-
-		JList<String> jlist = new JList<String>(followers);
-
+		JPanel centerPnl= new JPanel();
+		centerPnl.setBackground(Color.WHITE);
+		centerPnl.setPreferredSize(new Dimension(450, 300));
+		JList<String> jlist = new JList<String>(new Users(
+				controller.getFollowers()));
 		JScrollPane scrollpane = new JScrollPane(jlist);
-
-		followersPanel.add(scrollpane);
+		centerPnl.add(jlist);
+		followersPanel.add(centerPnl);
 	}
 
 	private void createFollowingPanel() {
-		followingPanel = new JPanel();
-		followingPanel.setBackground(Color.WHITE);
+		followingPanel = new JPanel() {
+			protected void paintComponent(Graphics g) {
+				g.drawImage(backgroundImage, 0, 0, null);
+				super.paintComponent(g);
+			}
+		};
+		followingPanel.setOpaque(false);
+		followingPanel.setLayout(new GridBagLayout());
 
-		followingPanel.setLayout(new BorderLayout());
-
+		JPanel centerPnl= new JPanel();
+		centerPnl.setBackground(Color.WHITE);
+		centerPnl.setPreferredSize(new Dimension(450, 300));
 		JList<String> jlist = new JList<String>(new Users(
 				controller.getFollowing()));
-
 		JScrollPane scrollpane = new JScrollPane(jlist);
-
-		followingPanel.add(scrollpane);
+		centerPnl.add(jlist);
+		followingPanel.add(centerPnl);
 	}
 
 	private void createTweetPanel() {
@@ -164,6 +177,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 				super.paintComponent(g);
 			}
 		};
+		
 		tweetPanel.setOpaque(false);
 		tweetPanel.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
@@ -201,7 +215,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		gbc.gridy = 2;
 		tweetPanel.add(charsRemaining, gbc);
 
-		tweetTotal = new JButton(controller.getTweetCount() + " Tweets");
+		tweetTotal = new JLabel(controller.getTweetCount() + " Tweets");
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridx = 0;
 		gbc.gridy = 3;
@@ -220,16 +234,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	@SuppressWarnings("serial")
 	private void createProfilePanel() {
-		// Get User Information
-		displayName = controller.getDisplayName();
-		twitterName = controller.getTwitterName();
-		description = controller.getDescription();
-		location = controller.getLocation();
-		website = controller.getWebsite();
-		profileImage = controller.getProfileImage();
-		profileBanner = controller.getProfileBanner();
-		backgroundImage = controller.getBackgroundImage();
-
 		/** INFO PANEL */
 		JPanel infoPanel = new JPanel() {
 			protected void paintComponent(Graphics g) {
