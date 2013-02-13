@@ -82,6 +82,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	private JButton unfollow;
 	private Users following;
 	private GridBagConstraints finggbc;
+	private JLabel followingTotal;
 	
 
 	/****************************************************
@@ -180,10 +181,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		jlistFollowing = new JList<String>(following);
 		JScrollPane scrollpane = new JScrollPane(jlistFollowing);
 		
-		finggbc.fill = GridBagConstraints.HORIZONTAL;
 		finggbc.gridx = 0;
 		finggbc.gridy = 0;
-		finggbc.gridwidth = 3;
+		finggbc.gridwidth = 4;
+		finggbc.fill = GridBagConstraints.HORIZONTAL;
+
 		centerPnl.add(jlistFollowing);
 		followingPanel.add(centerPnl, finggbc);
 		
@@ -191,8 +193,13 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		unfollow.addActionListener(this);
 		finggbc.gridx = 0;
 		finggbc.gridy = 1;
-		finggbc.gridwidth = 1;
 		followingPanel.add(unfollow, finggbc);
+		
+		followingTotal = new JLabel(" Following " + controller.getFriendsCount());
+		finggbc.gridx=1;
+		finggbc.gridy=1;
+		finggbc.gridwidth = 1;
+		followingPanel.add(followingTotal, finggbc);
 	}
 
 	private void createTweetPanel() {
@@ -587,24 +594,23 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		}
 		
 		if (source == unfollow){
-			
 			long l = following.remove(jlistFollowing.getSelectedIndex());
-			
 			controller.unfollow(l);
+			
+			updateFollowingCount();
 			
 		}
 	}
 
 	private void updateFollowingCount() {
-		setPlainButton("" + controller.getFriendsCount(), "Following",
-				followingBtn);
+		setPlainButton("" + controller.getFriendsCount(), "Following", followingBtn);
+		followingTotal.setText(" Following " + controller.getFriendsCount());
 
 	}
 
 	private void updateTweetCount() {
 		setPlainButton("" + controller.getTweetCount(), "Tweets", tweetsBtn);
 		tweetTotal.setText(controller.getTweetCount() + " Tweets");
-
 	}
 
 	public static void main(String[] args) {

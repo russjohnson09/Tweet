@@ -199,10 +199,8 @@ public class TwitterController {
 		try {
 			return twitter.showUser(twitter.getId()).getStatusesCount();
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0;
