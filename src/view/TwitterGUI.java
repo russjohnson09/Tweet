@@ -444,7 +444,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
         /** PROFILE PANEL */
         profilePanel = new JPanel() {
-            protected void paintComponent(Graphics g) {
+            protected void paintComponent(final Graphics g) {
                 g.drawImage(backgroundImage, 0, 0, null);
                 super.paintComponent(g);
             }
