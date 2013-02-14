@@ -1,21 +1,29 @@
 package test;
 import java.awt.Graphics;
 import java.awt.Image;
-
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import controller.TwitterController;
 
-
+/****************************************************
+ * GUITest Class.
+ ***************************************************/
 public class GUITest {
 
+	/****************************************************
+	 * Creates controller.
+	 ***************************************************/
 	private static TwitterController controller = new TwitterController();
-	
-	
-	public static void main(String[] args) {
+
+	/****************************************************
+	 * Main.
+	 * @param args String[]
+	 ***************************************************/
+	public static void main(final String[] args) {
 		final Image img = controller.getBackgroundImage();
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel() {
-			protected void paintComponent(Graphics g) {
+			protected void paintComponent(final Graphics g) {
 				g.drawImage(img, 0, 0, null);
 				super.paintComponent(g);
 			}

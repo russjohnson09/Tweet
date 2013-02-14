@@ -21,6 +21,9 @@ import twitter4j.auth.*;
 import model.Tweets;
 import model.TwitterModel;
 
+/****************************************************
+ * Tweets Class.
+ ***************************************************/
 public class TwitterController {
 
 	private static TwitterModel model = new TwitterModel();

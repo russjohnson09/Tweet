@@ -14,17 +14,29 @@ import javax.swing.JScrollPane;
 
 import model.Tweets;
 
+/****************************************************
+ * DialogTweets Class.
+ ***************************************************/
 public class DialogTweets extends JDialog implements ActionListener {
 
+	/** Remove button. */
 	private JButton remove;
 
+	/** Jlist of tweets. */
 	private JList<String> list;
 
+	/** list of tweets to be removed. */
 	private ArrayList<Long> removeList = new ArrayList<Long>();
 
+	/** Tweet. */
 	private Tweets tweets;
 
-	public DialogTweets(JFrame parent, Tweets tweets) {
+	/****************************************************
+	 * DialogTweets Class.
+	 * @param parent JFrame
+	 * @param tweets Tweets
+	 ***************************************************/
+	public DialogTweets(final JFrame parent, final Tweets tweets) {
 		super(parent, true);
 
 		setLayout(new BorderLayout());
@@ -52,21 +64,26 @@ public class DialogTweets extends JDialog implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public final void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == remove) {
 			int i = list.getSelectedIndex();
-			if(i>=0){
+			if (i >= 0) {
 				removeList.add(tweets.remove(i));
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Please first select a tweet",
+						"Oops!",
+						JOptionPane.PLAIN_MESSAGE);
 			}
-			else
-				JOptionPane.showMessageDialog(null, "Please first select a tweet", 
-						"Oops!", JOptionPane.PLAIN_MESSAGE);
-			// dispose();
 		}
 
 	}
 
-	public ArrayList<Long> getRemoveList() {
+	/****************************************************
+	 * Removes list.
+	 * @return ArrayList<Lsong>
+	 ***************************************************/
+	public final ArrayList<Long> getRemoveList() {
 		return removeList;
 	}
 

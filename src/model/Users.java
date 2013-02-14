@@ -6,19 +6,28 @@ import javax.swing.AbstractListModel;
 
 import twitter4j.User;
 
+/****************************************************
+ * Users Class.
+ ***************************************************/
 public class Users extends AbstractListModel<String> {
 
+	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Arraylist of users. */
 	private ArrayList<User> users;
 
-	public Users(ArrayList<User> f) {
+	/****************************************************
+	 * Users Constructor.
+	 * @param f ArrayList<User>
+	 ***************************************************/
+	public Users(final ArrayList<User> f) {
 		super();
 		users = f;
 	}
 
 	@Override
-	public String getElementAt(int i) {
+	public String getElementAt(final int i) {
 		User u = users.get(i);
 
 		String str = "Name: ";
@@ -30,20 +39,30 @@ public class Users extends AbstractListModel<String> {
 	}
 
 	@Override
-	public int getSize() {
+	/****************************************************
+	 * Gets user size.
+	 ***************************************************/
+	public final int getSize() {
 		return users.size();
 	}
 
-	public void add(User u) {
+	/****************************************************
+	 * Adds User.
+	 * @param u User
+	 ***************************************************/
+	public final void add(final User u) {
 		users.add(u);
 	}
 
-	public long remove(int index) {
+	/****************************************************
+	 * Removes user.
+	 * @param index int
+	 * @return long
+	 ***************************************************/
+	public final long remove(final int index) {
 		long l = users.get(index).getId();
 		users.remove(index);
 		fireIntervalRemoved(this, 0, users.size());
 		return l;
-
 	}
-
 }
