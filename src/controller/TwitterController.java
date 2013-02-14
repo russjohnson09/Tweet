@@ -26,18 +26,29 @@ import model.TwitterModel;
  ***************************************************/
 public class TwitterController {
 
+	/** TwitterModel. */
 	private static TwitterModel model = new TwitterModel();
 
+	/** Boolean if the controller is set up. */
 	private boolean isSetUp = false;
 
+	/** Twitter. */
 	private Twitter twitter;
+
+	/** RequestToken. */
 	private RequestToken requestToken;
 
-	public final static String CONSUMER_KEY = "yNBLlBrsFHz89PyCfjrAw";
-	public final static String CONSUMER_KEY_SECRET = "8SIq5OXfeIKabtB3B2CBHJVIkrjQbSPloHoTmxtis4";
+	/** Consumer key. */
+	public static final String CONSUMER_KEY = "yNBLlBrsFHz89PyCfjrAw";
 
+	/** Consumer key secret. */
+	public  static final String CONSUMER_KEY_SECRET
+		= "8SIq5OXfeIKabtB3B2CBHJVIkrjQbSPloHoTmxtis4";
+
+	/****************************************************
+	 * Twitter Controller constructor.
+	 ***************************************************/
 	public TwitterController() {
-
 		model = new TwitterModel();
 
 		twitter = new TwitterFactory().getInstance();
@@ -47,7 +58,8 @@ public class TwitterController {
 		String tokenSecret = getAccessTokenSecret();
 
 		if (token != null && tokenSecret != null) {
-			twitter.setOAuthAccessToken(new AccessToken(token, tokenSecret));
+			twitter.setOAuthAccessToken(
+					new AccessToken(token, tokenSecret));
 
 			isSetUp = true;
 
@@ -61,10 +73,10 @@ public class TwitterController {
 	}
 
 	/**
-	 * Methods that will be called by the GUI
+	 * Gets Display Name.
+	 * @return String
 	 */
-
-	public String getDisplayName() {
+	public final String getDisplayName() {
 		try {
 			return twitter.showUser(twitter.getId()).getName();
 		} catch (IllegalStateException e) {
@@ -78,9 +90,14 @@ public class TwitterController {
 		return null;
 	}
 
-	public String getTwitterName() {
+	/****************************************************
+	 * Gets twitter name.
+	 * @return String
+	 ***************************************************/
+	public final String getTwitterName() {
 		try {
-			return "@" + twitter.showUser(twitter.getId()).getScreenName();
+			return "@" + twitter.showUser(
+					twitter.getId()).getScreenName();
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,7 +108,12 @@ public class TwitterController {
 		return null;
 	}
 
-	public String getTwitterName(long l) {
+	/****************************************************
+	 * Gets twitter name.
+	 * @param l Long
+	 * @return String
+	 ***************************************************/
+	public final String getTwitterName(final long l) {
 		try {
 			return "@" + twitter.showUser(l).getScreenName();
 		} catch (IllegalStateException e) {
@@ -104,9 +126,14 @@ public class TwitterController {
 		return null;
 	}
 
-	public String getDescription() {
+	/****************************************************
+	 * Gets description.
+	 * @return String
+	 ***************************************************/
+	public final String getDescription() {
 		try {
-			return twitter.showUser(twitter.getId()).getDescription();
+			return twitter.showUser(twitter.getId())
+					.getDescription();
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,7 +144,11 @@ public class TwitterController {
 		return null;
 	}
 
-	public String getWebsite() {
+	/****************************************************
+	 * Gets website.
+	 * @return String
+	 ***************************************************/
+	public final String getWebsite() {
 		String str = null;
 		try {
 			str = twitter.showUser(twitter.getId()).getURL();
@@ -132,7 +163,11 @@ public class TwitterController {
 		return null;
 	}
 
-	public String getLocation() {
+	/****************************************************
+	 * Gets location.
+	 * @return String
+	 ***************************************************/
+	public final String getLocation() {
 		try {
 			return twitter.showUser(twitter.getId()).getLocation();
 		} catch (IllegalStateException e) {
@@ -145,9 +180,14 @@ public class TwitterController {
 		return null;
 	}
 
-	public ImageIcon getProfileImage() {
+	/****************************************************
+	 * gets Prfile image.
+	 * @return ImageIcon profile picture
+	 ***************************************************/
+	public final ImageIcon getProfileImage() {
 		try {
-			return new ImageIcon(new URL(twitter.showUser(twitter.getId())
+			return new ImageIcon(new URL(
+					twitter.showUser(twitter.getId())
 					.getBiggerProfileImageURL()));
 		} catch (MalformedURLException e) {
 			return null;
@@ -162,6 +202,10 @@ public class TwitterController {
 		return null;
 	}
 
+	/****************************************************
+	 * Gets profile banner image.
+	 * @return image
+	 ***************************************************/
 	public Image getProfileBanner() {
 		Image img = null;
 		try {
@@ -180,16 +224,29 @@ public class TwitterController {
 		return img;
 	}
 
-	public Color getTextColor() {
+	/****************************************************
+	 * Gets text color.
+	 * @return Color white
+	 ***************************************************/
+	public final Color getTextColor() {
 		return Color.WHITE;
 	}
 
-	public Image getBackgroundImage() {
+	/****************************************************
+	 * Gets background image.
+	 * @return Banner
+	 ***************************************************/
+	public final Image getBackgroundImage() {
 		Image img = new ImageIcon("src/background.jpeg").getImage();
 		return img;
 	}
 
-	public boolean tweet(String str) {
+	/****************************************************
+	 * Gets profile banner image.
+	 * @param str tweet
+	 * @return Boolean
+	 ***************************************************/
+	public final boolean tweet(final String str) {
 		try {
 			twitter.updateStatus(str);
 			return true;
@@ -198,9 +255,14 @@ public class TwitterController {
 		}
 	}
 
-	public int getTweetCount() {
+	/****************************************************
+	 * Gets tweet count.
+	 * @return Int
+	 ***************************************************/
+	public final int getTweetCount() {
 		try {
-			return twitter.showUser(twitter.getId()).getStatusesCount();
+			return twitter.showUser(twitter.getId())
+					.getStatusesCount();
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (TwitterException e) {
@@ -209,7 +271,11 @@ public class TwitterController {
 		return 0;
 	}
 
-	public long[] getFriendsIDs() {
+	/****************************************************
+	 * Gets friends IDs.
+	 * @return long[]
+	 ***************************************************/
+	public final long[] getFriendsIDs() {
 		try {
 			return twitter.getFriendsIDs(-1).getIDs();
 		} catch (TwitterException e) {
@@ -217,9 +283,14 @@ public class TwitterController {
 		}
 	}
 
-	public int getFriendsCount() {
+	/****************************************************
+	 * Gets friend count.
+	 * @return int number of friends
+	 ***************************************************/
+	public final int getFriendsCount() {
 		try {
-			return twitter.showUser(twitter.getId()).getFriendsCount();
+			return twitter.showUser(twitter.getId())
+					.getFriendsCount();
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (TwitterException e) {
@@ -228,7 +299,11 @@ public class TwitterController {
 		return 0;
 	}
 
-	public ArrayList<User> getFollowers() {
+	/****************************************************
+	 * Gets follower.
+	 * @return ArrayList<User>
+	 ***************************************************/
+	public final ArrayList<User> getFollowers() {
 		ArrayList<User> users = new ArrayList<User>();
 		try {
 			long[] list = twitter.getFollowersIDs(-1).getIDs();
@@ -236,12 +311,17 @@ public class TwitterController {
 				users.add(twitter.showUser(l));
 			}
 		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return users;
 	}
 
-
-	public ArrayList<User> getFollowing() {
+	/****************************************************
+	 * Gets following.
+	 * @return ArrayList<User>
+	 ***************************************************/
+	public final ArrayList<User> getFollowing() {
 		ArrayList<User> users = new ArrayList<User>();
 		try {
 			long[] list = twitter.getFriendsIDs(-1).getIDs();
@@ -249,21 +329,34 @@ public class TwitterController {
 				users.add(twitter.showUser(l));
 			}
 		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return users;
 	}
 
-	public boolean unfollow(long l) {
+	/****************************************************
+	 * unfollows user.
+	 * @param l Long
+	 * @return boolean
+	 ***************************************************/
+	public final boolean unfollow(final long l) {
 		try {
 			twitter.destroyFriendship(l);
 			return true;
 		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return false;
 	}
-	
 
-	public User showUser(long l) {
+	/****************************************************
+	 * ShowsUser.
+	 * @param l Long
+	 * @return User
+	 ***************************************************/
+	public final User showUser(final long l) {
 		try {
 			return twitter.showUser(l);
 		} catch (TwitterException e) {
@@ -273,9 +366,14 @@ public class TwitterController {
 		return null;
 	}
 
-	public int getFollowersCount() {
+	/****************************************************
+	 * Gets follower Count.
+	 * @return Int number of followers
+	 ***************************************************/
+	public final int getFollowersCount() {
 		try {
-			return twitter.showUser(twitter.getId()).getFollowersCount();
+			return twitter.showUser(twitter.getId())
+					.getFollowersCount();
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -286,7 +384,11 @@ public class TwitterController {
 		return 0;
 	}
 
-	public void destroyStatus(Long l) {
+	/****************************************************
+	 * destroys Status.
+	 * @param l Long
+	 ***************************************************/
+	public final void destroyStatus(final Long l) {
 		try {
 			twitter.destroyStatus(l);
 		} catch (TwitterException e) {
@@ -295,11 +397,11 @@ public class TwitterController {
 		}
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public Tweets getHomeTimeline() {
+	/****************************************************
+	 * Gets home timeline.
+	 * @return tweets from timeline
+	 ***************************************************/
+	public final Tweets getHomeTimeline() {
 		Tweets tweets = new Tweets();
 		ResponseList<Status> statuses = null;
 		try {
@@ -316,11 +418,11 @@ public class TwitterController {
 		return tweets;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public Tweets getUserTimeline() {
+	/****************************************************
+	 * gets users timeline.
+	 * @return Tweets
+	 ***************************************************/
+	public final Tweets getUserTimeline() {
 		Tweets tweets = new Tweets();
 		ResponseList<Status> statuses = null;
 		try {
@@ -337,12 +439,20 @@ public class TwitterController {
 		return tweets;
 	}
 
-	public String getAuthUrl() {
+	/****************************************************
+	 * gets authorsURL.
+	 * @return String Users URL
+	 ***************************************************/
+	public final String getAuthUrl() {
 		return requestToken.getAuthorizationURL();
 
 	}
 
-	private void addToFile(AccessToken accessToken) {
+	/****************************************************
+	 * adds access token to file.
+	 * @param accessToken
+	 ***************************************************/
+	private void addToFile(final AccessToken accessToken) {
 		JSONObject obj = new JSONObject();
 
 		obj.put("AccessToken", accessToken.getToken());
@@ -362,11 +472,16 @@ public class TwitterController {
 
 	}
 
+	/****************************************************
+	 * Gets access token.
+	 * @return String access token
+	 ***************************************************/
 	private String getAccessToken() {
 		JSONParser parser = new JSONParser();
 		try {
 
-			Object obj = parser.parse(new FileReader("./auth.json"));
+			Object obj = parser.parse(
+					new FileReader("./auth.json"));
 
 			JSONObject jsonObject = (JSONObject) obj;
 
@@ -377,11 +492,16 @@ public class TwitterController {
 		}
 	}
 
+	/****************************************************
+	 * Gets access token.
+	 * @return String access token
+	 ***************************************************/
 	private String getAccessTokenSecret() {
 		JSONParser parser = new JSONParser();
 		try {
 
-			Object obj = parser.parse(new FileReader("./auth.json"));
+			Object obj = parser.parse(
+					new FileReader("./auth.json"));
 
 			JSONObject jsonObject = (JSONObject) obj;
 
@@ -392,14 +512,23 @@ public class TwitterController {
 		}
 	}
 
-	public boolean getIsSetUp() {
+	/****************************************************
+	 * Boolean if controller is setup.
+	 * @return Boolean is set up
+	 ***************************************************/
+	public final boolean getIsSetUp() {
 		return isSetUp;
 	}
 
-	public void setUp(String pin) {
+	/****************************************************
+	 * sets up controller.
+	 * @param pin String
+	 ***************************************************/
+	public final void setUp(final String pin) {
 		AccessToken accessToken = null;
 		try {
-			accessToken = twitter.getOAuthAccessToken(requestToken, pin);
+			accessToken = twitter
+					.getOAuthAccessToken(requestToken, pin);
 
 		} catch (TwitterException te) {
 			te.printStackTrace();
