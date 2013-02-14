@@ -19,72 +19,80 @@ import model.Tweets;
  ***************************************************/
 public class DialogTweets extends JDialog implements ActionListener {
 
-	/** Remove button. */
-	private JButton remove;
+    /** Remove button. */
+    private JButton remove;
 
-	/** Jlist of tweets. */
-	private JList<String> list;
+    /** Jlist of tweets. */
+    private JList<String> list;
 
-	/** list of tweets to be removed. */
-	private ArrayList<Long> removeList = new ArrayList<Long>();
+    /** list of tweets to be removed. */
+    private ArrayList<Long> removeList = new ArrayList<Long>();
 
-	/** Tweet. */
-	private Tweets tweets;
+    /** Tweet. */
+    private Tweets tweets;
 
-	/****************************************************
-	 * DialogTweets Class.
-	 * @param parent JFrame
-	 * @param tweets Tweets
-	 ***************************************************/
-	public DialogTweets(final JFrame parent, final Tweets tweets) {
-		super(parent, true);
+    /** Width of JDialog. */
+    private final int w = 700;
+    /** Length of JDialog. */
+    private final int l = 700;
 
-		setLayout(new BorderLayout());
+    /****************************************************
+     * DialogTweets Class.
+     * 
+     * @param parent
+     *            JFrame
+     * @param t
+     *            Tweets
+     ***************************************************/
+    public DialogTweets(final JFrame parent, final Tweets t) {
+        super(parent, true);
 
-		this.tweets = tweets;
+        setLayout(new BorderLayout());
 
-		setTitle("Tweets");
+        tweets = t;
 
-		setSize(700, 700);
-		setLocationRelativeTo(parent);
+        setTitle("Tweets");
 
-		list = new JList<String>(tweets);
+        setSize(w, l);
+        setLocationRelativeTo(parent);
 
-		JScrollPane scrollpane = new JScrollPane(list);
-		add(scrollpane, BorderLayout.CENTER);
+        list = new JList<String>(tweets);
 
-		remove = new JButton("Remove");
-		remove.addActionListener(this);
+        JScrollPane scrollpane = new JScrollPane(list);
+        add(scrollpane, BorderLayout.CENTER);
 
-		add(remove, BorderLayout.SOUTH);
+        remove = new JButton("Remove");
+        remove.addActionListener(this);
 
-		pack();
-		setVisible(true);
+        add(remove, BorderLayout.SOUTH);
 
-	}
+        pack();
+        setVisible(true);
 
-	@Override
-	public final void actionPerformed(final ActionEvent e) {
-		if (e.getSource() == remove) {
-			int i = list.getSelectedIndex();
-			if (i >= 0) {
-				removeList.add(tweets.remove(i));
-			} else {
-				JOptionPane.showMessageDialog(null,
-						"Please first select a tweet",
-						"Oops!",
-						JOptionPane.PLAIN_MESSAGE);
-			}
-		}
+    }
 
-	}
+    @Override
+    public final void actionPerformed(final ActionEvent e) {
+        if (e.getSource() == remove) {
+            int i = list.getSelectedIndex();
+            if (i >= 0) {
+                removeList.add(tweets.remove(i));
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Please first select a tweet", "Oops!",
+                        JOptionPane.PLAIN_MESSAGE);
+            }
+        }
 
-	/****************************************************
-	 * Removes list.
-	 * @return ArrayList<Lsong>
-	 ***************************************************/
-	public final ArrayList<Long> getRemoveList() {
-		return removeList;
-	}
+    }
+
+    /****************************************************
+     * Removes list.
+     * 
+     * @return ArrayList<Lsong>
+     ***************************************************/
+    public final ArrayList<Long> getRemoveList() {
+        return removeList;
+    }
 
 }
