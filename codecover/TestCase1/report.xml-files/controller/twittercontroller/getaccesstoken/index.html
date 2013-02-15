@@ -1,0 +1,250 @@
+
+            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>getAccessToken - Feb 15, 2013 3:34:43 AM - CodeCover Report</title>
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+</head>
+<body>
+    <div class="headline">
+        Coverage Report
+    </div>
+    <div class="session">
+        Feb 15, 2013 3:34:43 AM
+    </div>
+    <div class="sessionDate">
+        measured on February 15, 2013 3:34:43 AM EST
+    </div>
+    <div class="linkToTop">
+          <a href="../../../../report.xml">
+              up to the title page
+          </a>
+    </div>
+    <div class="ancestors">
+    <a href="../../index.html">
+        controller</a>
+    .
+    <a href="../index.html">
+        TwitterController</a>
+    .
+    getAccessToken
+    </div><div class="methodInfo">
+    <table class="methodInfo">
+    <thead class="methodInfo">
+        <tr class="methodInfo">
+            <th class="methodInfo firstcolumn"></th>
+            <th class="methodInfo" colspan="3">Statement Coverage</th>
+            <th class="methodInfo" colspan="3">Branch Coverage</th>
+            <th class="methodInfo" colspan="3">Term Coverage</th>
+        </tr>
+    </thead>
+    <tbody class="methodInfo">
+        <tr class="methodInfo">
+            <td class="methodInfo firstcolumn">
+                    private String getAccessToken()
+            </td>  
+                                    <td class="methodInfo">
+                        3&nbsp;/&nbsp;5
+                </td>
+                <td class="methodInfo">
+                        60&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:60%"></div></div>
+                </td>   
+                                                <td class="methodInfo">
+                        1&nbsp;/&nbsp;2
+                </td>
+                <td class="methodInfo">
+                        50&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:50%"></div></div>
+                </td>   
+                                            <td class="methodInfo">
+                        0&nbsp;/&nbsp;0
+                </td>
+                <td class="methodInfo">
+                        ---
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="grey"></div>
+                </td>  
+                        </tr>
+    </tbody>
+    </table></div>
+    <div class="code">
+    <table class="code">
+        <thead class="code">
+        <tr class="code">
+                        <th class="code" colspan="3">TwitterController.java</th>
+                </tr>
+        </thead>
+        <tbody class="code">
+                      <tr class="code" id="L508">
+             <td class="code lineNumber">
+                  <a href="#L508">508</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp; private String getAccessToken() {
+              </td>
+          </tr>
+                      <tr class="code" id="L509">
+             <td class="code lineNumber">
+                  <a href="#L509">509</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">JSONParser parser = new JSONParser();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L510">
+             <td class="code lineNumber">
+                  <a href="#L510">510</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered partlyCovered Branch_Coverage" title="Unexecuted branches: implicit (omitted) branch">try</span> {
+              </td>
+          </tr>
+                      <tr class="code" id="L511">
+             <td class="code lineNumber">
+                  <a href="#L511">511</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L512">
+             <td class="code lineNumber">
+                  <a href="#L512">512</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">Object obj = parser.parse(new FileReader(&quot;./auth.json&quot;));</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L513">
+             <td class="code lineNumber">
+                  <a href="#L513">513</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L514">
+             <td class="code lineNumber">
+                  <a href="#L514">514</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">JSONObject jsonObject = (JSONObject) obj;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L515">
+             <td class="code lineNumber">
+                  <a href="#L515">515</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L516">
+             <td class="code lineNumber">
+                  <a href="#L516">516</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">return (String) jsonObject.get(&quot;AccessToken&quot;);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L517">
+             <td class="code lineNumber">
+                  <a href="#L517">517</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L518">
+             <td class="code lineNumber">
+                  <a href="#L518">518</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <span class="covered fullyCovered Branch_Coverage">catch (Throwable e)</span> {
+              </td>
+          </tr>
+                      <tr class="code" id="L519">
+             <td class="code lineNumber">
+                  <a href="#L519">519</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">return null;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L520">
+             <td class="code lineNumber">
+                  <a href="#L520">520</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L521">
+             <td class="code lineNumber">
+                  <a href="#L521">521</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+            </tbody>
+    </table></div>
+        <div class="creationNote">
+        created on February 15, 2013 3:36:23 AM EST with
+        <a href="http://www.codecover.org">
+            CodeCover
+        </a>
+    </div>    
+</body>
+</html>
+        

@@ -1,0 +1,316 @@
+
+            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>getPlainButton - Feb 15, 2013 3:34:43 AM - CodeCover Report</title>
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+</head>
+<body>
+    <div class="headline">
+        Coverage Report
+    </div>
+    <div class="session">
+        Feb 15, 2013 3:34:43 AM
+    </div>
+    <div class="sessionDate">
+        measured on February 15, 2013 3:34:43 AM EST
+    </div>
+    <div class="linkToTop">
+          <a href="../../../../report.xml">
+              up to the title page
+          </a>
+    </div>
+    <div class="ancestors">
+    <a href="../../index.html">
+        view</a>
+    .
+    <a href="../index.html">
+        TwitterGUI</a>
+    .
+    getPlainButton
+    </div><div class="methodInfo">
+    <table class="methodInfo">
+    <thead class="methodInfo">
+        <tr class="methodInfo">
+            <th class="methodInfo firstcolumn"></th>
+            <th class="methodInfo" colspan="3">Statement Coverage</th>
+            <th class="methodInfo" colspan="3">Branch Coverage</th>
+            <th class="methodInfo" colspan="3">Term Coverage</th>
+        </tr>
+    </thead>
+    <tbody class="methodInfo">
+        <tr class="methodInfo">
+            <td class="methodInfo firstcolumn">
+                    private JButton getPlainButton(final String line1, final String line2)
+            </td>  
+                                    <td class="methodInfo">
+                        15&nbsp;/&nbsp;15
+                </td>
+                <td class="methodInfo">
+                        100&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:100%"></div></div>
+                </td>   
+                                                <td class="methodInfo">
+                        2&nbsp;/&nbsp;2
+                </td>
+                <td class="methodInfo">
+                        100&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:100%"></div></div>
+                </td>   
+                                                <td class="methodInfo">
+                        2&nbsp;/&nbsp;2
+                </td>
+                <td class="methodInfo">
+                        100&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:100%"></div></div>
+                </td>   
+                        </tr>
+    </tbody>
+    </table></div>
+    <div class="code">
+    <table class="code">
+        <thead class="code">
+        <tr class="code">
+                        <th class="code" colspan="3">TwitterGUI.java</th>
+                </tr>
+        </thead>
+        <tbody class="code">
+                      <tr class="code" id="L466">
+             <td class="code lineNumber">
+                  <a href="#L466">466</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp; private JButton getPlainButton(final String line1, final String line2) {
+              </td>
+          </tr>
+                      <tr class="code" id="L467">
+             <td class="code lineNumber">
+                  <a href="#L467">467</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">String text = line1;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L468">
+             <td class="code lineNumber">
+                  <a href="#L468">468</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Branch_Coverage">if</span> (<span class="covered fullyCovered Term_Coverage">line2 != null</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L469">
+             <td class="code lineNumber">
+                  <a href="#L469">469</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">text = (&quot;&lt;html&gt;&lt;center&gt;&lt;font size=6&gt;&quot; + line1 + &quot;&lt;/font&gt;&lt;br&gt;&lt;i&gt;&quot;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L470">
+             <td class="code lineNumber">
+                  <a href="#L470">470</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  <span class="covered fullyCovered Statement_Coverage">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + line2 + &quot;&lt;/i&gt;&lt;/center&gt;&lt;/html&gt;&quot;);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L471">
+             <td class="code lineNumber">
+                  <a href="#L471">471</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L472">
+             <td class="code lineNumber">
+                  <a href="#L472">472</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">JButton tmp = new JButton();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L473">
+             <td class="code lineNumber">
+                  <a href="#L473">473</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">final int w = 120;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L474">
+             <td class="code lineNumber">
+                  <a href="#L474">474</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">final int l = 50;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L475">
+             <td class="code lineNumber">
+                  <a href="#L475">475</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">final int fontsize = 15;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L476">
+             <td class="code lineNumber">
+                  <a href="#L476">476</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">tmp.setPreferredSize(new Dimension(w, l));</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L477">
+             <td class="code lineNumber">
+                  <a href="#L477">477</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">tmp.setFont(new Font(&quot;Arial&quot;, Font.BOLD, fontsize));</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L478">
+             <td class="code lineNumber">
+                  <a href="#L478">478</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">tmp.setText(text);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L479">
+             <td class="code lineNumber">
+                  <a href="#L479">479</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">tmp.setBackground(Color.WHITE);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L480">
+             <td class="code lineNumber">
+                  <a href="#L480">480</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">tmp.setForeground(Color.DARK_GRAY);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L481">
+             <td class="code lineNumber">
+                  <a href="#L481">481</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">tmp.setBorder(new LineBorder(Color.GRAY, 1, true));</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L482">
+             <td class="code lineNumber">
+                  <a href="#L482">482</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">tmp.setFocusable(false);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L483">
+             <td class="code lineNumber">
+                  <a href="#L483">483</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">tmp.setFocusPainted(false);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L484">
+             <td class="code lineNumber">
+                  <a href="#L484">484</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">return tmp;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L485">
+             <td class="code lineNumber">
+                  <a href="#L485">485</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+            </tbody>
+    </table></div>
+        <div class="creationNote">
+        created on February 15, 2013 3:36:23 AM EST with
+        <a href="http://www.codecover.org">
+            CodeCover
+        </a>
+    </div>    
+</body>
+</html>
+        

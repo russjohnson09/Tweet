@@ -1,0 +1,845 @@
+
+            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>actionPerformed - Feb 15, 2013 3:34:43 AM - CodeCover Report</title>
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+</head>
+<body>
+    <div class="headline">
+        Coverage Report
+    </div>
+    <div class="session">
+        Feb 15, 2013 3:34:43 AM
+    </div>
+    <div class="sessionDate">
+        measured on February 15, 2013 3:34:43 AM EST
+    </div>
+    <div class="linkToTop">
+          <a href="../../../../report.xml">
+              up to the title page
+          </a>
+    </div>
+    <div class="ancestors">
+    <a href="../../index.html">
+        view</a>
+    .
+    <a href="../index.html">
+        TwitterGUI</a>
+    .
+    actionPerformed
+    </div><div class="methodInfo">
+    <table class="methodInfo">
+    <thead class="methodInfo">
+        <tr class="methodInfo">
+            <th class="methodInfo firstcolumn"></th>
+            <th class="methodInfo" colspan="3">Statement Coverage</th>
+            <th class="methodInfo" colspan="3">Branch Coverage</th>
+            <th class="methodInfo" colspan="3">Term Coverage</th>
+        </tr>
+    </thead>
+    <tbody class="methodInfo">
+        <tr class="methodInfo">
+            <td class="methodInfo firstcolumn">
+                    @Override
+    public final void actionPerformed(final ActionEvent e)
+            </td>  
+                                    <td class="methodInfo">
+                        18&nbsp;/&nbsp;21
+                </td>
+                <td class="methodInfo">
+                        85&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:85%"></div></div>
+                </td>   
+                                                <td class="methodInfo">
+                        21&nbsp;/&nbsp;24
+                </td>
+                <td class="methodInfo">
+                        87&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:87%"></div></div>
+                </td>   
+                                                <td class="methodInfo">
+                        25&nbsp;/&nbsp;28
+                </td>
+                <td class="methodInfo">
+                        89&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:89%"></div></div>
+                </td>   
+                        </tr>
+    </tbody>
+    </table></div>
+    <div class="code">
+    <table class="code">
+        <thead class="code">
+        <tr class="code">
+                        <th class="code" colspan="3">TwitterGUI.java</th>
+                </tr>
+        </thead>
+        <tbody class="code">
+                      <tr class="code" id="L654">
+             <td class="code lineNumber">
+                  <a href="#L654">654</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp; @Override
+              </td>
+          </tr>
+                      <tr class="code" id="L655">
+             <td class="code lineNumber">
+                  <a href="#L655">655</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp; public final void actionPerformed(final ActionEvent e) {
+              </td>
+          </tr>
+                      <tr class="code" id="L656">
+             <td class="code lineNumber">
+                  <a href="#L656">656</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">Object source = e.getSource();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L657">
+             <td class="code lineNumber">
+                  <a href="#L657">657</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L658">
+             <td class="code lineNumber">
+                  <a href="#L658">658</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered partlyCovered Branch_Coverage" title="Unexecuted branches: then">if</span> (<span class="covered partlyCovered Term_Coverage">source == exit</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L659">
+             <td class="code lineNumber">
+                  <a href="#L659">659</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">System.exit(0);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L660">
+             <td class="code lineNumber">
+                  <a href="#L660">660</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L661">
+             <td class="code lineNumber">
+                  <a href="#L661">661</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Branch_Coverage">if</span> (<span class="covered fullyCovered Term_Coverage">source == newTweet</span> || <span class="covered fullyCovered Term_Coverage">source == tweetsBtn</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L662">
+             <td class="code lineNumber">
+                  <a href="#L662">662</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">tabbedPane.setSelectedComponent(tweetPanel);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L663">
+             <td class="code lineNumber">
+                  <a href="#L663">663</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L664">
+             <td class="code lineNumber">
+                  <a href="#L664">664</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Branch_Coverage">if</span> (<span class="covered fullyCovered Term_Coverage">source == delete</span> || <span class="covered fullyCovered Term_Coverage">source == tweetsBtn</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L665">
+             <td class="code lineNumber">
+                  <a href="#L665">665</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">DialogTweets x = new DialogTweets(this,</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L666">
+             <td class="code lineNumber">
+                  <a href="#L666">666</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  <span class="covered fullyCovered Statement_Coverage">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controller.getUserTimeline());</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L667">
+             <td class="code lineNumber">
+                  <a href="#L667">667</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (long l : x.getRemoveList()) {
+              </td>
+          </tr>
+                      <tr class="code" id="L668">
+             <td class="code lineNumber">
+                  <a href="#L668">668</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">controller.destroyStatus(l);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L669">
+             <td class="code lineNumber">
+                  <a href="#L669">669</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L670">
+             <td class="code lineNumber">
+                  <a href="#L670">670</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">updateTweetCount();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L671">
+             <td class="code lineNumber">
+                  <a href="#L671">671</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L672">
+             <td class="code lineNumber">
+                  <a href="#L672">672</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L673">
+             <td class="code lineNumber">
+                  <a href="#L673">673</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Branch_Coverage">if</span> (<span class="covered fullyCovered Term_Coverage">source == tweetSubmit</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L674">
+             <td class="code lineNumber">
+                  <a href="#L674">674</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L675">
+             <td class="code lineNumber">
+                  <a href="#L675">675</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Branch_Coverage">if</span> (<span class="covered fullyCovered Term_Coverage">tweetText.getText().length() &gt; CHAR_LIMIT</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L676">
+             <td class="code lineNumber">
+                  <a href="#L676">676</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">JOptionPane.showMessageDialog(null, &quot;Tweet is too long.&quot;,</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L677">
+             <td class="code lineNumber">
+                  <a href="#L677">677</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  <span class="covered fullyCovered Statement_Coverage">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Oops&quot;, JOptionPane.PLAIN_MESSAGE);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L678">
+             <td class="code lineNumber">
+                  <a href="#L678">678</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <span class="covered fullyCovered Branch_Coverage">else</span> {
+              </td>
+          </tr>
+                      <tr class="code" id="L679">
+             <td class="code lineNumber">
+                  <a href="#L679">679</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered partlyCovered Branch_Coverage" title="Unexecuted branches: else">if</span> (<span class="covered partlyCovered Term_Coverage">controller.tweet(tweetText.getText())</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L680">
+             <td class="code lineNumber">
+                  <a href="#L680">680</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">updateTweetCount();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L681">
+             <td class="code lineNumber">
+                  <a href="#L681">681</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">JOptionPane.showMessageDialog(null, &quot;Tweet Sent.&quot;,</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L682">
+             <td class="code lineNumber">
+                  <a href="#L682">682</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  <span class="covered fullyCovered Statement_Coverage">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Confirmation&quot;, JOptionPane.PLAIN_MESSAGE);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L683">
+             <td class="code lineNumber">
+                  <a href="#L683">683</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">tweetText.setText(&quot;&quot;);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L684">
+             <td class="code lineNumber">
+                  <a href="#L684">684</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <span class="covered notCovered Branch_Coverage">else</span> {
+              </td>
+          </tr>
+                      <tr class="code" id="L685">
+             <td class="code lineNumber">
+                  <a href="#L685">685</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">JOptionPane.showMessageDialog(null, &quot;Tweet could not &quot;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L686">
+             <td class="code lineNumber">
+                  <a href="#L686">686</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  <span class="covered notCovered Statement_Coverage">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; + &quot;be sent.&quot;, &quot;Oops&quot;, JOptionPane.PLAIN_MESSAGE);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L687">
+             <td class="code lineNumber">
+                  <a href="#L687">687</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L688">
+             <td class="code lineNumber">
+                  <a href="#L688">688</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L689">
+             <td class="code lineNumber">
+                  <a href="#L689">689</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L690">
+             <td class="code lineNumber">
+                  <a href="#L690">690</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L691">
+             <td class="code lineNumber">
+                  <a href="#L691">691</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L692">
+             <td class="code lineNumber">
+                  <a href="#L692">692</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Branch_Coverage">if</span> (<span class="covered fullyCovered Term_Coverage">source == about</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L693">
+             <td class="code lineNumber">
+                  <a href="#L693">693</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">JOptionPane.showMessageDialog(null, &quot;Desktop twitter application&quot;);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L694">
+             <td class="code lineNumber">
+                  <a href="#L694">694</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L695">
+             <td class="code lineNumber">
+                  <a href="#L695">695</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Branch_Coverage">if</span> (<span class="covered fullyCovered Term_Coverage">source == followersBtn</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L696">
+             <td class="code lineNumber">
+                  <a href="#L696">696</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">tabbedPane.setSelectedComponent(followersPanel);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L697">
+             <td class="code lineNumber">
+                  <a href="#L697">697</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L698">
+             <td class="code lineNumber">
+                  <a href="#L698">698</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Branch_Coverage">if</span> (<span class="covered fullyCovered Term_Coverage">source == followingBtn</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L699">
+             <td class="code lineNumber">
+                  <a href="#L699">699</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">tabbedPane.setSelectedComponent(followingPanel);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L700">
+             <td class="code lineNumber">
+                  <a href="#L700">700</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L701">
+             <td class="code lineNumber">
+                  <a href="#L701">701</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered partlyCovered Branch_Coverage" title="Unexecuted branches: then">if</span> (<span class="covered partlyCovered Term_Coverage">source == cancel</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L702">
+             <td class="code lineNumber">
+                  <a href="#L702">702</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">tweetText.setText(&quot;&quot;);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L703">
+             <td class="code lineNumber">
+                  <a href="#L703">703</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L704">
+             <td class="code lineNumber">
+                  <a href="#L704">704</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Branch_Coverage">if</span> (<span class="covered fullyCovered Term_Coverage">source == tweetShow</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L705">
+             <td class="code lineNumber">
+                  <a href="#L705">705</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">DialogTweets x = new DialogTweets(this,</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L706">
+             <td class="code lineNumber">
+                  <a href="#L706">706</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  <span class="covered fullyCovered Statement_Coverage">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controller.getUserTimeline());</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L707">
+             <td class="code lineNumber">
+                  <a href="#L707">707</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (long l : x.getRemoveList()) {
+              </td>
+          </tr>
+                      <tr class="code" id="L708">
+             <td class="code lineNumber">
+                  <a href="#L708">708</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">controller.destroyStatus(l);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L709">
+             <td class="code lineNumber">
+                  <a href="#L709">709</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L710">
+             <td class="code lineNumber">
+                  <a href="#L710">710</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">updateTweetCount();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L711">
+             <td class="code lineNumber">
+                  <a href="#L711">711</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L712">
+             <td class="code lineNumber">
+                  <a href="#L712">712</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L713">
+             <td class="code lineNumber">
+                  <a href="#L713">713</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L714">
+             <td class="code lineNumber">
+                  <a href="#L714">714</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Branch_Coverage">if</span> (<span class="covered fullyCovered Term_Coverage">source == unfollow</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L715">
+             <td class="code lineNumber">
+                  <a href="#L715">715</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">long l = following.remove(jlistFollowing.getSelectedIndex());</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L716">
+             <td class="code lineNumber">
+                  <a href="#L716">716</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">controller.unfollow(l);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L717">
+             <td class="code lineNumber">
+                  <a href="#L717">717</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L718">
+             <td class="code lineNumber">
+                  <a href="#L718">718</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">updateFollowingCount();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L719">
+             <td class="code lineNumber">
+                  <a href="#L719">719</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  
+              </td>
+          </tr>
+                      <tr class="code" id="L720">
+             <td class="code lineNumber">
+                  <a href="#L720">720</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L721">
+             <td class="code lineNumber">
+                  <a href="#L721">721</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+            </tbody>
+    </table></div>
+        <div class="creationNote">
+        created on February 15, 2013 3:36:23 AM EST with
+        <a href="http://www.codecover.org">
+            CodeCover
+        </a>
+    </div>    
+</body>
+</html>
+        
