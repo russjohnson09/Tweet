@@ -1,0 +1,294 @@
+
+            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>getProfileBanner - Feb 15, 2013 3:04:40 AM - CodeCover Report</title>
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+</head>
+<body>
+    <div class="headline">
+        Coverage Report
+    </div>
+    <div class="session">
+        Feb 15, 2013 3:04:40 AM
+    </div>
+    <div class="sessionDate">
+        measured on February 15, 2013 3:04:40 AM EST
+    </div>
+    <div class="linkToTop">
+          <a href="../../../../report.xml">
+              up to the title page
+          </a>
+    </div>
+    <div class="ancestors">
+    <a href="../../index.html">
+        controller</a>
+    .
+    <a href="../index.html">
+        TwitterController</a>
+    .
+    getProfileBanner
+    </div><div class="methodInfo">
+    <table class="methodInfo">
+    <thead class="methodInfo">
+        <tr class="methodInfo">
+            <th class="methodInfo firstcolumn"></th>
+            <th class="methodInfo" colspan="3">Statement Coverage</th>
+            <th class="methodInfo" colspan="3">Branch Coverage</th>
+            <th class="methodInfo" colspan="3">Term Coverage</th>
+        </tr>
+    </thead>
+    <tbody class="methodInfo">
+        <tr class="methodInfo">
+            <td class="methodInfo firstcolumn">
+                    public final Image getProfileBanner()
+            </td>  
+                                    <td class="methodInfo">
+                        4&nbsp;/&nbsp;6
+                </td>
+                <td class="methodInfo">
+                        66&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:66%"></div></div>
+                </td>   
+                                                <td class="methodInfo">
+                        2&nbsp;/&nbsp;6
+                </td>
+                <td class="methodInfo">
+                        33&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:33%"></div></div>
+                </td>   
+                                                <td class="methodInfo">
+                        1&nbsp;/&nbsp;2
+                </td>
+                <td class="methodInfo">
+                        50&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:50%"></div></div>
+                </td>   
+                        </tr>
+    </tbody>
+    </table></div>
+    <div class="code">
+    <table class="code">
+        <thead class="code">
+        <tr class="code">
+                        <th class="code" colspan="3">TwitterController.java</th>
+                </tr>
+        </thead>
+        <tbody class="code">
+                      <tr class="code" id="L219">
+             <td class="code lineNumber">
+                  <a href="#L219">219</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp; public final Image getProfileBanner() {
+              </td>
+          </tr>
+                      <tr class="code" id="L220">
+             <td class="code lineNumber">
+                  <a href="#L220">220</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">Image img = null;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L221">
+             <td class="code lineNumber">
+                  <a href="#L221">221</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered partlyCovered Branch_Coverage" title="Unexecuted branches: implicit (omitted) branch,  catch (IllegalStateException e),  catch (TwitterException e)">try</span> {
+              </td>
+          </tr>
+                      <tr class="code" id="L222">
+             <td class="code lineNumber">
+                  <a href="#L222">222</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">img = (new ImageIcon(new URL(twitter.showUser(twitter.getId())</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L223">
+             <td class="code lineNumber">
+                  <a href="#L223">223</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  <span class="covered fullyCovered Statement_Coverage">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .getProfileBannerURL())).getImage());</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L224">
+             <td class="code lineNumber">
+                  <a href="#L224">224</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <span class="covered fullyCovered Branch_Coverage">catch (MalformedURLException e)</span> {
+              </td>
+          </tr>
+                      <tr class="code" id="L225">
+             <td class="code lineNumber">
+                  <a href="#L225">225</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <span class="covered notCovered Branch_Coverage">catch (IllegalStateException e)</span> {
+              </td>
+          </tr>
+                      <tr class="code" id="L226">
+             <td class="code lineNumber">
+                  <a href="#L226">226</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // TODO Auto-generated catch block
+              </td>
+          </tr>
+                      <tr class="code" id="L227">
+             <td class="code lineNumber">
+                  <a href="#L227">227</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">e.printStackTrace();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L228">
+             <td class="code lineNumber">
+                  <a href="#L228">228</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <span class="covered notCovered Branch_Coverage">catch (TwitterException e)</span> {
+              </td>
+          </tr>
+                      <tr class="code" id="L229">
+             <td class="code lineNumber">
+                  <a href="#L229">229</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // TODO Auto-generated catch block
+              </td>
+          </tr>
+                      <tr class="code" id="L230">
+             <td class="code lineNumber">
+                  <a href="#L230">230</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">e.printStackTrace();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L231">
+             <td class="code lineNumber">
+                  <a href="#L231">231</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L232">
+             <td class="code lineNumber">
+                  <a href="#L232">232</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered partlyCovered Branch_Coverage" title="Unexecuted branches: implicit (omitted) branch">if</span> (<span class="covered partlyCovered Term_Coverage">img == null</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L233">
+             <td class="code lineNumber">
+                  <a href="#L233">233</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">img = (new ImageIcon(&quot;src/banner.jpeg&quot;)).getImage();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L234">
+             <td class="code lineNumber">
+                  <a href="#L234">234</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L235">
+             <td class="code lineNumber">
+                  <a href="#L235">235</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered fullyCovered Statement_Coverage">return img;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L236">
+             <td class="code lineNumber">
+                  <a href="#L236">236</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+            </tbody>
+    </table></div>
+        <div class="creationNote">
+        created on February 15, 2013 3:10:09 AM EST with
+        <a href="http://www.codecover.org">
+            CodeCover
+        </a>
+    </div>    
+</body>
+</html>
+        

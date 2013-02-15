@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -346,9 +347,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                 final int ten = 10;
                 g.drawImage(profileBanner,
                         (FRAME_WIDTH / 2) - profileBanner.getWidth(null) / 2
-                                - eight,
-                        FRAME_HEIGHT / three + ten
-                        - profileBanner.getHeight(null) / 2, null);
+                                - eight, FRAME_HEIGHT / three + ten
+                                - profileBanner.getHeight(null) / 2, null);
             }
         };
         infoPanel.setOpaque(false);
@@ -364,8 +364,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         profImgBtn.setPreferredSize(new Dimension(img.getIconWidth() + 2, img
                 .getIconHeight() + 2));
         final int four = 4;
-        profImgBtn.setBorder(new LineBorder(Color.WHITE,
-                four));
+        profImgBtn.setBorder(new LineBorder(Color.WHITE, four));
         profImgBtn.setIcon(img);
         infoPanel.add(profImgBtn, c);
 
@@ -381,8 +380,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         // Twitter Name
         c.gridy = 2;
         JLabel twitterNameLbl = new JLabel(twitterName);
-        twitterNameLbl.setFont(new Font("arial", Font.PLAIN,
-                five + five + five));
+        twitterNameLbl
+                .setFont(new Font("arial", Font.PLAIN, five + five + five));
         twitterNameLbl.setForeground(Color.WHITE);
         infoPanel.add(twitterNameLbl, c);
         final int thirty = 30;
@@ -649,7 +648,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     /**
      * Where all actions should be delegated and sent to the controller.
      * 
-     * @param e actionevent
+     * @param e
+     *            actionevent
      */
     @Override
     public final void actionPerformed(final ActionEvent e) {
@@ -744,6 +744,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
      *            String[]
      ***************************************************/
     public static void main(final String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int i = sc.nextInt();
         new TwitterGUI();
     }
 

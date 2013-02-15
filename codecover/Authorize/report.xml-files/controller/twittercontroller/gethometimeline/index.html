@@ -1,0 +1,272 @@
+
+            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>getHomeTimeline - Feb 15, 2013 3:04:40 AM - CodeCover Report</title>
+    <link rel="stylesheet" type="text/css" href="../../../style.css">
+</head>
+<body>
+    <div class="headline">
+        Coverage Report
+    </div>
+    <div class="session">
+        Feb 15, 2013 3:04:40 AM
+    </div>
+    <div class="sessionDate">
+        measured on February 15, 2013 3:04:40 AM EST
+    </div>
+    <div class="linkToTop">
+          <a href="../../../../report.xml">
+              up to the title page
+          </a>
+    </div>
+    <div class="ancestors">
+    <a href="../../index.html">
+        controller</a>
+    .
+    <a href="../index.html">
+        TwitterController</a>
+    .
+    getHomeTimeline
+    </div><div class="methodInfo">
+    <table class="methodInfo">
+    <thead class="methodInfo">
+        <tr class="methodInfo">
+            <th class="methodInfo firstcolumn"></th>
+            <th class="methodInfo" colspan="3">Statement Coverage</th>
+            <th class="methodInfo" colspan="3">Branch Coverage</th>
+            <th class="methodInfo" colspan="3">Term Coverage</th>
+        </tr>
+    </thead>
+    <tbody class="methodInfo">
+        <tr class="methodInfo">
+            <td class="methodInfo firstcolumn">
+                    public final Tweets getHomeTimeline()
+            </td>  
+                                    <td class="methodInfo">
+                        0&nbsp;/&nbsp;6
+                </td>
+                <td class="methodInfo">
+                        0&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:0%"></div></div>
+                </td>   
+                                                <td class="methodInfo">
+                        0&nbsp;/&nbsp;4
+                </td>
+                <td class="methodInfo">
+                        0&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:0%"></div></div>
+                </td>   
+                                                <td class="methodInfo">
+                        0&nbsp;/&nbsp;2
+                </td>
+                <td class="methodInfo">
+                        0&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:0%"></div></div>
+                </td>   
+                        </tr>
+    </tbody>
+    </table></div>
+    <div class="code">
+    <table class="code">
+        <thead class="code">
+        <tr class="code">
+                        <th class="code" colspan="3">TwitterController.java</th>
+                </tr>
+        </thead>
+        <tbody class="code">
+                      <tr class="code" id="L429">
+             <td class="code lineNumber">
+                  <a href="#L429">429</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp; public final Tweets getHomeTimeline() {
+              </td>
+          </tr>
+                      <tr class="code" id="L430">
+             <td class="code lineNumber">
+                  <a href="#L430">430</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">Tweets tweets = new Tweets();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L431">
+             <td class="code lineNumber">
+                  <a href="#L431">431</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">ResponseList&lt;Status&gt; statuses = null;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L432">
+             <td class="code lineNumber">
+                  <a href="#L432">432</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Branch_Coverage" title="Unexecuted branches: implicit (omitted) branch,  catch (TwitterException e)">try</span> {
+              </td>
+          </tr>
+                      <tr class="code" id="L433">
+             <td class="code lineNumber">
+                  <a href="#L433">433</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">statuses = twitter.getHomeTimeline();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L434">
+             <td class="code lineNumber">
+                  <a href="#L434">434</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <span class="covered notCovered Branch_Coverage">catch (TwitterException e)</span> {
+              </td>
+          </tr>
+                      <tr class="code" id="L435">
+             <td class="code lineNumber">
+                  <a href="#L435">435</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // TODO Auto-generated catch block
+              </td>
+          </tr>
+                      <tr class="code" id="L436">
+             <td class="code lineNumber">
+                  <a href="#L436">436</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">e.printStackTrace();</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L437">
+             <td class="code lineNumber">
+                  <a href="#L437">437</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L438">
+             <td class="code lineNumber">
+                  <a href="#L438">438</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Branch_Coverage" title="Unexecuted branches: then,  implicit (omitted) branch">if</span> (<span class="covered notCovered Term_Coverage">statuses != null</span>) {
+              </td>
+          </tr>
+                      <tr class="code" id="L439">
+             <td class="code lineNumber">
+                  <a href="#L439">439</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (Status s : statuses) {
+              </td>
+          </tr>
+                      <tr class="code" id="L440">
+             <td class="code lineNumber">
+                  <a href="#L440">440</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">tweets.add(s);</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L441">
+             <td class="code lineNumber">
+                  <a href="#L441">441</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L442">
+             <td class="code lineNumber">
+                  <a href="#L442">442</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+                      <tr class="code" id="L443">
+             <td class="code lineNumber">
+                  <a href="#L443">443</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="covered notCovered Statement_Coverage">return tweets;</span>
+              </td>
+          </tr>
+                      <tr class="code" id="L444">
+             <td class="code lineNumber">
+                  <a href="#L444">444</a>
+                       </td>
+              <td class="code executions">
+                       &nbsp;
+              </td>
+              <td class="code text">
+                  &nbsp;&nbsp;&nbsp; }
+              </td>
+          </tr>
+            </tbody>
+    </table></div>
+        <div class="creationNote">
+        created on February 15, 2013 3:10:09 AM EST with
+        <a href="http://www.codecover.org">
+            CodeCover
+        </a>
+    </div>    
+</body>
+</html>
+        
