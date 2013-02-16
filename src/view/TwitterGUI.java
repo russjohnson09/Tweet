@@ -39,7 +39,6 @@ import controller.TwitterController;
 
 /**********************************************************************
  * Twitter GUI.
- * 
  * @author Nick, Vincenzo, Corey, Russ
  *********************************************************************/
 public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
@@ -313,7 +312,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         gbc.gridwidth = w;
         tweetPanel.add(tweetText, gbc);
 
-        charsRemaining = new JLabel("" + remaining + "", JLabel.RIGHT);
+        charsRemaining = new JLabel("140", JLabel.RIGHT);
         gbc.gridx = 2;
         gbc.gridy = 2;
         tweetPanel.add(charsRemaining, gbc);
@@ -739,7 +738,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
     /****************************************************
      * Main.
-     * 
      * @param args
      *            String[]
      ***************************************************/
@@ -751,7 +749,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
     @Override
     public void keyTyped(final KeyEvent e) {
-        // TODO Auto-generated method stub
+        if (e.getKeyChar() == ' ') {
+            remaining--;
+        } else {
+            remaining++;
+        }
+        charsRemaining.setText(""+ (140 - remaining) +"");
     }
 
     @Override
