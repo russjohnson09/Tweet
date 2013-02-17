@@ -40,6 +40,7 @@ import controller.TwitterController;
 /**********************************************************************
  * Twitter GUI.
  * @author Nick, Vincenzo, Corey, Russ
+ * @date 17 February, 2013
  *********************************************************************/
 public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
@@ -456,11 +457,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     /****************************************************
      * Gets plain button for the profile tab page.
      * 
-     * @param line1
-     *            string
-     * @param line2
-     *            string
-     * @return Returns JButton
+     * @param String line1
+     * @param String line2
+     * @return JButton
      ***************************************************/
     private JButton getPlainButton(final String line1, final String line2) {
         String text = line1;
@@ -486,12 +485,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     /****************************************************
      * Sets plain button for the profile tab page.
      * 
-     * @param line1
-     *            string
-     * @param line2
-     *            string
-     * @param j
-     *            JButton
+     * @param String line1
+     * @param String line2
+     * @return JButton
      ***************************************************/
     private void setPlainButton(final String line1, final String line2,
             final JButton j) {
@@ -514,22 +510,25 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     }
 
     /****************************************************
-     * Creates description panel.
+     * Creates description panel for use within profile
+     * panel.
      * 
-     * @param panel
-     *            Jpanel
-     * @param c
-     *            GridBagConstrains
+     * @param JPanel panel
+     * @param GridBagConstraints c
      ***************************************************/
     private void createDescriptionPanel(final JPanel panel,
             final GridBagConstraints c) {
         final int max = 55;
         final int fontsize = 14;
-        if (description.length() < max) {
+        
+        //single line
+        if (description.length() < max) {   
             JLabel descriptionLbl = new JLabel(description);
             descriptionLbl.setFont(new Font("arial", Font.PLAIN, fontsize));
             descriptionLbl.setForeground(Color.WHITE);
             panel.add(descriptionLbl, c);
+            
+        // double line    
         } else if (description.length() < max + max) {
             String d1, d2;
 
@@ -551,6 +550,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
             panel.add(description1Lbl, c);
             c.gridy = 2 + 2;
             panel.add(description2Lbl, c);
+            
+        // triple line    
         } else {
             String d1, d2, d3;
             String[] w = description.split(" ");
@@ -644,12 +645,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         add(tabbedPane);
     }
 
-    /**
-     * Where all actions should be delegated and sent to the controller.
-     * 
-     * @param e
-     *            actionevent
-     */
+    /***************************************************
+     * Where all actions are delegated
+     * @param ActionEvent e
+     **************************************************/
     @Override
     public final void actionPerformed(final ActionEvent e) {
         Object source = e.getSource();
@@ -737,33 +736,29 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     }
 
     /****************************************************
-     * Main.
-     * @param args
-     *            String[]
+     * Main Method
+     * @param String[] args
      ***************************************************/
     public static void main(final String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int i = sc.nextInt();
         new TwitterGUI();
     }
 
     @Override
     public void keyTyped(final KeyEvent e) {
-        if (e.getKeyChar() == ' ') {
-            remaining--;
-        } else {
+        if (e.getKeyChar() == e.VK_BACK_SPACE
+            && remaining <= 140) {
             remaining++;
+        } else {
+            remaining--;
         }
-        charsRemaining.setText(""+ (140 - remaining) +"");
+        charsRemaining.setText("" + remaining);
     }
 
     @Override
     public void keyPressed(final KeyEvent e) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void keyReleased(final KeyEvent e) {
-        // TODO Auto-generated method stub
     }
 }

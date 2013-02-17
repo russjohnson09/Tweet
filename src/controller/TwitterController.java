@@ -28,6 +28,8 @@ import twitter4j.auth.RequestToken;
 
 /****************************************************
  * Tweets Class.
+ * @author Nick, Vincenzo, Corey, Russ
+ * @date 17 February, 2013
  ***************************************************/
 public class TwitterController {
 
@@ -85,10 +87,8 @@ public class TwitterController {
         try {
             return twitter.showUser(twitter.getId()).getName();
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -97,17 +97,15 @@ public class TwitterController {
 
     /****************************************************
      * Gets twitter name.
-     * 
+     *
      * @return String
      ***************************************************/
     public final String getTwitterName() {
         try {
             return "@" + twitter.showUser(twitter.getId()).getScreenName();
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -116,18 +114,15 @@ public class TwitterController {
     /****************************************************
      * Gets twitter name.
      * 
-     * @param l
-     *            Long
+     * @param Long l
      * @return String
      ***************************************************/
     public final String getTwitterName(final long l) {
         try {
             return "@" + twitter.showUser(l).getScreenName();
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -142,10 +137,8 @@ public class TwitterController {
         try {
             return twitter.showUser(twitter.getId()).getDescription();
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -162,10 +155,8 @@ public class TwitterController {
             str = twitter.showUser(twitter.getId()).getURL();
             return str;
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -180,10 +171,8 @@ public class TwitterController {
         try {
             return twitter.showUser(twitter.getId()).getLocation();
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -201,10 +190,8 @@ public class TwitterController {
         } catch (MalformedURLException e) {
             return null;
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -223,10 +210,8 @@ public class TwitterController {
                     .getProfileBannerURL())).getImage());
         } catch (MalformedURLException e) {
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         if (img == null) {
@@ -255,10 +240,9 @@ public class TwitterController {
     }
 
     /****************************************************
-     * Gets profile banner image.
+     * Post a new Tweet.
      * 
-     * @param str
-     *            tweet
+     * @param String str
      * @return Boolean
      ***************************************************/
     public final boolean tweet(final String str) {
@@ -273,7 +257,7 @@ public class TwitterController {
     /****************************************************
      * Gets tweet count.
      * 
-     * @return Int
+     * @return int
      ***************************************************/
     public final int getTweetCount() {
         try {
@@ -316,7 +300,7 @@ public class TwitterController {
     }
 
     /****************************************************
-     * Gets follower.
+     * Gets followers.
      * 
      * @return ArrayList<User>
      ***************************************************/
@@ -328,7 +312,6 @@ public class TwitterController {
                 users.add(twitter.showUser(l));
             }
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return users;
@@ -347,17 +330,15 @@ public class TwitterController {
                 users.add(twitter.showUser(l));
             }
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return users;
     }
 
     /****************************************************
-     * unfollows user.
+     * Unfollows user.
      * 
-     * @param l
-     *            Long
+     * @param long l
      * @return boolean
      ***************************************************/
     public final boolean unfollow(final long l) {
@@ -365,7 +346,6 @@ public class TwitterController {
             twitter.destroyFriendship(l);
             return true;
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return false;
@@ -374,15 +354,13 @@ public class TwitterController {
     /****************************************************
      * ShowsUser.
      * 
-     * @param l
-     *            Long
+     * @param long l
      * @return User
      ***************************************************/
     public final User showUser(final long l) {
         try {
             return twitter.showUser(l);
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -391,16 +369,14 @@ public class TwitterController {
     /****************************************************
      * Gets follower Count.
      * 
-     * @return Int number of followers
+     * @return int number of followers
      ***************************************************/
     public final int getFollowersCount() {
         try {
             return twitter.showUser(twitter.getId()).getFollowersCount();
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return 0;
@@ -409,14 +385,12 @@ public class TwitterController {
     /****************************************************
      * destroys Status.
      * 
-     * @param l
-     *            Long
+     * @param long l
      ***************************************************/
     public final void destroyStatus(final Long l) {
         try {
             twitter.destroyStatus(l);
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -432,7 +406,6 @@ public class TwitterController {
         try {
             statuses = twitter.getHomeTimeline();
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         if (statuses != null) {
@@ -454,7 +427,6 @@ public class TwitterController {
         try {
             statuses = twitter.getUserTimeline();
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         if (statuses != null) {
@@ -552,8 +524,7 @@ public class TwitterController {
     /****************************************************
      * sets up controller.
      * 
-     * @param pin
-     *            String
+     * @param String pin
      ***************************************************/
     public final void setUp(final String pin) {
         AccessToken accessToken = null;
