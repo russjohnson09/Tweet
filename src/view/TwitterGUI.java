@@ -678,7 +678,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                     updateTweetCount();
                     JOptionPane.showMessageDialog(null, "Tweet Sent.",
                             "Confirmation", JOptionPane.PLAIN_MESSAGE);
-                    tweetText.setText("");
+                    e.setSource(cancel);
+                    actionPerformed(e); 
                 } else {
                     JOptionPane.showMessageDialog(null, "Tweet could not "
                             + "be sent.", "Oops", JOptionPane.PLAIN_MESSAGE);
@@ -698,6 +699,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         }
         if (source == cancel) {
             tweetText.setText("");
+            remaining = 140;
+            charsRemaining.setText("" + remaining);
         }
         if (source == tweetShow) {
             DialogTweets x = new DialogTweets(this,
@@ -745,9 +748,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
     @Override
     public void keyTyped(final KeyEvent e) {
-        if (e.getKeyChar() == e.VK_BACK_SPACE
-            && remaining <= 140) {
-            remaining++;
+        if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
+            if (remaining < 140)
+                remaining++;
         } else {
             remaining--;
         }
