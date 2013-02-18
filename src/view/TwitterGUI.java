@@ -713,11 +713,17 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         }
 
         if (source == unfollow) {
-            long l = following.remove(jlistFollowing.getSelectedIndex());
-            controller.unfollow(l);
+        	int i = jlistFollowing.getSelectedIndex();
+            if (i >= 0) {
+            	long l = following.remove(jlistFollowing.getSelectedIndex());
+                controller.unfollow(l);
 
-            updateFollowingCount();
-
+                updateFollowingCount();
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Please first select a person or group", "Oops!",
+                        JOptionPane.PLAIN_MESSAGE);
+            }
         }
     }
 
