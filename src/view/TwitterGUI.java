@@ -114,10 +114,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     private static final int FOLLOWERS_WIDTH = 450;
     
     /** Following Search Button. */
-    private JButton searchFersButton;
+    private JButton fersSearchButton;
     
     /** Following Search text area. */
-    private JTextArea searchFersTextArea;
+    private JTextArea fersSearchTextArea;
     
     /** serialVersionUID. */
     private GridBagConstraints fersgbc;
@@ -244,28 +244,28 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         followers = new Users(controller.getFollowers());
 
         fersAllButton = new JButton("Show All");
-        //fersAllButton.addActionListener(this);
+        fersAllButton.addActionListener(this);
         fersgbc.gridx = 0;
         fersgbc.gridy = 0;
         fersgbc.gridwidth = 1;
         fersgbc.fill = 1;
         followersPanel.add(fersAllButton, fersgbc);
         
-        searchFersButton = new JButton("Search");
-        //searchFersButton.addActionListener(this);
+        fersSearchButton = new JButton("Search");
+        fersSearchButton.addActionListener(this);
         fersgbc.gridx = 1;
         fersgbc.gridy = 0;
         fersgbc.gridwidth = 1;
         fersgbc.fill = 1;
-        followersPanel.add(searchFersButton, fersgbc);
+        followersPanel.add(fersSearchButton, fersgbc);
 
-        searchFersTextArea = new JTextArea();
-        searchFersTextArea.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        fersSearchTextArea = new JTextArea();
+        fersSearchTextArea.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         fersgbc.gridx = 2;
         fersgbc.gridy = 0;
         fersgbc.gridwidth = 1;
         fersgbc.fill = 1;
-        followersPanel.add(searchFersTextArea, fersgbc);
+        followersPanel.add(fersSearchTextArea, fersgbc);
         
         jlistFollowers = new JList<String>(followers);
         fersgbc.gridx = 0;
@@ -396,7 +396,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
         tweetText = new JTextArea();
         tweetText.addKeyListener(this);
-        tweetText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        tweetText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         tweetText.setFocusable(true);
         final int col = 30;
         tweetText.setColumns(col);
@@ -856,12 +856,18 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     @Override
     public void keyTyped(final KeyEvent e) {
         if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
-            if (remaining < 140)
+            if (remaining < 140){
                 remaining++;
+            }
         } else {
             remaining--;
         }
-        charsRemaining.setText("" + remaining);
+        if(remaining<0){
+        	charsRemaining.setText("** Tweet is too long! **");
+        }else{
+        	charsRemaining.setText("" + remaining);
+        }
+        
     }
 
     @Override
