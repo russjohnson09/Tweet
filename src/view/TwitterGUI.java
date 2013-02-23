@@ -63,7 +63,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     private JFrame frame;
 
     /** Each panel of the GUI. */
-    private JPanel profilePanel, tweetPanel, followingPanel, followersPanel;
+    private JPanel profilePanel, trendingPanel, tweetPanel, followingPanel, followersPanel;
 
     /** Menu Bar. */
     private JMenuBar menuBar;
@@ -89,7 +89,14 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
     /** Background and banner image. */
     private Image profileBanner, backgroundImage;
-
+    
+    // Trending Panel ******************************************************
+    /** serialVersionUID. */
+    private JList<String> jlistTrending;
+    
+    /** GBC Layout. */
+    private GridBagConstraints trendinggbc;
+    
     // Tweet Panel *********************************************************
     /** GBC Layout. */
     private GridBagConstraints gbc;
@@ -195,6 +202,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         // Create components
         createProfilePanel();
         createTweetPanel();
+        createTrendingPanel();
         createFollowingPanel();
         createFollowersPanel();
         createMenu();
@@ -551,6 +559,23 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     }
 
     /****************************************************
+     * Creates trending panel and its components.
+     ***************************************************/
+    private void createTrendingPanel() {
+        trendingPanel = new JPanel() {
+            protected void paintComponent(final Graphics g) {
+                g.drawImage(backgroundImage, 0, 0, null);
+                super.paintComponent(g);
+            }
+        };
+
+        trendingPanel.setOpaque(false);
+        trendingPanel.setLayout(new GridBagLayout());
+        trendinggbc = new GridBagConstraints();
+                
+    }
+    
+    /****************************************************
      * Gets plain button for the profile tab page.
      * 
      * @param String line1
@@ -735,6 +760,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         tabbedPane.setFont(new Font("arial", Font.BOLD, fontsize));
         tabbedPane.setTabLayoutPolicy(JTabbedPane.CENTER);
         tabbedPane.addTab("Profile", profilePanel);
+        tabbedPane.addTab("Trending", trendingPanel);
         tabbedPane.addTab("Tweet", tweetPanel);
         tabbedPane.addTab("Followers", followersPanel);
         tabbedPane.addTab("Following", followingPanel);
@@ -808,9 +834,15 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
         }
         if (source == fingAllButton) {
-            tabbedPane.setSelectedComponent(followingPanel);
+            
         }
         if (source == fingSearchButton) {
+         
+        }
+        if (source == fersAllButton) {
+            
+        }
+        if (source == fersSearchButton) {
          
         }
         if (source == unfollow) {
