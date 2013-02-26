@@ -56,24 +56,23 @@ public class TwitterController {
      * Twitter Controller constructor.
      ***************************************************/
     public TwitterController() {
-        model = new TwitterModel();
+    	model = new TwitterModel();
 
         twitter = new TwitterFactory().getInstance();
         twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_KEY_SECRET);
 
         String token = getAccessToken();
         String tokenSecret = getAccessTokenSecret();
-
+        
         if (token != null && tokenSecret != null) {
             twitter.setOAuthAccessToken(new AccessToken(token, tokenSecret));
-
             isSetUp = true;
-
+            
         } else {
             try {
-                requestToken = twitter.getOAuthRequestToken();
+            	requestToken = twitter.getOAuthRequestToken();
             } catch (TwitterException e) {
-                e.printStackTrace();
+            	e.printStackTrace();
             }
         }
     }
