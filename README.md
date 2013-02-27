@@ -12,21 +12,20 @@ Current Features
 
 Planned for Release 2
 ---------------------
-Search: Fers/Fing (Russ)
-Search: new people/etc (Russ the bus)
-Make the authentication procedure sexier (Rusty Nail)
-  (auto-open browser?)
+* Search: Fers/Fing (Russ)
+* Search: new people/etc (Russ the bus)
+* Make the authentication procedure sexier (Rusty Nail)
+* (auto-open browser?)
 
-Trending/Timeline Panel (Corasaur)
+* Trending/Timeline Panel (Corasaur)
 
-Get follower's status/images/info (Nick)
-   pop-up?
-Tweet images (Nick)
-Udate profile/banner pic (Nick)
+* Get follower's status/images/info popup? (Nick)
+* Tweet images (Nick)
+* Udate profile/banner pic (Nick)
 
-Messages Panel (Vincenzo the amazing)
-System Refresh (Button?) Vincenzo)
-Loading screen (Vincenzo)
+* Messages Panel (Vincenzo the amazing)
+* System Refresh (Button?) Vincenzo)
+* Loading screen (Vincenzo)
 
 
 
