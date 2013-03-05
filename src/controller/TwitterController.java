@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import model.Tweets;
 import model.TwitterModel;
@@ -19,6 +21,7 @@ import org.json.simple.parser.JSONParser;
 
 import twitter4j.ResponseList;
 import twitter4j.Status;
+import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -248,7 +251,27 @@ public class TwitterController {
         try {
             twitter.updateStatus(str);
             return true;
+            
         } catch (TwitterException e) {
+            return false;
+        }
+    }
+    
+    
+    /****************************************************
+     * Post an image as a Tweet. 
+     * 
+     * @param File img
+     * @return Boolean
+     ***************************************************/
+    public boolean tweetImage(File img, String message) {
+        try{
+            StatusUpdate status = new StatusUpdate(message);
+            status.setMedia(img);
+            twitter.updateStatus(status);
+            return true;
+            
+        } catch(TwitterException e) {
             return false;
         }
     }

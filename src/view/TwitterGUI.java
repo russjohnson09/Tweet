@@ -16,12 +16,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -117,13 +119,16 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	private int remaining = CHAR_LIMIT;
 
 	/** JButtons for tweet panel. */
-	private JButton cancel, tweetSubmit, tweetShow;
+	private JButton cancel, tweetSubmit, tweetShow, attachImg;
 
 	/** Labels for characters remaining and total tweets. */
 	private JLabel charsRemaining, tweetTotal;
 
 	/** Text area to type outgoing tweet. */
 	private JTextArea tweetText;
+	
+	/** Image File to be uploaded with tweet */
+	private File attachedFile;
 
 	// Followers Panel *****************************************************
 	/** Final frame height. */
@@ -398,7 +403,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		tweetPanel.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
 
-		// Instantiate vars
 		cancel = new JButton("Cancel");
 		cancel.setFocusable(false);
 		cancel.addActionListener(this);
@@ -408,14 +412,19 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		tweetPanel.add(cancel, gbc);
-
+		
+		attachImg = new JButton("Attach Image");
+        attachImg.setFocusable(false);
+        attachImg.addActionListener(this);
+        gbc.gridx = 1;
+        tweetPanel.add(attachImg, gbc);
+        
 		tweetSubmit = new JButton("Send Tweet");
 		tweetSubmit.setFocusable(false);
 		tweetSubmit.addActionListener(this);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.gridx = 1;
-
+		gbc.gridx = 2;
 		tweetPanel.add(tweetSubmit, gbc);
+		
 
 		tweetText = new JTextArea();
 		tweetText.addKeyListener(this);
@@ -695,15 +704,13 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			descriptionLbl.setForeground(Color.WHITE);
 			panel.add(descriptionLbl, c);
 
-			// double line    
+		// double line    
 		} else if (description.length() < max + max) {
 			String d1, d2;
 
 			String[] w = description.split(" ");
 			int wMid = (w.length / 2) + 1;
-			System.out.println("" + wMid);
 			int dMid = description.length() / 2;
-			System.out.println("" + dMid);
 			d1 = description.substring(0,
 					description.indexOf(w[wMid], dMid - 1));
 			d2 = description.substring(description.indexOf(w[wMid], dMid - 1));
@@ -718,7 +725,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			c.gridy = 2 + 2;
 			panel.add(description2Lbl, c);
 
-			// triple line    
+		// triple line    
 		} else {
 			String d1, d2, d3;
 			String[] w = description.split(" ");
@@ -838,23 +845,38 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		}
 
 		if (source == tweetSubmit) {
-
-			if (tweetText.getText().length() > CHAR_LIMIT) {
-				JOptionPane.showMessageDialog(null, "Tweet is too long.",
-						"Oops", JOptionPane.PLAIN_MESSAGE);
-			} else {
-				if (controller.tweet(tweetText.getText())) {
-					updateTweetCount();
-					JOptionPane.showMessageDialog(null, "Tweet Sent.",
-							"Confirmation", JOptionPane.PLAIN_MESSAGE);
-					e.setSource(cancel);
-					actionPerformed(e); 
-				} else {
-					JOptionPane.showMessageDialog(null, "Tweet could not "
-							+ "be sent.", "Oops", JOptionPane.PLAIN_MESSAGE);
-				}
-			}
-
+		    int length = tweetText.getText().length();
+		    if (length > 0 && length <= 140){
+		        if (attachImg.isEnabled() == true) {
+		            if (controller.tweet(tweetText.getText())) {
+		                updateTweetCount();
+		                JOptionPane.showMessageDialog(null, "Tweet Sent.",
+                            "Confirmation", JOptionPane.PLAIN_MESSAGE);
+		            }
+		        }
+		        else {
+		            if (controller.tweetImage(attachedFile, tweetText.getText())) {
+                        updateTweetCount();
+                        JOptionPane.showMessageDialog(null, "Tweet Sent.",
+                            "Confirmation", JOptionPane.PLAIN_MESSAGE);
+                    }
+		        }  
+		    }
+		    if (length == 0) {
+		        if (attachImg.isEnabled() == true)
+		            JOptionPane.showMessageDialog(null, "Enter text first!");
+		        else
+		            if (controller.tweetImage(attachedFile, tweetText.getText())) {
+                        updateTweetCount();
+                        JOptionPane.showMessageDialog(null, "Tweet Sent.",
+                            "Confirmation", JOptionPane.PLAIN_MESSAGE);
+                    }
+		    }
+		    if (length > 140) {
+		        JOptionPane.showMessageDialog(null, "Tweet is too long");
+		    }
+		    e.setSource(cancel);
+            actionPerformed(e);
 		}
 
 		if (source == about) {
@@ -870,6 +892,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			tweetText.setText("");
 			remaining = 140;
 			charsRemaining.setText("" + remaining);
+			attachedFile = null; 
+            attachImg.setEnabled(true);
 		}
 		if (source == tweetShow) {
 			DialogTweets x = new DialogTweets(this,
@@ -878,20 +902,34 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 				controller.destroyStatus(l);
 			}
 			updateTweetCount();
-
 		}
+		
+		if (source == attachImg) {
+		    JFileChooser jfc = new JFileChooser();
+	        int option = jfc.showOpenDialog(this);
+	        if (option == JFileChooser.APPROVE_OPTION) {
+	            attachedFile = jfc.getSelectedFile();
+	            attachImg.setText("File Attached"); 
+	            attachImg.setEnabled(false);
+	        }
+		}
+		
 		if (source == fingAllButton) {
 
 		}
+		
 		if (source == fingSearchButton) {
 
 		}
+		
 		if (source == fersAllButton) {
 
 		}
+		
 		if (source == fersSearchButton) {
 
 		}
+		
 		if (source == unfollow) {
 			int i = jlistFollowing.getSelectedIndex();
 			if (i >= 0) {
@@ -934,34 +972,19 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	@Override
 	public void keyTyped(final KeyEvent e) {
-	    int charCount = tweetText.getText().length();
-	    
-	    if (charCount <= 0)
-	        charsRemaining.setText("" + 140);
-	    else
-	        charsRemaining.setText("" + (140-charCount));
-	    /*
-		if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
-			if (remaining < 140){
-				remaining++;
-			}
-		} else {
-			remaining--;
-		}
-		if(remaining<0){
-			charsRemaining.setText("** Tweet is too long! **");
-		}else{
-			charsRemaining.setText("" + remaining);
-		}
-		*/
-
+	    if (tabbedPane.getSelectedComponent() == tweetPanel) {
+    	    int charCount = tweetText.getText().length();
+    	    
+    	    if (charCount <= 0)
+    	        charsRemaining.setText("" + 140);
+    	    else
+    	        charsRemaining.setText("" + (140-charCount));
+	    }
 	}
 
 	@Override
-	public void keyPressed(final KeyEvent e) {
-	}
+	public void keyPressed(final KeyEvent e) {}
 
 	@Override
-	public void keyReleased(final KeyEvent e) {
-	}
+	public void keyReleased(final KeyEvent e) {}
 }
