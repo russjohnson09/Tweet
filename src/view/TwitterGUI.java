@@ -934,6 +934,13 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	@Override
 	public void keyTyped(final KeyEvent e) {
+	    int charCount = tweetText.getText().length();
+	    
+	    if (charCount <= 0)
+	        charsRemaining.setText("" + 140);
+	    else
+	        charsRemaining.setText("" + (140-charCount));
+	    /*
 		if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
 			if (remaining < 140){
 				remaining++;
@@ -946,6 +953,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		}else{
 			charsRemaining.setText("" + remaining);
 		}
+		*/
 
 	}
 

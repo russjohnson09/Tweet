@@ -1,9 +1,7 @@
 package model;
 
 import java.util.ArrayList;
-
 import javax.swing.AbstractListModel;
-
 import twitter4j.User;
 
 /****************************************************
@@ -31,12 +29,7 @@ public class Users extends AbstractListModel<String> {
     @Override
     public final String getElementAt(final int i) {
         User u = users.get(i);
-
-        String str = "Name: ";
-        str += u.getName();
-        str += ", Screen Name: ";
-        str += u.getScreenName();
-
+        String str = u.getName() + "  (@" +  u.getScreenName() + ")";
         return str;
     }
 
@@ -62,7 +55,6 @@ public class Users extends AbstractListModel<String> {
      * Removes user.
      *
      * @param index
-     *            int
      * @return long
      ***************************************************/
     public final long remove(final int index) {
