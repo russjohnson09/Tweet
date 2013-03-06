@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -32,9 +33,9 @@ public class DialogTweets extends JDialog implements ActionListener {
     private Tweets tweets;
 
     /** Width of JDialog. */
-    private final int w = 700;
+    private final int w = 400;
     /** Length of JDialog. */
-    private final int l = 700;
+    private final int l = 300;
 
     /****************************************************
      * DialogTweets Class.
@@ -52,9 +53,7 @@ public class DialogTweets extends JDialog implements ActionListener {
         tweets = t;
 
         setTitle("Tweets");
-
-        setSize(w, l);
-        setLocationRelativeTo(parent);
+        setPreferredSize(new Dimension(w, l));
 
         list = new JList<String>(tweets);
 
@@ -68,7 +67,6 @@ public class DialogTweets extends JDialog implements ActionListener {
 
         pack();
         setVisible(true);
-
     }
 
     @Override
@@ -83,7 +81,6 @@ public class DialogTweets extends JDialog implements ActionListener {
                         JOptionPane.PLAIN_MESSAGE);
             }
         }
-
     }
 
     /****************************************************
@@ -94,5 +91,4 @@ public class DialogTweets extends JDialog implements ActionListener {
     public final ArrayList<Long> getRemoveList() {
         return removeList;
     }
-
 }

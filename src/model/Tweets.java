@@ -18,6 +18,7 @@ public class Tweets extends AbstractListModel<String> {
     /** ArrayList tweets. */
     private ArrayList<Status> tweets;
 
+    
     /****************************************************
      * Tweets Constructor.
      ***************************************************/

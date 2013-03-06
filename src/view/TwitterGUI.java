@@ -207,7 +207,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		setUpController();
 
 		// Get User Information
-
 		displayName = controller.getDisplayName();
 		twitterName = controller.getTwitterName();
 		description = controller.getDescription();
@@ -862,7 +861,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                     }
 		        }  
 		    }
-		    if (length == 0) {
+		    else if (length == 0) {
 		        if (attachImg.isEnabled() == true)
 		            JOptionPane.showMessageDialog(null, "Enter text first!");
 		        else
@@ -872,7 +871,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                             "Confirmation", JOptionPane.PLAIN_MESSAGE);
                     }
 		    }
-		    if (length > 140) {
+		    else if (length > 140) {
 		        JOptionPane.showMessageDialog(null, "Tweet is too long");
 		    }
 		    e.setSource(cancel);
@@ -894,6 +893,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			charsRemaining.setText("" + remaining);
 			attachedFile = null; 
             attachImg.setEnabled(true);
+            attachImg.setText("Attach Image");
 		}
 		if (source == tweetShow) {
 			DialogTweets x = new DialogTweets(this,
