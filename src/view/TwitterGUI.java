@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.Event;
@@ -17,9 +18,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -84,6 +89,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	/** Tabbed pane. */
 	private JTabbedPane tabbedPane;
 
+
 	// Profile Panel *******************************************************
 	/** Strings for profile information. */
 	private String displayName, twitterName, description, location, website;
@@ -97,6 +103,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	/** Background and banner image. */
 	private Image profileBanner, backgroundImage;
 
+
 	// Trending Panel ******************************************************
 	/** Final frame height. */
 	private static final int TRENDING_HEIGHT = 300;
@@ -104,12 +111,14 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	/** Final frame width. */
 	private static final int TRENDING_WIDTH = 250;
 
+
 	// Timeline Panel ******************************************************
 	/** Final frame height. */
 	private static final int TIMELINE_HEIGHT = 300;
 
 	/** Final frame width. */
 	private static final int TIMELINE_WIDTH = 500;
+
 
 	// Tweet Panel *********************************************************
 	/** GBC Layout. */
@@ -129,6 +138,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	
 	/** Image File to be uploaded with tweet */
 	private File attachedFile;
+
 
 	// Followers Panel *****************************************************
 	/** Final frame height. */
@@ -154,6 +164,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	/** serialVersionUID. */
 	private JList<String> jlistFollowers;
+	
+	private JList<Icon> followersIconsJL;
 
 	/** Display all followers. */
 	private JButton fersAllButton;
@@ -177,6 +189,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	/** serialVersionUID. */
 	private JList<String> jlistFollowing;
+	
+	private JList<Icon> followingIconsJL;
 
 	/** serialVersionUID. */
 	private JButton unfollow;
@@ -215,7 +229,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		profileImage = controller.getProfileImage();
 		profileBanner = controller.getProfileBanner();
 		backgroundImage = controller.getBackgroundImage();
-
 
 		// Create components
 		createProfilePanel();
@@ -295,6 +308,22 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		followersPanel.add(fersSearchTextArea, fersgbc);
 
 		jlistFollowers = new JList<String>(followers);
+		jlistFollowers.setCellRenderer(new DefaultListCellRenderer() {
+		    @Override
+		    public Component getListCellRendererComponent(JList list, Object value, 
+		            int index, boolean isSelected, boolean cellHasFocus) 
+		    {
+		        JLabel label = (JLabel) super.getListCellRendererComponent(list, 
+		                value, index, isSelected, cellHasFocus);
+		        try {
+                    label.setIcon(new ImageIcon(new URL(followers.getUser(index).getMiniProfileImageURL())));
+                    
+                } catch (MalformedURLException e) {}
+		        return label;
+		    }
+		});
+		
+		
 		fersgbc.gridx = 0;
 		fersgbc.gridy = 1;
 		final int w = 3;
@@ -360,6 +389,20 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		followingPanel.add(fingSearchTextArea, finggbc);
 
 		jlistFollowing = new JList<String>(following);
+		jlistFollowing.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList list, Object value, 
+                    int index, boolean isSelected, boolean cellHasFocus) 
+            {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, 
+                        value, index, isSelected, cellHasFocus);
+                try {
+                    label.setIcon(new ImageIcon(new URL(following.getUser(index).getMiniProfileImageURL())));
+                    
+                } catch (MalformedURLException e) {}
+                return label;
+            }
+        });
 		finggbc.gridx = 0;
 		finggbc.gridy = 1;
 		final int w = 3;

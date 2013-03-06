@@ -32,6 +32,14 @@ public class Users extends AbstractListModel<String> {
         String str = u.getName() + "  (@" +  u.getScreenName() + ")";
         return str;
     }
+    
+    public final User getUser(final int i) {
+        if (i < users.size())
+            return users.get(i);
+        else
+            return null; 
+    }
+    
 
     @Override
     /****************************************************

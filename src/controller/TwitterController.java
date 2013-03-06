@@ -199,6 +199,27 @@ public class TwitterController {
 
         return null;
     }
+    
+    /****************************************************
+     * gets Smaller Profile image.
+     * 
+     * @return ImageIcon profile picture
+     ***************************************************/
+    public final ImageIcon getSmallerProfileImage() {
+        try {
+            return new ImageIcon(new URL(twitter.showUser(twitter.getId())
+                    .getProfileImageURL()));
+        } catch (MalformedURLException e) {
+            return null;
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    
 
     /****************************************************
      * Gets profile banner image.
