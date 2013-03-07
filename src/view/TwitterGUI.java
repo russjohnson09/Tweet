@@ -189,8 +189,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	/** serialVersionUID. */
 	private JList<String> jlistFollowing;
-	
-	private JList<Icon> followingIconsJL;
 
 	/** serialVersionUID. */
 	private JButton unfollow;
@@ -207,14 +205,15 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	/****************************************************
 	 * Graphical User Interface.
 	 ***************************************************/
-	public TwitterGUI(){
+	public TwitterGUI() {
+	    
 		frame = new JFrame();
 		setTitle("Desktop Tweets");
 		setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		setMaximumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-		setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+		//setMaximumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+		//setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 		setResizable(false);
 		setLocationRelativeTo(null);
 
@@ -440,19 +439,16 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 				super.paintComponent(g);
 			}
 		};
-
 		tweetPanel.setOpaque(false);
 		tweetPanel.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
-
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        
 		cancel = new JButton("Cancel");
 		cancel.setFocusable(false);
 		cancel.addActionListener(this);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		final int ipady = 10;
-		gbc.ipady = ipady;
-		gbc.gridx = 0;
-		gbc.gridy = 0;
 		tweetPanel.add(cancel, gbc);
 		
 		attachImg = new JButton("Attach Image");
