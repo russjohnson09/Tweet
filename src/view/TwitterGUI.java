@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.Event;
@@ -19,7 +20,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -221,7 +225,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		setLocationRelativeTo(null);
 
 		setUpController();
-
+		
+		
 		// Get User Information
 		displayName = controller.getDisplayName();
 		twitterName = controller.getTwitterName();
@@ -254,11 +259,19 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		if (!controller.getIsSetUp()) {
 			String authUrl = controller.getAuthUrl();
 			// TODO open browser
-			Toolkit.getDefaultToolkit().getSystemClipboard()
-			.setContents(new StringSelection(authUrl), null);
-			String pin = JOptionPane.showInputDialog("Please "
-					+ " follow this link to authenticate this"
-					+ " App.\nEnter Pin:", authUrl);
+			if(Desktop.isDesktopSupported()) {
+    			try {
+                    Desktop.getDesktop().browse(new URI(authUrl));
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (URISyntaxException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+			}
+
+			String pin = JOptionPane.showInputDialog("Please Enter Pin:");
 			controller.setUp(pin);
 		}
 	}
