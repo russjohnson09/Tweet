@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
@@ -183,6 +184,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	/** Following Search Button. */
 	private JButton fingSearchButton;
+	
+	private JScrollPane fingScrollPane;
 
 	/** Following Search text area. */
 	private JTextArea fingSearchTextArea;
@@ -250,7 +253,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		if (!controller.getIsSetUp()) {
 			String authUrl = controller.getAuthUrl();
-			// copy to clipboard
+			// TODO open browser
 			Toolkit.getDefaultToolkit().getSystemClipboard()
 			.setContents(new StringSelection(authUrl), null);
 			String pin = JOptionPane.showInputDialog("Please "
@@ -274,11 +277,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		followersPanel.setOpaque(false);
 		followersPanel.setLayout(new GridBagLayout());
 		fersgbc = new GridBagConstraints();
-
-		JPanel centerPnl = new JPanel();
-		centerPnl.setBackground(Color.WHITE);
-		centerPnl.setPreferredSize(new Dimension(FOLLOWERS_WIDTH,
-				FOLLOWERS_HEIGHT));
 
 		followers = new Users(controller.getFollowers());
 
@@ -308,7 +306,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 		jlistFollowers = new JList<String>(followers);
 		jlistFollowers.setCellRenderer(new DefaultListCellRenderer() {
-		    @Override
+            @Override
 		    public Component getListCellRendererComponent(JList list, Object value, 
 		            int index, boolean isSelected, boolean cellHasFocus) 
 		    {
@@ -328,9 +326,13 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		final int w = 3;
 		fersgbc.gridwidth = w;
 		fersgbc.fill = GridBagConstraints.HORIZONTAL;
-
-		centerPnl.add(jlistFollowers);
-		followersPanel.add(centerPnl, fersgbc);
+		
+		//TODO
+		JScrollPane scrollPane = new JScrollPane(jlistFollowers);
+		scrollPane.setPreferredSize(new Dimension(FOLLOWERS_WIDTH,
+                FOLLOWERS_HEIGHT));
+		
+		followersPanel.add(scrollPane, fersgbc);
 
 		followersTotal = new JLabel(controller.getFollowersCount() +
 				" Followers");
@@ -355,11 +357,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		followingPanel.setOpaque(false);
 		followingPanel.setLayout(new GridBagLayout());
 		finggbc = new GridBagConstraints();
-
-		JPanel centerPnl = new JPanel();
-		centerPnl.setBackground(Color.WHITE);
-		centerPnl.setPreferredSize(new Dimension(FOLLOWING_WIDTH,
-				FOLLOWING_HEIGHT));
 
 		following = new Users(controller.getFollowing());
 
@@ -408,8 +405,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		finggbc.gridwidth = w;
 		finggbc.fill = GridBagConstraints.HORIZONTAL;
 
-		centerPnl.add(jlistFollowing);
-		followingPanel.add(centerPnl, finggbc);
+		//TODO
+		fingScrollPane = new JScrollPane(jlistFollowing);
+		fingScrollPane.setPreferredSize(new Dimension(FOLLOWING_WIDTH,
+                FOLLOWING_HEIGHT));
+		
+		followingPanel.add(fingScrollPane, finggbc);
 
 		unfollow = new JButton("Unfollow");
 		unfollow.addActionListener(this);
@@ -583,7 +584,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		final int thrity = 30;
 		cpc.ipadx = thrity;
 		countPanel.setOpaque(false);
-		// countPanel.setBackground(Color.WHITE);
 
 		followersBtn = getPlainButton("" + controller.getFollowersCount(),
 				"Followers");
@@ -954,19 +954,19 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		}
 		
 		if (source == fingAllButton) {
-
+		    following.showAll();
 		}
 		
 		if (source == fingSearchButton) {
-
+		    following.search(fingSearchTextArea.getText());
 		}
 		
 		if (source == fersAllButton) {
-
+		    followers.showAll();
 		}
 		
 		if (source == fersSearchButton) {
-
+		    followers.search(fersSearchTextArea.getText());
 		}
 		
 		if (source == unfollow) {
@@ -984,7 +984,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		}
 	}
 
-	/****************************************************
+    /****************************************************
 	 * Updates following count.
 	 ***************************************************/
 	private void updateFollowingCount() {

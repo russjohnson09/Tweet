@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
+import javax.swing.ListModel;
+
 import twitter4j.User;
 
 /****************************************************
@@ -14,6 +16,9 @@ public class Users extends AbstractListModel<String> {
 
     /** Arraylist of users. */
     private ArrayList<User> users;
+    
+    /** ArrayList of users currently being viewed */
+    private ArrayList<User> visible;
 
     /****************************************************
      * Users Constructor.
@@ -24,18 +29,19 @@ public class Users extends AbstractListModel<String> {
     public Users(final ArrayList<User> f) {
         super();
         users = f;
+        visible = new ArrayList<User>(f);
     }
 
     @Override
     public final String getElementAt(final int i) {
-        User u = users.get(i);
+        User u = visible.get(i);
         String str = u.getName() + "  (@" +  u.getScreenName() + ")";
         return str;
     }
     
     public final User getUser(final int i) {
-        if (i < users.size())
-            return users.get(i);
+        if (i < visible.size())
+            return visible.get(i);
         else
             return null; 
     }
@@ -46,7 +52,7 @@ public class Users extends AbstractListModel<String> {
      * Gets user size.
      ***************************************************/
     public final int getSize() {
-        return users.size();
+        return visible.size();
     }
 
     /****************************************************
@@ -57,6 +63,8 @@ public class Users extends AbstractListModel<String> {
      ***************************************************/
     public final void add(final User u) {
         users.add(u);
+        visible.add(u);
+        fireIntervalAdded(this, 0, visible.size());
     }
 
     /****************************************************
@@ -66,9 +74,37 @@ public class Users extends AbstractListModel<String> {
      * @return long
      ***************************************************/
     public final long remove(final int index) {
-        long l = users.get(index).getId();
-        users.remove(index);
-        fireIntervalRemoved(this, 0, users.size());
+        long l = visible.get(index).getId();       
+        for (int i = 0; i< users.size(); i++) {
+            if (l == users.get(i).getId()){
+                users.remove(i);
+                break;
+            }
+        }
+        visible.remove(index);
+        fireIntervalRemoved(this, 0, visible.size());
         return l;
+    }
+    
+    public final void showAll() {
+        visible = new ArrayList<User>(users);
+        fireIntervalAdded(this, 0, visible.size());
+    }
+
+    /****************************************************
+     * Returns a subset of users based on search.
+     ***************************************************/
+    public void search(String query) {
+        query = query.toLowerCase();
+        String str1;
+        String str2;
+        for (int i = visible.size() - 1; i >= 0; i--) {
+            str1 = visible.get(i).getScreenName().toLowerCase();
+            str2 = visible.get(i).getName().toLowerCase();
+            if (!( str1.startsWith(query) || str2.startsWith(query))) {
+                visible.remove(i);
+            }
+        }
+        fireIntervalRemoved(this, 0, visible.size());
     }
 }
