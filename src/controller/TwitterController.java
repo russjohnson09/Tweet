@@ -19,6 +19,7 @@ import model.TwitterModel;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import twitter4j.DirectMessage;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
@@ -488,6 +489,24 @@ public class TwitterController {
     public final String getAuthUrl() {
         return requestToken.getAuthorizationURL();
 
+    }
+    
+    /****************************************************
+     * Gets Direct Messages to the user
+     * 
+     * @return String Users URL
+     ***************************************************/
+    public ResponseList<DirectMessage> getDirectMessages() {
+        //ArrayList<User> users = new ArrayList<User>();
+        ResponseList<DirectMessage> list = null;
+        
+        try {
+            list = twitter.getDirectMessages();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return list;
     }
 
     /****************************************************

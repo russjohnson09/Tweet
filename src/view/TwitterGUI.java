@@ -80,7 +80,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	/** Each panel of the GUI. */
 	private JPanel profilePanel, trendingPanel, timelinePanel,
-		tweetPanel, followingPanel, followersPanel;
+		tweetPanel, followingPanel, followersPanel, messagesPanel;
 
 	/** Menu Bar. */
 	private JMenuBar menuBar;
@@ -208,6 +208,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	/** serialVersionUID. */
 	private JLabel followingTotal;
+	
+	// Messages Panel *********************************************************
+    /** Messages Panel */
+    //private JPanel messages;
 
 	/****************************************************
 	 * Graphical User Interface.
@@ -244,6 +248,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		createTimelinePanel();
 		createFollowingPanel();
 		createFollowersPanel();
+		createMessagesPanel();
 		createMenu();
 		createTabbedPane();
 
@@ -807,6 +812,27 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 			panel.add(description3Lbl, c);
 		}
 	}
+	
+	/****************************************************
+     * Creates Messages panel and its components.
+     ***************************************************/
+    private void createMessagesPanel() {
+        messagesPanel = new JPanel() {
+            protected void paintComponent(final Graphics g) {
+                g.drawImage(backgroundImage, 0, 0, null);
+                super.paintComponent(g);
+            }
+        };
+        messagesPanel.setLayout(new GridBagLayout());
+        gbc = new GridBagConstraints();
+        
+        System.out.println("Messages: " + controller.getDirectMessages());
+        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        
+        
+    }
 
 	/****************************************************
 	 * Creates menu bar.
@@ -869,6 +895,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		tabbedPane.addTab("Tweet", tweetPanel);
 		tabbedPane.addTab("Followers", followersPanel);
 		tabbedPane.addTab("Following", followingPanel);
+		tabbedPane.addTab("Messages", messagesPanel);
 		add(tabbedPane);
 	}
 
