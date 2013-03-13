@@ -27,7 +27,16 @@ public class Tweets extends AbstractListModel<String> {
         tweets = new ArrayList<Status>();
     }
 
-    @Override
+    /****************************************************
+     * returns Tweets arraylist
+     ***************************************************/
+    public ArrayList<Status> getTweets() {
+        return tweets;
+    }
+    
+    /****************************************************
+     * gets element at specified location
+     ***************************************************/
     public final String getElementAt(final int i) {
         Status s = tweets.get(i);
 

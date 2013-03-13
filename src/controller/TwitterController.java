@@ -382,21 +382,27 @@ public class TwitterController {
         return users;
     }
     
-    /****************************************************
-     * 
-     ***************************************************/
-    public JList<Status> getTimeline() {
-        JList<Status> timeline = new JList<Status>();
-        ResponseList <Status> t = null;
-        try {
-            t = twitter.getHomeTimeline();
-        } catch (TwitterException e) {}
-        
-        for (Status s : t) {
-            timeline.add((Component) s);
-        }
-        return timeline;
-    }
+//    /****************************************************
+//     * Returns a array list of the users timeline
+//     * 
+//     * @return ArrayList<Status>
+//     ***************************************************/
+//    public ArrayList<Status> getTimeline() {
+//        ArrayList<Status> timeline = new ArrayList<Status>();
+//        
+//        ResponseList <Status> t = null;
+//        try {
+//            t = twitter.getHomeTimeline();
+//        } 
+//        catch (TwitterException e){}
+//        
+//        
+//        
+//        for (Status s : t) {
+//            timeline.add(s);
+//        }
+//        return timeline;
+//    }
     
     
     /****************************************************

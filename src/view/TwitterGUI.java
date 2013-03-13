@@ -51,6 +51,7 @@ import javax.swing.border.LineBorder;
 
 import twitter4j.TwitterException;
 
+import model.Tweets;
 import model.Users;
 import controller.TwitterController;
 
@@ -114,7 +115,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	private static final int TIMELINE_HEIGHT = 300;
 
 	/** Final frame width. */
-	private static final int TIMELINE_WIDTH = 350;
+	private static final int TIMELINE_WIDTH = 450;
 	
 	/** Final frame height. */
     private static final int TRENDING_HEIGHT = 300;
@@ -227,7 +228,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		setLocationRelativeTo(null);
 		
 		JPanel temp = new JPanel();
-		temp.setBackground(Color.CYAN); //LOADING SCREEN GOES HERE ***           <------------------ NICK THE DICK
+		temp.setBackground(Color.CYAN);
 		add(temp);
 		setVisible(true); 
 		
@@ -659,17 +660,22 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		
 		//Timeline Panel
 		JPanel timelinePnl = new JPanel();
-		JList jlistTimeline = new JList();
-		timelinePnl.add(jlistTimeline);
-		timelinePnl.setPreferredSize(new Dimension(TIMELINE_WIDTH, TIMELINE_HEIGHT));
+		JList<String> jlistTimeline = new JList<String>();
+		Tweets tweets = controller.getHomeTimeline();
+		jlistTimeline = new JList<String>(tweets);
+				
+		JScrollPane scrollPane = new JScrollPane(jlistTimeline);
+        scrollPane.setPreferredSize(new Dimension(TIMELINE_WIDTH,TIMELINE_HEIGHT));
+		
+		timelinePnl.add(scrollPane);
 		
 		timelinegbc.gridx = 0;
         timelinegbc.gridy = 0;
         timelinegbc.fill = GridBagConstraints.HORIZONTAL;
+        timelinePnl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         timelinePanel.add(timelinePnl, timelinegbc);
         
-        //external padding between timeline and trending panels
-        timelinegbc.insets = new Insets(0,20,0,0);
+        timelinegbc.insets = new Insets(0,15,0,0);
         
         //Trending Panel
         JPanel trendingPnl = new JPanel();
@@ -677,6 +683,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         trendingPnl.add(jlistTrending);
         trendingPnl.setPreferredSize(new Dimension(TRENDING_WIDTH, TRENDING_HEIGHT));
         timelinegbc.gridx = 1;
+        trendingPnl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         timelinePanel.add(trendingPnl, timelinegbc);
 		
 		

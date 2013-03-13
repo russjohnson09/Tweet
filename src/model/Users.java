@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 import javax.swing.ListModel;
 
+import twitter4j.Status;
 import twitter4j.User;
 
 /****************************************************
@@ -107,4 +108,6 @@ public class Users extends AbstractListModel<String> {
         }
         fireIntervalRemoved(this, 0, visible.size());
     }
+    
+    
 }
