@@ -95,6 +95,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
 	/** Tabbed pane. */
 	private JTabbedPane tabbedPane;
+	
+	private LoadingPanel loadingPanel;
 
 
 	// Profile Panel *******************************************************
@@ -226,35 +228,43 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		//setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 		setResizable(false);
 		setLocationRelativeTo(null);
-		
-		JPanel temp = new JPanel();
-		temp.setBackground(Color.CYAN);
-		add(temp);
+		loadingPanel= new LoadingPanel();
+		add(loadingPanel);
 		setVisible(true); 
-		
+		loadingPanel.incrementLoadingScreen();
 		setUpController();
 				
 		// Get User Information
 		displayName = controller.getDisplayName();
 		twitterName = controller.getTwitterName();
+		loadingPanel.incrementLoadingScreen();
 		description = controller.getDescription();
+		loadingPanel.incrementLoadingScreen();
 		location = controller.getLocation();
+		loadingPanel.incrementLoadingScreen();
 		website = controller.getWebsite();
+		loadingPanel.incrementLoadingScreen();
 		profileImage = controller.getProfileImage();
+		loadingPanel.incrementLoadingScreen();
 		profileBanner = controller.getProfileBanner();
+		loadingPanel.incrementLoadingScreen();
 		backgroundImage = controller.getBackgroundImage();
 
 		// Create components
 		createProfilePanel();
+		loadingPanel.incrementLoadingScreen();
 		createTweetPanel();
 		createTimelinePanel();
+		loadingPanel.incrementLoadingScreen();
 		createFollowingPanel();
 		createFollowersPanel();
+		loadingPanel.incrementLoadingScreen();
 		createMessagesPanel();
 		createMenu();
+		loadingPanel.incrementLoadingScreen();
 		createTabbedPane();
-
-		remove(temp);
+		loadingPanel.incrementLoadingScreen();
+		remove(loadingPanel);
 	}
 
 	/****************************************************

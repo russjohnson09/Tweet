@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -28,21 +30,23 @@ public class LoadingPanel extends JPanel {
         loadPercent = 0;
         super.setVisible(true);
         super.setLayout(new BorderLayout());
-        super.setBackground(Color.WHITE);
-       
+        super.setOpaque(false);
         Font font = new Font("arial", Font.BOLD, 20);
         
         JLabel waitLbl = new JLabel ("Please Wait");
         waitLbl.setFont(font);
+        waitLbl.setForeground(Color.WHITE);
         JLabel loadLbl = new JLabel("The Application is Loading");
+        loadLbl.setForeground(Color.WHITE);
         loadLbl.setFont(font);
         
         JPanel loadPnl = new JPanel();
-        BoxLayout bl = new BoxLayout(loadPnl, BoxLayout.Y_AXIS);
-        loadPnl.setLayout(bl);
-        loadPnl.setBackground(Color.WHITE);
-        loadPnl.add(waitLbl);
-        loadPnl.add(loadLbl);
+        loadPnl.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        loadPnl.add(waitLbl, gbc);
+        loadPnl.setOpaque(false);
+        gbc.gridy = 1;
+        loadPnl.add(loadLbl, gbc);
         super.add(loadPnl, BorderLayout.CENTER);
         
         loadBar = new JPanel();
