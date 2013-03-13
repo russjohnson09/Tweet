@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileReader;
@@ -11,6 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import model.Tweets;
@@ -383,15 +385,15 @@ public class TwitterController {
     /****************************************************
      * 
      ***************************************************/
-    public ArrayList<Status> getTimeline() {
-        ArrayList<Status> timeline = new ArrayList<Status>();
+    public JList<Status> getTimeline() {
+        JList<Status> timeline = new JList<Status>();
         ResponseList <Status> t = null;
         try {
             t = twitter.getHomeTimeline();
         } catch (TwitterException e) {}
         
         for (Status s : t) {
-            timeline.add(s);
+            timeline.add((Component) s);
         }
         return timeline;
     }
