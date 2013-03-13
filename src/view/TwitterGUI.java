@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -79,7 +80,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	private JFrame frame;
 
 	/** Each panel of the GUI. */
-	private JPanel profilePanel, trendingPanel, timelinePanel,
+	private JPanel profilePanel, timelinePanel,
 		tweetPanel, followingPanel, followersPanel, messagesPanel;
 
 	/** Menu Bar. */
@@ -108,21 +109,18 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	/** Background and banner image. */
 	private Image profileBanner, backgroundImage;
 
-
-	// Trending Panel ******************************************************
-	/** Final frame height. */
-	private static final int TRENDING_HEIGHT = 300;
-
-	/** Final frame width. */
-	private static final int TRENDING_WIDTH = 250;
-
-
 	// Timeline Panel ******************************************************
 	/** Final frame height. */
 	private static final int TIMELINE_HEIGHT = 300;
 
 	/** Final frame width. */
-	private static final int TIMELINE_WIDTH = 500;
+	private static final int TIMELINE_WIDTH = 350;
+	
+	/** Final frame height. */
+    private static final int TRENDING_HEIGHT = 300;
+
+    /** Final frame width. */
+    private static final int TRENDING_WIDTH = 150;
 
 
 	// Tweet Panel *********************************************************
@@ -220,17 +218,21 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 	    
 		frame = new JFrame();
 		setTitle("Desktop Tweets");
-		setBackground(Color.WHITE);
+		setBackground(Color.CYAN);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		//setMaximumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 		//setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 		setResizable(false);
 		setLocationRelativeTo(null);
-
+		
+		JPanel temp = new JPanel();
+		temp.setBackground(Color.CYAN); //LOADING SCREEN GOES HERE ***           <------------------ NICK THE DICK
+		add(temp);
+		setVisible(true); 
+		
 		setUpController();
-		
-		
+				
 		// Get User Information
 		displayName = controller.getDisplayName();
 		twitterName = controller.getTwitterName();
@@ -244,7 +246,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		// Create components
 		createProfilePanel();
 		createTweetPanel();
-		createTrendingPanel();
 		createTimelinePanel();
 		createFollowingPanel();
 		createFollowersPanel();
@@ -252,7 +253,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		createMenu();
 		createTabbedPane();
 
-		setVisible(true);
+		remove(temp);
 	}
 
 	/****************************************************
@@ -638,33 +639,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		profilePanel.add(countPanel, BorderLayout.SOUTH);
 	}
 
-	/****************************************************
-	 * Creates trending panel and its components.
-	 ***************************************************/
-	private void createTrendingPanel() {
-		trendingPanel = new JPanel() {
-			protected void paintComponent(final Graphics g) {
-				g.drawImage(backgroundImage, 0, 0, null);
-				super.paintComponent(g);
-			}
-		};
-
-		trendingPanel.setOpaque(false);
-
-		JPanel centerPnl = new JPanel();
-		centerPnl.setBackground(Color.WHITE);
-		centerPnl.setPreferredSize(new Dimension(TRENDING_WIDTH,
-				TRENDING_HEIGHT));
-
-		JList jlistTrending = new JList();
-		centerPnl.add(jlistTrending);
-
-		trendingPanel.add(centerPnl);
-	}
-
+	
 	/****************************************************
 	 * Creates Timeline panel and its components.
 	 ***************************************************/
+	//here
 	private void createTimelinePanel() {
 		timelinePanel = new JPanel() {
 			protected void paintComponent(final Graphics g) {
@@ -674,16 +653,34 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		};
 
 		timelinePanel.setOpaque(false);
+		timelinePanel.setLayout(new GridBagLayout());
+		GridBagConstraints timelinegbc = new GridBagConstraints();
 		
-		JPanel centerPnl = new JPanel();
-		centerPnl.setBackground(Color.WHITE);
-		centerPnl.setPreferredSize(new Dimension(TIMELINE_WIDTH,
-				TIMELINE_HEIGHT));
-
+		
+		//Timeline Panel
+		JPanel timelinePnl = new JPanel();
 		JList jlistTimeline = new JList();
-		centerPnl.add(jlistTimeline);
-
-		timelinePanel.add(centerPnl);
+		timelinePnl.add(jlistTimeline);
+		timelinePnl.setPreferredSize(new Dimension(TIMELINE_WIDTH, TIMELINE_HEIGHT));
+		
+		timelinegbc.gridx = 0;
+        timelinegbc.gridy = 0;
+        timelinegbc.fill = GridBagConstraints.HORIZONTAL;
+        timelinePanel.add(timelinePnl, timelinegbc);
+        
+        //external padding between timeline and trending panels
+        timelinegbc.insets = new Insets(0,20,0,0);
+        
+        //Trending Panel
+        JPanel trendingPnl = new JPanel();
+        JList jlistTrending = new JList();
+        trendingPnl.add(jlistTrending);
+        trendingPnl.setPreferredSize(new Dimension(TRENDING_WIDTH, TRENDING_HEIGHT));
+        timelinegbc.gridx = 1;
+        timelinePanel.add(trendingPnl, timelinegbc);
+		
+		
+		
 	}
 	
 	/****************************************************
@@ -826,8 +823,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         messagesPanel.setLayout(new GridBagLayout());
         gbc = new GridBagConstraints();
         
-        System.out.println("Messages: " + controller.getDirectMessages());
-        
         gbc.gridx = 0;
         gbc.gridy = 0;
         
@@ -891,7 +886,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.CENTER);
 		tabbedPane.addTab("Profile", profilePanel);
 		tabbedPane.addTab("Timeline", timelinePanel);
-		tabbedPane.addTab("Trending", trendingPanel);
 		tabbedPane.addTab("Tweet", tweetPanel);
 		tabbedPane.addTab("Followers", followersPanel);
 		tabbedPane.addTab("Following", followingPanel);
