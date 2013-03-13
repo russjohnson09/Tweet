@@ -30,6 +30,7 @@ import twitter4j.User;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
+
 /****************************************************
  * Tweets Class.
  * @author Nick, Vincenzo, Corey, Russ
@@ -378,7 +379,24 @@ public class TwitterController {
         }
         return users;
     }
-
+    
+    /****************************************************
+     * 
+     ***************************************************/
+    public ArrayList<Status> getTimeline() {
+        ArrayList<Status> timeline = new ArrayList<Status>();
+        ResponseList <Status> t = null;
+        try {
+            t = twitter.getHomeTimeline();
+        } catch (TwitterException e) {}
+        
+        for (Status s : t) {
+            timeline.add(s);
+        }
+        return timeline;
+    }
+    
+    
     /****************************************************
      * Unfollows user.
      * 
