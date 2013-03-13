@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -51,6 +54,13 @@ public class LoadingPanel extends JPanel {
         bottomBar.setBackground(Color.GRAY);
         bottomBar.add(loadBar);
         super.add(bottomBar, BorderLayout.SOUTH);
+        
+        
+    }
+    
+    protected void paintComponent(final Graphics g) {
+        g.drawImage(new ImageIcon("src/background.jpeg").getImage(), 0, 0, null);
+        super.paintComponent(g);
     }
     
     
