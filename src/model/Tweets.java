@@ -43,7 +43,7 @@ public class Tweets extends AbstractListModel<String> {
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("MM/dd/yyyy");
 
-        String str = s.getText() + "  (" + df.format(s.getCreatedAt()) + ")";
+        String str = s.getUser().getName()+ " (" + df.format(s.getCreatedAt()) + ") --- " + s.getText();
         return str;
     }
 

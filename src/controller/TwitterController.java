@@ -25,6 +25,7 @@ import twitter4j.DirectMessage;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
+import twitter4j.Trends;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -381,30 +382,7 @@ public class TwitterController {
         }
         return users;
     }
-    
-//    /****************************************************
-//     * Returns a array list of the users timeline
-//     * 
-//     * @return ArrayList<Status>
-//     ***************************************************/
-//    public ArrayList<Status> getTimeline() {
-//        ArrayList<Status> timeline = new ArrayList<Status>();
-//        
-//        ResponseList <Status> t = null;
-//        try {
-//            t = twitter.getHomeTimeline();
-//        } 
-//        catch (TwitterException e){}
-//        
-//        
-//        
-//        for (Status s : t) {
-//            timeline.add(s);
-//        }
-//        return timeline;
-//    }
-    
-    
+       
     /****************************************************
      * Unfollows user.
      * 
@@ -464,7 +442,25 @@ public class TwitterController {
             e.printStackTrace();
         }
     }
-
+    
+    /****************************************************
+     * Gets trending
+     * 
+     * @return Trends
+     ***************************************************/
+    public final Trends getTrending() {
+        Trends trends;
+        try {
+            trends = twitter.getPlaceTrends(2379574);
+            // This is chicago's WOEID
+            return trends;
+        } catch (TwitterException e) {
+            e.printStackTrace();
+            return null;
+        }
+        
+    }
+    
     /****************************************************
      * Gets home timeline.
      * 

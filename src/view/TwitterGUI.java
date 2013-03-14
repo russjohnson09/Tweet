@@ -52,6 +52,8 @@ import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.border.LineBorder;
 
+import twitter4j.Trends;
+import twitter4j.Trend;
 import twitter4j.TwitterException;
 
 import model.Tweets;
@@ -585,11 +587,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         Tweets tweets = controller.getHomeTimeline();
         jlistTimeline = new JList<String>(tweets);
 
-        JScrollPane scrollPane = new JScrollPane(jlistTimeline);
-        scrollPane.setPreferredSize(new Dimension(TIMELINE_WIDTH,
+        JScrollPane TimelineScrollPane = new JScrollPane(jlistTimeline);
+        TimelineScrollPane.setPreferredSize(new Dimension(TIMELINE_WIDTH,
                 TIMELINE_HEIGHT));
 
-        timelinePnl.add(scrollPane);
+        timelinePnl.add(TimelineScrollPane);
 
         timelinegbc.gridx = 0;
         timelinegbc.gridy = 0;
@@ -600,10 +602,18 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         timelinegbc.insets = new Insets(0, 15, 0, 0);
 
         // Trending Panel
+        Trends rawTrends = controller.getTrending();
+        Trend[] trendArray = rawTrends.getTrends();
+        String[] strTrends = new String[10];
+        for(int x=0;x<10;x++){
+            strTrends[x] = trendArray[x].getName();
+        }
+        JList<String> jlistTrending = new JList<String>(strTrends);
         JPanel trendingPnl = new JPanel();
-        JList jlistTrending = new JList();
-        trendingPnl.add(jlistTrending);
-        trendingPnl.setPreferredSize(new Dimension(TRENDING_WIDTH,
+        JScrollPane TrendingScrollPane = new JScrollPane(jlistTrending);
+        
+        trendingPnl.add(TrendingScrollPane);
+        TrendingScrollPane.setPreferredSize(new Dimension(TRENDING_WIDTH,
                 TRENDING_HEIGHT));
         timelinegbc.gridx = 1;
         trendingPnl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
