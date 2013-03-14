@@ -120,17 +120,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     private static final int TIMELINE_HEIGHT = 300;
 
     /** Final frame width. */
-    private static final int TIMELINE_WIDTH = 450;
-
-    /** Final frame height. */
-    private static final int TRENDING_HEIGHT = 300;
-
-    /** Final frame width. */
-    private static final int TRENDING_WIDTH = 150;
+    private static final int TIMELINE_WIDTH = 600;
 
     // Tweet Panel *********************************************************
     /** GBC Layout. */
-    private GridBagConstraints gbc;
+    private GridBagConstraints tweetgbc;
 
     /** Chars remaining. */
     private int remaining = CHAR_LIMIT;
@@ -146,7 +140,13 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
     /** Image File to be uploaded with tweet */
     private File attachedFile;
+    
+    /** Final frame height. */
+    private static final int TRENDING_HEIGHT = 300;
 
+    /** Final frame width. */
+    private static final int TRENDING_WIDTH = 200;
+    
     // Followers Panel *****************************************************
     /** Final frame height. */
     private static final int FOLLOWERS_HEIGHT = 300;
@@ -504,27 +504,35 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         };
         tweetPanel.setOpaque(false);
         tweetPanel.setLayout(new GridBagLayout());
-        gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
+        
+        GridBagConstraints panelgbc = new GridBagConstraints();
+           
+        
+        // This is the tweet half
+        JPanel tweetPnl = new JPanel();
+        tweetPnl.setLayout(new GridBagLayout());
+        
+        tweetgbc = new GridBagConstraints();
+        tweetgbc.fill = GridBagConstraints.HORIZONTAL;
+        tweetgbc.gridx = 0;
+        tweetgbc.gridy = 0;
 
         cancel = new JButton("Cancel");
         cancel.setFocusable(false);
         cancel.addActionListener(this);
-        tweetPanel.add(cancel, gbc);
+        tweetPnl.add(cancel, tweetgbc);
 
         attachImg = new JButton("Attach Image");
         attachImg.setFocusable(false);
         attachImg.addActionListener(this);
-        gbc.gridx = 1;
-        tweetPanel.add(attachImg, gbc);
+        tweetgbc.gridx = 1;
+        tweetPnl.add(attachImg, tweetgbc);
 
         tweetSubmit = new JButton("Send Tweet");
         tweetSubmit.setFocusable(false);
         tweetSubmit.addActionListener(this);
-        gbc.gridx = 2;
-        tweetPanel.add(tweetSubmit, gbc);
+        tweetgbc.gridx = 2;
+        tweetPnl.add(tweetSubmit, tweetgbc);
 
         tweetText = new JTextArea();
         tweetText.addKeyListener(this);
@@ -535,32 +543,57 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         final int row = 8;
         tweetText.setRows(row);
         tweetText.setLineWrap(true);
-        gbc.gridx = 0;
-        gbc.gridy = 1;
+        tweetgbc.gridx = 0;
+        tweetgbc.gridy = 1;
         final int w = 3;
-        gbc.gridwidth = w;
-        tweetPanel.add(tweetText, gbc);
+        tweetgbc.gridwidth = w;
+        tweetPnl.add(tweetText, tweetgbc);
 
         charsRemaining = new JLabel("140", JLabel.RIGHT);
-        gbc.gridx = 2;
-        gbc.gridy = 2;
-        tweetPanel.add(charsRemaining, gbc);
+        tweetgbc.gridx = 2;
+        tweetgbc.gridy = 2;
+        tweetPnl.add(charsRemaining, tweetgbc);
 
         tweetTotal = new JLabel(controller.getTweetCount() + " Tweets");
-        gbc.gridx = 0;
+        tweetgbc.gridx = 0;
         final int gridy = 3;
-        gbc.gridy = gridy;
-        gbc.gridwidth = 1;
-        tweetPanel.add(tweetTotal, gbc);
+        tweetgbc.gridy = gridy;
+        tweetgbc.gridwidth = 1;
+        tweetPnl.add(tweetTotal, tweetgbc);
 
         tweetShow = new JButton("Show Tweets");
         tweetShow.setFocusable(false);
         tweetShow.addActionListener(this);
-        gbc.gridx = 1;
-        gbc.gridy = gridy;
-        gbc.gridwidth = 1;
-        gbc.anchor = GridBagConstraints.PAGE_END;
-        tweetPanel.add(tweetShow, gbc);
+        tweetgbc.gridx = 1;
+        tweetgbc.gridy = gridy;
+        tweetgbc.gridwidth = 1;
+        tweetgbc.anchor = GridBagConstraints.PAGE_END;
+        tweetPnl.add(tweetShow, tweetgbc);
+        tweetPnl.setOpaque(false);
+        tweetPanel.add(tweetPnl, panelgbc);
+        
+        panelgbc.insets = new Insets(0,15,0,0);//padding
+
+        // This is the trending half
+        JPanel trendingPnl = new JPanel();
+        
+        Trends rawTrends = controller.getTrending();
+        Trend[] trendArray = rawTrends.getTrends();
+        String[] strTrends = new String[10];
+        for(int x=0;x<10;x++){
+            strTrends[x] = trendArray[x].getName();
+        }
+        JList<String> jlistTrending = new JList<String>(strTrends);
+        JScrollPane TrendingScrollPane = new JScrollPane(jlistTrending);
+        
+        trendingPnl.add(TrendingScrollPane);
+        TrendingScrollPane.setPreferredSize(new Dimension(TRENDING_WIDTH,
+                TRENDING_HEIGHT));
+        trendingPnl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        panelgbc.gridx = 1;
+        tweetPanel.add(trendingPnl, panelgbc);
+        
+        
     }
 
     
@@ -601,24 +634,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
         timelinegbc.insets = new Insets(0, 15, 0, 0);
 
-        // Trending Panel
-        Trends rawTrends = controller.getTrending();
-        Trend[] trendArray = rawTrends.getTrends();
-        String[] strTrends = new String[10];
-        for(int x=0;x<10;x++){
-            strTrends[x] = trendArray[x].getName();
-        }
-        JList<String> jlistTrending = new JList<String>(strTrends);
-        JPanel trendingPnl = new JPanel();
-        JScrollPane TrendingScrollPane = new JScrollPane(jlistTrending);
-        
-        trendingPnl.add(TrendingScrollPane);
-        TrendingScrollPane.setPreferredSize(new Dimension(TRENDING_WIDTH,
-                TRENDING_HEIGHT));
-        timelinegbc.gridx = 1;
-        trendingPnl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        timelinePanel.add(trendingPnl, timelinegbc);
-
     }
 
 
@@ -635,10 +650,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         };
         messagesPanel.setOpaque(false);
         messagesPanel.setLayout(new GridBagLayout());
-        gbc = new GridBagConstraints();
+        tweetgbc = new GridBagConstraints();
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
+        tweetgbc.gridx = 0;
+        tweetgbc.gridy = 0;
 
     }
 
