@@ -645,13 +645,14 @@ public class TwitterController {
         
     }
 
-    public void follow(long l) {
+    public User follow(long l) {
         try {
-            twitter.createFriendship(l);
+            return twitter.createFriendship(l);
         } catch (TwitterException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return null;
         
     }
 

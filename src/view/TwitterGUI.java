@@ -58,6 +58,7 @@ import twitter4j.ResponseList;
 import twitter4j.Trends;
 import twitter4j.Trend;
 import twitter4j.TwitterException;
+import twitter4j.User;
 
 import model.Tweets;
 import model.Users;
@@ -970,8 +971,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         if (source == addFollowingBtn) {
             int i = jlistAddFollowing.getSelectedIndex();
             if (i >= 0) {
-                long l = following.showId(i);
-                controller.follow(l);
+                long l = followingSearch.showId(i);
+                User u = controller.follow(l);
+                following.add(u);
             } else {
                 JOptionPane.showMessageDialog(null,
                         "Please first select a person or group", "Oops!",
