@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.ScrollPane;
@@ -123,6 +124,13 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
     /** Final frame width. */
     private static final int TIMELINE_WIDTH = 600;
+    
+    JButton homeTlBtn;
+    JButton userTlBtn;
+    
+    JList<String> jlistTimeline;
+    Tweets tweets;
+    JScrollPane TimelineScrollPane;
 
     // Tweet Panel *********************************************************
     /** GBC Layout. */
@@ -144,7 +152,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     private File attachedFile;
     
     /** Final frame height. */
-    private static final int TRENDING_HEIGHT = 300;
+    private static final int TRENDING_HEIGHT = 250;
 
     /** Final frame width. */
     private static final int TRENDING_WIDTH = 200;
@@ -539,6 +547,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         tweetText = new JTextArea();
         tweetText.addKeyListener(this);
         tweetText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        tweetText.setPreferredSize(new Dimension(300,195));
         tweetText.setFocusable(true);
         final int col = 30;
         tweetText.setColumns(col);
@@ -598,12 +607,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         
     }
 
-    
-
     /****************************************************
      * Creates Timeline panel and its components.
      ***************************************************/
-    // here
     private void createTimelinePanel() {
         timelinePanel = new JPanel() {
             protected void paintComponent(final Graphics g) {
@@ -614,27 +620,40 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
         timelinePanel.setOpaque(false);
         timelinePanel.setLayout(new GridBagLayout());
-        GridBagConstraints timelinegbc = new GridBagConstraints();
-
+        GridBagConstraints timelinePanelgbc = new GridBagConstraints();
+        
+        // Button Panel
+        JPanel tlButtonPnl = new JPanel();
+        tlButtonPnl.setLayout(new GridLayout(1,2));
+        homeTlBtn = new JButton("Home Timeline");
+        userTlBtn = new JButton("User Timeline");
+        homeTlBtn.addActionListener(this);
+        userTlBtn.addActionListener(this);
+        tlButtonPnl.add(homeTlBtn);
+        tlButtonPnl.add(userTlBtn);
+        
+        timelinePanelgbc.gridx=0;
+        timelinePanelgbc.gridy=0;
+        timelinePanel.add(tlButtonPnl, timelinePanelgbc);
+        
         // Timeline Panel
+        GridBagConstraints timelinegbc = new GridBagConstraints();
+        
         JPanel timelinePnl = new JPanel();
-        JList<String> jlistTimeline = new JList<String>();
-        Tweets tweets = controller.getHomeTimeline();
+        tweets = controller.getHomeTimeline();
         jlistTimeline = new JList<String>(tweets);
 
-        JScrollPane TimelineScrollPane = new JScrollPane(jlistTimeline);
+        TimelineScrollPane = new JScrollPane(jlistTimeline);
         TimelineScrollPane.setPreferredSize(new Dimension(TIMELINE_WIDTH,
                 TIMELINE_HEIGHT));
 
         timelinePnl.add(TimelineScrollPane);
 
-        timelinegbc.gridx = 0;
-        timelinegbc.gridy = 0;
+        
+        timelinePanelgbc.gridy = 1;
         timelinegbc.fill = GridBagConstraints.HORIZONTAL;
         timelinePnl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        timelinePanel.add(timelinePnl, timelinegbc);
-
-        timelinegbc.insets = new Insets(0, 15, 0, 0);
+        timelinePanel.add(timelinePnl, timelinePanelgbc);
 
     }
 
@@ -787,7 +806,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                 }
             } else if (length == 0) {
                 if (attachImg.isEnabled() == true)
-                    JOptionPane.showMessageDialog(null, "Enter text first!");
+                    JOptionPane.showMessageDialog(null, "Tweet is still empty.",
+                            "Oops!", JOptionPane.PLAIN_MESSAGE);
                 else if (controller.tweetImage(attachedFile,
                         tweetText.getText())) {
                     updateTweetCount();
@@ -795,7 +815,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                             "Confirmation", JOptionPane.PLAIN_MESSAGE);
                 }
             } else if (length > 140) {
-                JOptionPane.showMessageDialog(null, "Tweet is too long");
+                JOptionPane.showMessageDialog(null, "Tweet is too long.",
+                        "Oops!", JOptionPane.PLAIN_MESSAGE);
             }
             e.setSource(cancel);
             actionPerformed(e);
@@ -839,7 +860,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                 attachImg.setEnabled(false);
             }
         }
-
+        
         if (source == fingAllButton) {
             following.showAll();
         }
