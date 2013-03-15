@@ -640,4 +640,19 @@ public class TwitterController {
 
     }
 
+    public ResponseList<User> searchUsers(String text) throws TwitterException {
+        return twitter.searchUsers(text, 1);
+        
+    }
+
+    public void follow(long l) {
+        try {
+            twitter.createFriendship(l);
+        } catch (TwitterException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+    }
+
 }

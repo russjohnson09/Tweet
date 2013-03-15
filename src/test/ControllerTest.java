@@ -1,8 +1,8 @@
 package test;
 
 import static org.junit.Assert.*;
-import TwitterController;
-import TwitterGUI;
+import controller.TwitterController;
+import view.TwitterGUI;
 
 import org.easymock.EasyMock;
 import static org.easymock.EasyMock.expect;

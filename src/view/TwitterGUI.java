@@ -115,6 +115,17 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     // Profile Panel *******************************************************
     /** Buttons for profile: Followers, Following, and number of tweets. */
    // private JButton followersBtn, followingBtn, tweetsBtn;
+    
+    
+    
+    
+    //TODO
+    private JPanel addFollowingPanel;
+    private Users followingSearch;
+    private JTextArea addFollowingSearchTextArea;
+    private JList<String> jlistAddFollowing;
+    private JButton addFollowingSearchButton;
+    private JButton addFollowingBtn;
 
     
 
@@ -255,6 +266,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         loadingPanel.incrementLoadingScreen();
         createFollowingPanel();
         createFollowersPanel();
+        createAddFollowingPanel();
         loadingPanel.incrementLoadingScreen();
         createMessagesPanel();
         createMenu();
@@ -262,6 +274,13 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         createTabbedPane();
         loadingPanel.incrementLoadingScreen();
         remove(loadingPanel);
+        
+        //fixes bug in linux
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0 || os.indexOf("aix") > 0 ){
+            setVisible(false);
+            setVisible(true);
+        }
     }
 
     /****************************************************
@@ -396,7 +415,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         fersgbc.gridwidth = w;
         fersgbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // TODO
         JScrollPane scrollPane = new JScrollPane(jlistFollowers);
         scrollPane.setPreferredSize(new Dimension(FOLLOWERS_WIDTH,
                 FOLLOWERS_HEIGHT));
@@ -477,7 +495,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         finggbc.gridwidth = w;
         finggbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // TODO
         fingScrollPane = new JScrollPane(jlistFollowing);
         fingScrollPane.setPreferredSize(new Dimension(FOLLOWING_WIDTH,
                 FOLLOWING_HEIGHT));
@@ -679,6 +696,74 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         ResponseList<DirectMessage> rl = controller.getAllMessages();
         // Do some shit from here
     }
+    
+    private void createAddFollowingPanel(){
+        addFollowingPanel = new JPanel() {
+            protected void paintComponent(final Graphics g) {
+                g.drawImage(backgroundImage, 0, 0, null);
+                super.paintComponent(g);
+            }
+        };
+    
+        addFollowingPanel.setOpaque(false);
+        addFollowingPanel.setLayout(new GridBagLayout());
+        fersgbc = new GridBagConstraints();
+    
+        followingSearch = new Users();
+    
+        addFollowingSearchButton = new JButton("Search");
+        addFollowingSearchButton.addActionListener(this);
+        fersgbc.gridx = 1;
+        fersgbc.gridy = 0;
+        fersgbc.gridwidth = 1;
+        fersgbc.fill = 1;
+        addFollowingPanel.add(addFollowingSearchButton, fersgbc);
+    
+        addFollowingSearchTextArea = new JTextArea();
+        addFollowingSearchTextArea
+                .setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        fersgbc.gridx = 2;
+        fersgbc.gridy = 0;
+        fersgbc.gridwidth = 1;
+        fersgbc.fill = 1;
+        addFollowingPanel.add(addFollowingSearchTextArea, fersgbc);
+    
+        jlistAddFollowing = new JList<String>(followingSearch);
+        jlistAddFollowing.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList list,
+                    Object value, int index, boolean isSelected,
+                    boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(
+                        list, value, index, isSelected, cellHasFocus);
+                try {
+                    label.setIcon(new ImageIcon(new URL(followingSearch
+                            .getUser(index).getMiniProfileImageURL())));
+    
+                } catch (MalformedURLException e) {
+                }
+                return label;
+            }
+    });
+
+    fersgbc.gridx = 0;
+    fersgbc.gridy = 1;
+    final int w = 3;
+    fersgbc.gridwidth = w;
+    fersgbc.fill = GridBagConstraints.HORIZONTAL;
+
+    // TODO
+    JScrollPane scrollPane = new JScrollPane(jlistAddFollowing);
+    scrollPane.setPreferredSize(new Dimension(FOLLOWERS_WIDTH,
+            FOLLOWERS_HEIGHT));
+
+    addFollowingPanel.add(scrollPane, fersgbc);
+    
+    addFollowingBtn = new JButton("Add");
+    addFollowingBtn.addActionListener(this);
+    addFollowingPanel.add(addFollowingBtn);
+    
+    }
 
     /****************************************************
      * Creates menu bar.
@@ -760,6 +845,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         tabbedPane.addTab("Followers", followersPanel);
         tabbedPane.addTab("Following", followingPanel);
         tabbedPane.addTab("Messages", messagesPanel);
+        tabbedPane.addTab("Add Following", addFollowingPanel);
         add(tabbedPane);
     }
 
@@ -875,6 +961,22 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
         if (source == fersSearchButton) {
             followers.search(fersSearchTextArea.getText());
+        }
+        
+        if (source == addFollowingSearchButton) {
+            followingSearch.searchTwitter(addFollowingSearchTextArea.getText(), controller);
+        }
+        
+        if (source == addFollowingBtn) {
+            int i = jlistAddFollowing.getSelectedIndex();
+            if (i >= 0) {
+                long l = following.showId(i);
+                controller.follow(l);
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Please first select a person or group", "Oops!",
+                        JOptionPane.PLAIN_MESSAGE);
+            }
         }
 
         if (source == unfollow) {

@@ -1,5 +1,5 @@
 package test;
-import TwitterController;
+import controller.TwitterController;
 
 import java.awt.Graphics;
 import java.awt.Image;

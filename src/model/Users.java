@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 import javax.swing.ListModel;
 
+import controller.TwitterController;
+
 import twitter4j.Status;
+import twitter4j.TwitterException;
 import twitter4j.User;
 
 /****************************************************
@@ -31,6 +34,11 @@ public class Users extends AbstractListModel<String> {
         super();
         users = f;
         visible = new ArrayList<User>(f);
+    }
+
+    public Users() {
+        users = new ArrayList<User>();
+        visible = new ArrayList<User>();
     }
 
     @Override
@@ -107,6 +115,24 @@ public class Users extends AbstractListModel<String> {
             }
         }
         fireIntervalRemoved(this, 0, visible.size());
+    }
+
+    public void searchTwitter(String text, TwitterController controller){
+        users.clear();
+        visible.clear();
+        try {
+            for (User u : controller.searchUsers(text)) {
+                add(u);
+            }
+        } catch (TwitterException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+    }
+
+    public long showId(int index) {
+        return visible.get(index).getId();
     }
     
     
