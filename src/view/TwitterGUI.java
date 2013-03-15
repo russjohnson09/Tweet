@@ -823,7 +823,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         }
 
         if (source == about) {
-            JOptionPane.showMessageDialog(null, "HashTagSwag\n\nCorey Alberda\nRuss Johnson\nNick Olesak\nVincenzo Pavano\n\nv.2.0");
+            JOptionPane.showMessageDialog(null, "HashTagSwag\n\nCorey Alberda\nRuss Johnson\nNick Olesak\nVincenzo Pavano\n\n03/18/2013\nv.2.0");
         }
 
         if (source == cancel) {
