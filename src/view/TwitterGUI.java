@@ -242,7 +242,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         // Create components
         profilePanel = new ProfilePanel(controller);
         loadingPanel.incrementLoadingScreen();
-        createTweetPanel();
+        createTweetPanel(); 
         createTimelinePanel();
         loadingPanel.incrementLoadingScreen();
         createFollowingPanel();
