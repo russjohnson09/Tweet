@@ -974,6 +974,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                 long l = followingSearch.showId(i);
                 User u = controller.follow(l);
                 following.add(u);
+                followingTotal.setText("  Following "
+                        + controller.getFriendsCount());
+                ((ProfilePanel) profilePanel).setFollowingCount(controller.getFriendsCount());
             } else {
                 JOptionPane.showMessageDialog(null,
                         "Please first select a person or group", "Oops!",
@@ -986,6 +989,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
             if (i >= 0) {
                 long l = following.remove(jlistFollowing.getSelectedIndex());
                 controller.unfollow(l);
+                followingTotal.setText("  Following "
+                        + controller.getFriendsCount());
 
                 ((ProfilePanel) profilePanel).setFollowingCount(controller.getFriendsCount());
             } else {
