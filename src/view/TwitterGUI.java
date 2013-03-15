@@ -52,6 +52,8 @@ import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.border.LineBorder;
 
+import twitter4j.DirectMessage;
+import twitter4j.ResponseList;
 import twitter4j.Trends;
 import twitter4j.Trend;
 import twitter4j.TwitterException;
@@ -220,7 +222,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     public TwitterGUI() {
 
         frame = new JFrame();
-        setTitle("Desktop Tweets");
+        setTitle("HashTagSwag");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         // setMaximumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
@@ -654,7 +656,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
         tweetgbc.gridx = 0;
         tweetgbc.gridy = 0;
-
+        
+        ResponseList<DirectMessage> rl = controller.getAllMessages();
+        // Do some shit from here
     }
 
     /****************************************************
@@ -686,7 +690,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
         // About Menu
         aboutMenu = new JMenu("About");
-        about = new JMenuItem("About Desktop Tweets");
+        about = new JMenuItem("About HashTagSwag");
         about.addActionListener(this);
         about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,
                 Event.CTRL_MASK));
@@ -779,7 +783,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         }
 
         if (source == about) {
-            JOptionPane.showMessageDialog(null, "Desktop twitter application");
+            JOptionPane.showMessageDialog(null, "HashTagSwag\n\nCorey Alberda\nRuss Johnson\nNick Olesak\nVincenzo Pavano\n\nv.2.0");
         }
 
         if (source == cancel) {

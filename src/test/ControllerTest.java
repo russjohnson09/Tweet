@@ -1,6 +1,8 @@
 package test;
 
 import static org.junit.Assert.*;
+import TwitterController;
+import TwitterGUI;
 
 import org.easymock.EasyMock;
 import static org.easymock.EasyMock.expect;
@@ -8,11 +10,9 @@ import static org.easymock.EasyMock.replay;
 import org.junit.Before;
 import org.junit.Test;
 
-import controller.TwitterController;
 
 import twitter4j.Twitter;
 import twitter4j.User;
-import view.TwitterGUI;
 
 /**
  * Tests the controller for twitter.

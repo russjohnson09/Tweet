@@ -514,6 +514,24 @@ public class TwitterController {
     }
     
     /****************************************************
+     * Gets all of the user's messages 
+     * 
+     * @return String Users URL
+     ***************************************************/
+    public ResponseList<DirectMessage> getAllMessages() {
+        ResponseList<DirectMessage> rl = null;
+        
+        try {
+            rl = twitter.getDirectMessages();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return rl;
+    }
+
+    
+    /****************************************************
      * Gets Direct Messages to the user
      * 
      * @return String Users URL

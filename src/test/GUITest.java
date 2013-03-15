@@ -1,9 +1,10 @@
 package test;
+import TwitterController;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import controller.TwitterController;
 
 /****************************************************
  * GUITest Class.
