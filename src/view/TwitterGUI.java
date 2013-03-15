@@ -96,10 +96,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     private JMenuBar menuBar;
 
     /** Categories of the menu bar. */
-    private JMenu fileMenu, tweetMenu, aboutMenu;
+    private JMenu fileMenu, tweetMenu, messagesMenu, aboutMenu;
 
     /** Items in the menu bar. */
-    private JMenuItem exit, newTweet, delete, about;
+    private JMenuItem exit, newTweet, delete, about, showAll, compose, inbox;
 
     /** Tabbed pane. */
     static JTabbedPane tabbedPane;
@@ -685,8 +685,26 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         delete.addActionListener(this);
         delete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
                 Event.CTRL_MASK));
+        showAll = new JMenuItem("Show All");
+        showAll.addActionListener(this);
+        showAll.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_AT, 
+                Event.CTRL_MASK));
         tweetMenu.add(newTweet);
         tweetMenu.add(delete);
+        tweetMenu.add(showAll);
+        
+        // Messages Menu
+        messagesMenu = new JMenu("Messages");
+        compose = new JMenuItem("Compose");
+        compose.addActionListener(this);
+        compose.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
+                Event.CTRL_MASK));
+        inbox = new JMenuItem("Inbox");
+        inbox.addActionListener(this);
+        inbox.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I,
+                Event.CTRL_MASK));
+        messagesMenu.add(compose);
+        messagesMenu.add(inbox);
 
         // About Menu
         aboutMenu = new JMenu("About");
@@ -699,6 +717,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         // Add To MenuBar
         menuBar.add(fileMenu);
         menuBar.add(tweetMenu);
+        menuBar.add(messagesMenu);
         menuBar.add(aboutMenu);
         setJMenuBar(menuBar);
     }
@@ -741,7 +760,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         if (source == newTweet) {
             tabbedPane.setSelectedComponent(tweetPanel);
         }
-        if (source == delete) {
+        if (source == delete || source == showAll) {
             DialogTweets x = new DialogTweets(this, controller.getUserTimeline());
             for (long l : x.getRemoveList()) {
                 controller.destroyStatus(l);
@@ -801,6 +820,14 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                 controller.destroyStatus(l);
             }
             updateTweetCount();
+        }
+        
+        if (source == compose) {
+            tabbedPane.setSelectedComponent(messagesPanel);
+        }
+        
+        if (source == inbox) {
+            tabbedPane.setSelectedComponent(messagesPanel);
         }
 
         if (source == attachImg) {
