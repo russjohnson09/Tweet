@@ -695,6 +695,16 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         
         ResponseList<DirectMessage> rl = controller.getAllMessages();
         // Do some shit from here
+        
+        // Vincenzo: 
+        // Here's an example on how to use a Response List
+        // to get the user and message text
+        // Love, Nick
+        
+        DirectMessage dm = rl.get(0);
+        User sender = dm.getSender();
+        String text = dm.getText();
+        
     }
     
     private void createAddFollowingPanel(){
