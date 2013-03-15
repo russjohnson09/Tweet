@@ -48,7 +48,7 @@ public class ProfilePanel extends JPanel implements ActionListener {
         website = controller.getWebsite();
         profileImage = controller.getProfileImage();
         profileBanner = controller.getProfileBanner();
-        
+        TwitterGUI.loadingPanel.incrementLoadingScreen();
         
         
         
@@ -103,6 +103,8 @@ public class ProfilePanel extends JPanel implements ActionListener {
         c.gridy = 1 + 1 + 1;
         c.ipady = 0;
         createDescriptionPanel(infoPanel, c);
+        
+        TwitterGUI.loadingPanel.incrementLoadingScreen();
 
         // Location
         c.ipady = five;

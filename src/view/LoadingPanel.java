@@ -24,8 +24,7 @@ public class LoadingPanel extends JPanel {
     
     final int BAR_HEIGHT = 30;
 
-    
-    
+
     public LoadingPanel() {
         loadPercent = 0;
         super.setVisible(true);

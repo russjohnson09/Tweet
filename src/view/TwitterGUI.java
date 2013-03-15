@@ -107,15 +107,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     static JTabbedPane tabbedPane;
     
     /** Loading panel. */
-    private LoadingPanel loadingPanel;
+    static LoadingPanel loadingPanel;
     
     /** Background image. */
     private Image backgroundImage;
     
-
-    // Profile Panel *******************************************************
-    /** Buttons for profile: Followers, Following, and number of tweets. */
-   // private JButton followersBtn, followingBtn, tweetsBtn;
     
     
     
@@ -245,28 +241,29 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         setTitle("HashTagSwag");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        // setMaximumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-        // setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         setResizable(false);
         setLocationRelativeTo(null);
         loadingPanel = new LoadingPanel();
         add(loadingPanel);
         setVisible(true);
-        loadingPanel.incrementLoadingScreen();
+        
         setUpController();
-
-
         loadingPanel.incrementLoadingScreen();
+
         backgroundImage = controller.getBackgroundImage();
+        loadingPanel.incrementLoadingScreen();
 
         // Create components
         profilePanel = new ProfilePanel(controller);
         loadingPanel.incrementLoadingScreen();
         createTweetPanel(); 
+        loadingPanel.incrementLoadingScreen();
         createTimelinePanel();
         loadingPanel.incrementLoadingScreen();
         createFollowingPanel();
+        loadingPanel.incrementLoadingScreen();
         createFollowersPanel();
+        loadingPanel.incrementLoadingScreen();
         createAddFollowingPanel();
         loadingPanel.incrementLoadingScreen();
         createMessagesPanel();
@@ -384,6 +381,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         followersPanel.add(fersSearchButton, fersgbc);
 
         fersSearchTextArea = new JTextArea();
+        fersSearchTextArea.setFont(new Font("arial", Font.PLAIN, 18));
         fersSearchTextArea
                 .setBorder(BorderFactory.createLineBorder(Color.GRAY));
         fersgbc.gridx = 2;
@@ -465,6 +463,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         followingPanel.add(fingSearchButton, finggbc);
 
         fingSearchTextArea = new JTextArea();
+        fingSearchTextArea.setFont(new Font("arial", Font.PLAIN, 18));
         fingSearchTextArea
                 .setBorder(BorderFactory.createLineBorder(Color.GRAY));
         finggbc.gridx = 2;
@@ -713,6 +712,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         followingSearch = new Users();
     
         addFollowingSearchButton = new JButton("Search");
+        addFollowingSearchButton.setFocusable(false);
         addFollowingSearchButton.addActionListener(this);
         fersgbc.gridx = 1;
         fersgbc.gridy = 0;
@@ -721,12 +721,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         addFollowingPanel.add(addFollowingSearchButton, fersgbc);
     
         addFollowingSearchTextArea = new JTextArea();
+        addFollowingSearchTextArea.setFont(new Font("arial", Font.PLAIN, 18));
         addFollowingSearchTextArea
                 .setBorder(BorderFactory.createLineBorder(Color.GRAY));
         fersgbc.gridx = 2;
-        fersgbc.gridy = 0;
-        fersgbc.gridwidth = 1;
-        fersgbc.fill = 1;
         addFollowingPanel.add(addFollowingSearchTextArea, fersgbc);
     
         jlistAddFollowing = new JList<String>(followingSearch);
@@ -761,9 +759,13 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     addFollowingPanel.add(scrollPane, fersgbc);
     
     addFollowingBtn = new JButton("Add");
+    addFollowingBtn.setFocusable(false);
     addFollowingBtn.addActionListener(this);
-    addFollowingPanel.add(addFollowingBtn);
+    fersgbc.gridy = 3;
+    fersgbc.fill = GridBagConstraints.VERTICAL;
+    //fersgbc.gridx = 3;
     
+    addFollowingPanel.add(addFollowingBtn, fersgbc);
     }
 
     /****************************************************
