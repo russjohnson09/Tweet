@@ -536,7 +536,7 @@ public class TwitterController {
      * 
      * @return String Users URL
      ***************************************************/
-    public ResponseList<DirectMessage> getDirectMessages() {
+    public ResponseList<DirectMessage> getDirectMessage(String messageId) {
         //ArrayList<User> users = new ArrayList<User>();
         ResponseList<DirectMessage> list = null;
         

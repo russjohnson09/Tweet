@@ -23,12 +23,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
@@ -52,6 +56,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -712,27 +717,52 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         mlPanel.setBackground(Color.WHITE);
         mlPanel.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         
-        // Table definitions
-        DefaultTableModel tbm = new DefaultTableModel();
-        JTable table = new JTable(tbm);
-        table.setPreferredScrollableViewportSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-        String[][] messages = new String[rl.size()][5];
+        String[] cols = {
+            "Date",
+            "Sender",
+            "Message"
+        };
+        
+        final Object[][] messages = new Object[rl.size()][4];
         
         for (int i = 0; i < rl.size(); i++) {
             DirectMessage direct = rl.get(i);
+            String created = new SimpleDateFormat("MM/dd/yyyy hh:mm a")
+                .format(direct.getCreatedAt());
             
-            messages[i][0] = "" + direct.getCreatedAt() + "";
-            messages[i][1] = "" + direct.getId() + "";
-            messages[i][2] = "" + direct.getSenderId() + "";
-            messages[i][3] = direct.getSenderScreenName();
-            messages[i][4] = direct.getText();
             
-            // Row 1, Cell 1 (name & pic)
-            tbm.addRow(messages[0]);
-            
+            messages[i][0] = created;
+            messages[i][1] = direct.getSenderScreenName();
+            messages[i][2] = direct.getText();   
+            messages[i][3] = direct.getId();
         }
+        
+        // Table definitions
+        final JTable table = new JTable(messages, cols)/* {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        }*/;
+        table.setPreferredScrollableViewportSize(new Dimension(FRAME_HEIGHT, FRAME_WIDTH));
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                int row = table.rowAtPoint(evt.getPoint());
+                viewMessage(row);
+            }
+
+            private void viewMessage(int row) {
+                System.out.println("Id: " + messages[row][3]);
+                //controller.getDirectMessage(messages[row][3]);
+            }
+        });
+        
         JScrollPane scrollPane = new JScrollPane(table);
+        JButton view = new JButton("Read Message");
+        
         mlPanel.add(scrollPane);
+        mlPanel.add(view);
+        
         messagesPanel.add(mlPanel);
         
         
@@ -750,6 +780,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
             messages[i][4] = dm.getText();
         }
         */
+        
+    }
+    
+    private void viewMessage() {
         
     }
     
