@@ -713,7 +713,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         // I love you
         // Vincenzo
         
-        JPanel mlPanel = new JPanel();
+        final JPanel mlPanel = new JPanel();
         mlPanel.setBackground(Color.WHITE);
         mlPanel.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         
@@ -723,18 +723,18 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
             "Message"
         };
         
-        final Object[][] messages = new Object[rl.size()][4];
+        final Object[][] messages = new Object[rl.size()][5];
         
         for (int i = 0; i < rl.size(); i++) {
             DirectMessage direct = rl.get(i);
             String created = new SimpleDateFormat("MM/dd/yyyy hh:mm a")
                 .format(direct.getCreatedAt());
             
-            
             messages[i][0] = created;
             messages[i][1] = direct.getSenderScreenName();
             messages[i][2] = direct.getText();   
             messages[i][3] = direct.getId();
+            messages[i][4] = direct.getSenderId();
         }
         
         // Table definitions
@@ -752,8 +752,41 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
             }
 
             private void viewMessage(int row) {
-                System.out.println("Id: " + messages[row][3]);
-                //controller.getDirectMessage(messages[row][3]);
+                mlPanel.setVisible(false);
+                long messageId = (long) messages[row][3];
+                
+                DirectMessage directMessage = controller.showDirectMessage(messageId);
+                
+                // Display Message
+                JPanel msgPanel = new JPanel();
+                msgPanel.setLayout(new GridBagLayout());
+                msgPanel.setSize(300, 500);
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.fill = GridBagConstraints.HORIZONTAL;
+                
+             
+                // Date
+                JLabel created = new JLabel(messages[row][0].toString());
+                gbc.gridx = 2; /* Right */
+                gbc.gridy = 0; /* Below */
+                msgPanel.add(created, gbc);
+                
+                // Picture
+                ImageIcon icon = controller.getSmallerProfileImage((long)messages[row][5]);
+                gbc.gridx = 0;
+                gbc.gridy = 1;
+                JButton pic = new JButton();
+                pic.setIcon(icon);
+                msgPanel.add(pic, gbc);
+                
+                // Text
+                JTextArea text = new JTextArea();
+                text.setText(messages[row][2].toString());
+                gbc.gridx = 1;
+                gbc.gridy = 1;
+                gbc.gridwidth = 2;
+                msgPanel.add(text, gbc);
+                
             }
         });
         
@@ -780,10 +813,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
             messages[i][4] = dm.getText();
         }
         */
-        
-    }
-    
-    private void viewMessage() {
         
     }
     

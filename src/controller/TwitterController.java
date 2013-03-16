@@ -225,6 +225,29 @@ public class TwitterController {
         return null;
     }
     
+    /****************************************************
+     * gets Smaller Profile image.
+     * 
+     * @param long userId
+     * @return ImageIcon profile picture
+     ***************************************************/
+    public final ImageIcon getSmallerProfileImage(long userId) {
+        System.out.println(userId);
+        /*
+        try {
+            return new ImageIcon(new URL(twitter.showUser(userId)
+                    .getProfileImageURL()));
+        } catch (MalformedURLException e) {
+            return null;
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+        */
+        return null;
+    }
+    
 
     /****************************************************
      * Gets profile banner image.
@@ -536,12 +559,11 @@ public class TwitterController {
      * 
      * @return String Users URL
      ***************************************************/
-    public ResponseList<DirectMessage> getDirectMessage(String messageId) {
-        //ArrayList<User> users = new ArrayList<User>();
-        ResponseList<DirectMessage> list = null;
+    public DirectMessage showDirectMessage(long messageId) {
+        DirectMessage list = null;
         
         try {
-            list = twitter.getDirectMessages();
+            list = (DirectMessage) twitter.showDirectMessage(messageId);
         } catch (Exception e) {
             e.printStackTrace();
         }
