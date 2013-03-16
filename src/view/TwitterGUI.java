@@ -49,9 +49,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 import twitter4j.DirectMessage;
 import twitter4j.ResponseList;
@@ -236,48 +238,53 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
      * Graphical User Interface.
      ***************************************************/
     public TwitterGUI() {
-
-        frame = new JFrame();
-        setTitle("HashTagSwag");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        loadingPanel = new LoadingPanel();
-        add(loadingPanel);
-        setVisible(true);
         
-        setUpController();
-        loadingPanel.incrementLoadingScreen();
-
-        backgroundImage = controller.getBackgroundImage();
-        loadingPanel.incrementLoadingScreen();
-
-        // Create components
-        profilePanel = new ProfilePanel(controller);
-        loadingPanel.incrementLoadingScreen();
-        createTweetPanel(); 
-        loadingPanel.incrementLoadingScreen();
-        createTimelinePanel();
-        loadingPanel.incrementLoadingScreen();
-        createFollowingPanel();
-        loadingPanel.incrementLoadingScreen();
-        createFollowersPanel();
-        loadingPanel.incrementLoadingScreen();
-        createAddFollowingPanel();
-        loadingPanel.incrementLoadingScreen();
-        createMessagesPanel();
-        createMenu();
-        loadingPanel.incrementLoadingScreen();
-        createTabbedPane();
-        loadingPanel.incrementLoadingScreen();
-        remove(loadingPanel);
-        
-        //fixes bug in linux
-        String os = System.getProperty("os.name").toLowerCase();
-        if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0 || os.indexOf("aix") > 0 ){
-            setVisible(false);
+        try {
+            frame = new JFrame();
+            setTitle("HashTagSwag");
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setSize(FRAME_WIDTH, FRAME_HEIGHT);
+            setResizable(false);
+            setLocationRelativeTo(null);
+            loadingPanel = new LoadingPanel();
+            add(loadingPanel);
             setVisible(true);
+            
+            setUpController();
+            loadingPanel.incrementLoadingScreen();
+    
+            backgroundImage = controller.getBackgroundImage();
+            loadingPanel.incrementLoadingScreen();
+    
+            // Create components
+            profilePanel = new ProfilePanel(controller);
+            loadingPanel.incrementLoadingScreen();
+            createTweetPanel(); 
+            loadingPanel.incrementLoadingScreen();
+            createTimelinePanel();
+            loadingPanel.incrementLoadingScreen();
+            createFollowingPanel();
+            loadingPanel.incrementLoadingScreen();
+            createFollowersPanel();
+            loadingPanel.incrementLoadingScreen();
+            // THESE ARE ERRORING AND CAUSING THE PROGRAM TO CRASH
+            //createAddFollowingPanel();
+            //loadingPanel.incrementLoadingScreen();
+            createMessagesPanel();
+            createMenu();
+            loadingPanel.incrementLoadingScreen();
+            createTabbedPane();
+            loadingPanel.incrementLoadingScreen();
+            remove(loadingPanel);
+        
+            //fixes bug in linux
+            String os = System.getProperty("os.name").toLowerCase();
+            if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0 || os.indexOf("aix") > 0 ){
+                setVisible(false);
+                setVisible(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -686,16 +693,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                 super.paintComponent(g);
             }
         };
-        messagesPanel.setOpaque(false);
-        messagesPanel.setLayout(new GridBagLayout());
-        tweetgbc = new GridBagConstraints();
-
-        tweetgbc.gridx = 0;
-        tweetgbc.gridy = 0;
         
         ResponseList<DirectMessage> rl = controller.getAllMessages();
-        // Do some shit from here
-        
         // Vincenzo: 
         // Here's an example on how to use a Response List
         // to get the user and message text
@@ -704,6 +703,53 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         DirectMessage dm = rl.get(0);
         User sender = dm.getSender();
         String text = dm.getText();
+        
+        // Dear Nick,
+        // I love you
+        // Vincenzo
+        
+        JPanel mlPanel = new JPanel();
+        mlPanel.setBackground(Color.WHITE);
+        mlPanel.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        
+        // Table definitions
+        DefaultTableModel tbm = new DefaultTableModel();
+        JTable table = new JTable(tbm);
+        table.setPreferredScrollableViewportSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+        String[][] messages = new String[rl.size()][5];
+        
+        for (int i = 0; i < rl.size(); i++) {
+            DirectMessage direct = rl.get(i);
+            
+            messages[i][0] = "" + direct.getCreatedAt() + "";
+            messages[i][1] = "" + direct.getId() + "";
+            messages[i][2] = "" + direct.getSenderId() + "";
+            messages[i][3] = direct.getSenderScreenName();
+            messages[i][4] = direct.getText();
+            
+            // Row 1, Cell 1 (name & pic)
+            tbm.addRow(messages[0]);
+            
+        }
+        JScrollPane scrollPane = new JScrollPane(table);
+        mlPanel.add(scrollPane);
+        messagesPanel.add(mlPanel);
+        
+        
+        /*
+        // Build 2D array for the list
+        for (int i = 0; i < rl.size(); i++) {
+            DirectMessage dm = rl.get(i);
+            
+            // Cast everything as a string to make it fit in the array
+            // Is there a better way to do this? Maybe a struct-like object for Java?
+            messages[i][0] = "" + dm.getCreatedAt() + "";
+            messages[i][1] = "" + dm.getId() + "";
+            messages[i][2] = "" + dm.getSenderId() + "";
+            messages[i][3] = dm.getSenderScreenName();
+            messages[i][4] = dm.getText();
+        }
+        */
         
     }
     
