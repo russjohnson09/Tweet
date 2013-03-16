@@ -767,12 +767,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
              
                 // Date
                 JLabel created = new JLabel(messages[row][0].toString());
-                gbc.gridx = 2; /* Right */
+                gbc.gridx = 1; /* Right */
                 gbc.gridy = 0; /* Below */
                 msgPanel.add(created, gbc);
                 
                 // Picture
-                ImageIcon icon = controller.getSmallerProfileImage((long)messages[row][5]);
+                ImageIcon icon = controller.getSmallerProfileImage((long)messages[row][4]);
                 gbc.gridx = 0;
                 gbc.gridy = 1;
                 JButton pic = new JButton();
@@ -784,9 +784,39 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                 text.setText(messages[row][2].toString());
                 gbc.gridx = 1;
                 gbc.gridy = 1;
-                gbc.gridwidth = 2;
+                gbc.gridwidth = 1;
                 msgPanel.add(text, gbc);
                 
+                // Reply stuff
+                tweetSubmit = new JButton("Send Message");
+                tweetSubmit.setFocusable(false);
+                //tweetSubmit.addActionListener(this);
+                gbc.gridx = 0;
+                gbc.gridy = 3;
+                msgPanel.add(tweetSubmit, gbc);
+
+                tweetText = new JTextArea();
+                //tweetText.addKeyListener(this);
+                tweetText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+                tweetText.setPreferredSize(new Dimension(300,195));
+                tweetText.setFocusable(true);
+                final int col = 30;
+                tweetText.setColumns(col);
+                final int row2 = 8;
+                tweetText.setRows(row2);
+                tweetText.setLineWrap(true);
+                gbc.gridx = 0;
+                gbc.gridy = 3;
+                final int w = 2;
+                gbc.gridwidth = w;
+                msgPanel.add(tweetText, gbc);
+
+                charsRemaining = new JLabel("140", JLabel.RIGHT);
+                gbc.gridx = 2;
+                gbc.gridy = 3;
+                msgPanel.add(charsRemaining, gbc);
+                
+                messagesPanel.add(msgPanel);
             }
         });
         

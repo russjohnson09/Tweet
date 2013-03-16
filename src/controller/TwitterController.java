@@ -232,8 +232,6 @@ public class TwitterController {
      * @return ImageIcon profile picture
      ***************************************************/
     public final ImageIcon getSmallerProfileImage(long userId) {
-        System.out.println(userId);
-        /*
         try {
             return new ImageIcon(new URL(twitter.showUser(userId)
                     .getProfileImageURL()));
@@ -244,7 +242,7 @@ public class TwitterController {
         } catch (TwitterException e) {
             e.printStackTrace();
         }
-        */
+
         return null;
     }
     
@@ -557,6 +555,7 @@ public class TwitterController {
     /****************************************************
      * Gets Direct Messages to the user
      * 
+     * @param long messageId
      * @return String Users URL
      ***************************************************/
     public DirectMessage showDirectMessage(long messageId) {
@@ -569,6 +568,24 @@ public class TwitterController {
         }
         
         return list;
+    }
+    
+    /****************************************************
+     * Gets Direct Messages to the user
+     * 
+     * @param long userId
+     * @param String text
+     * @return String Users URL
+     ***************************************************/
+    public boolean sendDirectMessage(long userId, String text) {
+        try {
+            twitter.sendDirectMessage(userId, text);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return false;
     }
 
     /****************************************************
