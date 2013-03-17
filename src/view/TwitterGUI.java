@@ -73,7 +73,6 @@ import controller.TwitterController;
 
 /**********************************************************************
  * Twitter GUI.
- * 
  * @author Nick, Vincenzo, Corey, Russ
  * @date March 18, 2013
  *********************************************************************/
@@ -95,7 +94,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     private TwitterController controller;
 
     /** Main frame. */
-    static JFrame frame;
+    private static JFrame frame;
 
     /** Each panel of the GUI. */
     static JPanel profilePanel, timelinePanel, tweetPanel, followingPanel,
@@ -118,20 +117,24 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     
     /** Background image. */
     private Image backgroundImage;
-    
-    
-    
-    
-    
-    //TODO
-    private JPanel addFollowingPanel;
-    private Users followingSearch;
-    private JTextArea addFollowingSearchTextArea;
-    private JList<String> jlistAddFollowing;
-    private JButton addFollowingSearchButton;
-    private JButton addFollowingBtn;
 
+    /** Add following panel. */
+    private JPanel addFollowingPanel;
     
+    /** Following Search. */ 
+    private Users followingSearch;
+    
+    /** Add following text area. */
+    private JTextArea addFollowingSearchTextArea;
+    
+    /** Add following JList. */
+    private JList<String> jlistAddFollowing;
+    
+    /** Add following search button. */
+    private JButton addFollowingSearchButton;
+    
+    /** Add following button. */
+    private JButton addFollowingBtn;
 
     // Timeline Panel ******************************************************
     /** Final frame height. */
@@ -140,12 +143,20 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     /** Final frame width. */
     private static final int TIMELINE_WIDTH = 600;
     
-    JButton homeTlBtn;
-    JButton userTlBtn;
+    /** Home table button. */
+    private JButton homeTlBtn;
     
-    JList<String> jlistTimeline;
-    Tweets tweets;
-    JScrollPane TimelineScrollPane;
+    /** User table button. */
+    private JButton userTlBtn;
+    
+    /** Timeline JList. */
+    private JList<String> jlistTimeline;
+    
+    /** Tweets. */
+    private Tweets tweets;
+    
+    /** Timeline JScrollPane. */
+    private JScrollPane TimelineScrollPane;
 
     // Tweet Panel *********************************************************
     /** GBC Layout. */
@@ -158,12 +169,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     private JButton cancel, tweetSubmit, tweetShow, attachImg;
 
     /** Labels for characters remaining and total tweets. */
-    static JLabel charsRemaining, tweetTotal;
+    private static JLabel charsRemaining, tweetTotal;
 
     /** Text area to type outgoing tweet. */
     private JTextArea tweetText;
 
-    /** Image File to be uploaded with tweet */
+    /** Image File to be uploaded with tweet. */
     private File attachedFile;
     
     /** Final frame height. */
@@ -197,8 +208,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     /** serialVersionUID. */
     private JList<String> jlistFollowers;
 
-    private JList<Icon> followersIconsJL;
-
     /** Display all followers. */
     private JButton fersAllButton;
 
@@ -209,7 +218,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     /** Final frame width. */
     private static final int FOLLOWING_WIDTH = 450;
     
-    /** Small profile image size */
+    /** Small profile image size. */
     private static final int SMALL_PROFILE_IMAGE = 48;
 
     /** Display all following. */
@@ -218,6 +227,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     /** Following Search Button. */
     private JButton fingSearchButton;
 
+    /** Following ScrollPane. */
     private JScrollPane fingScrollPane;
 
     /** Following Search text area. */
@@ -312,7 +322,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		    
 		    /** Confirm Pin Button Action Listener */
 		    confirmPinButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
+                public void actionPerformed(final ActionEvent arg0) {
                     if (pinTF.getText().length() > 0) {
                         controller.setUp(pinTF.getText());
                         if (controller.getIsSetUp()) {
@@ -325,8 +335,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		    
 		    /** Browser Button Action Listener */
 		    browserButton.addActionListener(new ActionListener() {
-		         public void actionPerformed(ActionEvent arg0) {
-		             if(Desktop.isDesktopSupported()) {
+		         public void actionPerformed(final ActionEvent arg0) {
+		             if (Desktop.isDesktopSupported()) {
 		                 authFrame.toFront();
 		                 try {
 		                     Desktop.getDesktop().browse(new URI(authUrl));
@@ -340,7 +350,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 		    });
 		    JPanel pnl = new JPanel();
 		    
-		    authFrame.setSize(500, 200);
+		    final int AUTH_WIDTH = 500;
+		    final int AUTH_HEIGHT = 200;
+		    
+		    authFrame.setSize(AUTH_WIDTH, AUTH_HEIGHT);
             authFrame.setLocationRelativeTo(null);
 		    pnl.add(new JLabel("<html><center>Before you use this application, you "
 		            + "need to authorize your Twitter Account.<br>Click "
@@ -394,8 +407,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         fersgbc.fill = 1;
         followersPanel.add(fersSearchButton, fersgbc);
 
+        final int FERS_SIZE = 18;
         fersSearchTextArea = new JTextArea();
-        fersSearchTextArea.setFont(new Font("arial", Font.PLAIN, 18));
+        fersSearchTextArea.setFont(new Font("arial", Font.PLAIN, FERS_SIZE));
         fersSearchTextArea
                 .setBorder(BorderFactory.createLineBorder(Color.GRAY));
         fersgbc.gridx = 2;
