@@ -125,8 +125,6 @@ public class Users extends AbstractListModel<String> {
                 add(u);
             }
         } catch (TwitterException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         
     }
@@ -134,6 +132,4 @@ public class Users extends AbstractListModel<String> {
     public long showId(int index) {
         return visible.get(index).getId();
     }
-    
-    
 }

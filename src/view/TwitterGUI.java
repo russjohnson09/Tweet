@@ -213,6 +213,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
     /** Display all followers. */
     private JButton fersAllButton;
+    
+    /** Displays users profile information. */
+    private JButton showProfile;
 
     // Following Panel *****************************************************
     /** Final frame height. */
@@ -395,7 +398,13 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         followers = new Users(controller.getFollowers());
 
         fersAllButton = new JButton("Show All");
+        fersAllButton.setFocusPainted(false);
         fersAllButton.addActionListener(this);
+        
+        showProfile = new JButton("Show Profile");
+        showProfile.setFocusPainted(false);
+        showProfile.addActionListener(this);
+        
         fersgbc.gridx = 0;
         fersgbc.gridy = 0;
         fersgbc.gridwidth = 1;
@@ -420,7 +429,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         fersgbc.gridwidth = 1;
         fersgbc.fill = 1;
         followersPanel.add(fersSearchTextArea, fersgbc);
-
+        
+        
+        
         jlistFollowers = new JList<String>(followers);
         jlistFollowers.addMouseListener(this);
         jlistFollowers.setCellRenderer(new DefaultListCellRenderer() {
@@ -451,6 +462,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 FOLLOWERS_HEIGHT));
 
         followersPanel.add(scrollPane, fersgbc);
+        
+        fersgbc.gridx = 3;
+        fersgbc.gridy = 3;
+        followersPanel.add(showProfile, fersgbc);
 
         followersTotal = new JLabel(controller.getFollowersCount()
                 + " Followers");
@@ -1120,6 +1135,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 attachImg.setText("File Attached");
                 attachImg.setEnabled(false);
             }
+        }
+        
+        if (source == showProfile) {
+            User u = controller.getUser(followers.showId(jlistFollowers
+                    .getSelectedIndex()));
+            displayUserProfile(u);
         }
 
         if (source == fingAllButton) {
