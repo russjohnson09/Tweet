@@ -75,7 +75,7 @@ import controller.TwitterController;
  * Twitter GUI.
  * 
  * @author Nick, Vincenzo, Corey, Russ
- * @date 17 February, 2013
+ * @date March 18, 2013
  *********************************************************************/
 public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
@@ -208,6 +208,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
 
     /** Final frame width. */
     private static final int FOLLOWING_WIDTH = 450;
+    
+    /** Small profile image size */
+    private static final int SMALL_PROFILE_IMAGE = 48;
 
     /** Display all following. */
     private JButton fingAllButton;
@@ -272,9 +275,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
             loadingPanel.incrementLoadingScreen();
             createFollowersPanel();
             loadingPanel.incrementLoadingScreen();
-            // THESE ARE ERRORING AND CAUSING THE PROGRAM TO CRASH
-            //createAddFollowingPanel();
-            //loadingPanel.incrementLoadingScreen();
+            createAddFollowingPanel();
+            loadingPanel.incrementLoadingScreen();
             createMessagesPanel();
             createMenu();
             loadingPanel.incrementLoadingScreen();
@@ -738,11 +740,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         }
         
         // Table definitions
-        final JTable table = new JTable(messages, cols)/* {
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        }*/;
+        final JTable table = new JTable(messages, cols);
         table.setPreferredScrollableViewportSize(new Dimension(FRAME_HEIGHT, FRAME_WIDTH));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.addMouseListener(new MouseAdapter() {
@@ -777,14 +775,14 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                 gbc.gridy = 1;
                 JButton pic = new JButton();
                 pic.setIcon(icon);
+                pic.setPreferredSize(new Dimension(SMALL_PROFILE_IMAGE, SMALL_PROFILE_IMAGE));
                 msgPanel.add(pic, gbc);
                 
                 // Text
                 JTextArea text = new JTextArea();
                 text.setText(messages[row][2].toString());
-                gbc.gridx = 1;
+                gbc.gridx = 2;
                 gbc.gridy = 1;
-                gbc.gridwidth = 1;
                 msgPanel.add(text, gbc);
                 
                 // Reply stuff
@@ -798,7 +796,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                 tweetText = new JTextArea();
                 //tweetText.addKeyListener(this);
                 tweetText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-                tweetText.setPreferredSize(new Dimension(300,195));
+                //tweetText.setPreferredSize(new Dimension(300,195));
                 tweetText.setFocusable(true);
                 final int col = 30;
                 tweetText.setColumns(col);
@@ -821,10 +819,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
         });
         
         JScrollPane scrollPane = new JScrollPane(table);
-        JButton view = new JButton("Read Message");
         
         mlPanel.add(scrollPane);
-        mlPanel.add(view);
+        //mlPanel.add(view);
         
         messagesPanel.add(mlPanel);
         
@@ -1004,8 +1001,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
     /***************************************************
      * Where all actions are delegated
      * 
-     * @param ActionEvent
-     *            e
+     * @param ActionEvent e
      **************************************************/
     @Override
     public final void actionPerformed(final ActionEvent e) {
@@ -1072,6 +1068,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
             attachImg.setEnabled(true);
             attachImg.setText("Attach Image");
         }
+        
         if (source == tweetShow) {
             DialogTweets x = new DialogTweets(this, 
                     controller.getUserTimeline());
@@ -1149,6 +1146,14 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener {
                         "Please first select a person or group", "Oops!",
                         JOptionPane.PLAIN_MESSAGE);
             }
+        }
+        
+        if (source == inbox) {
+            tabbedPane.setSelectedComponent(messagesPanel);
+        }
+        
+        if (source == compose) {
+            
         }
     }
      

@@ -37,7 +37,7 @@ import twitter4j.auth.RequestToken;
 /****************************************************
  * Tweets Class.
  * @author Nick, Vincenzo, Corey, Russ
- * @date 17 February, 2013
+ * @date March 18, 2013
  ***************************************************/
 public class TwitterController {
 
