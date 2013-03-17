@@ -33,9 +33,9 @@ import twitter4j.User;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
-
 /****************************************************
  * Tweets Class.
+ * 
  * @author Nick, Vincenzo, Corey, Russ
  * @date March 18, 2013
  ***************************************************/
@@ -57,30 +57,29 @@ public class TwitterController {
     public static final String CONSUMER_KEY = "yNBLlBrsFHz89PyCfjrAw";
 
     /** Consumer key secret. */
-    public static final String CONSUMER_KEY_SECRET =
-            "8SIq5OXfeIKabtB3B2CBHJVIkrjQbSPloHoTmxtis4";
+    public static final String CONSUMER_KEY_SECRET = "8SIq5OXfeIKabtB3B2CBHJVIkrjQbSPloHoTmxtis4";
 
     /****************************************************
      * Twitter Controller constructor.
      ***************************************************/
     public TwitterController() {
-    	model = new TwitterModel();
+        model = new TwitterModel();
 
         twitter = new TwitterFactory().getInstance();
         twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_KEY_SECRET);
 
         String token = getAccessToken();
         String tokenSecret = getAccessTokenSecret();
-        
+
         if (token != null && tokenSecret != null) {
             twitter.setOAuthAccessToken(new AccessToken(token, tokenSecret));
             isSetUp = true;
-            
+
         } else {
             try {
-            	requestToken = twitter.getOAuthRequestToken();
+                requestToken = twitter.getOAuthRequestToken();
             } catch (TwitterException e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
         }
     }
@@ -104,7 +103,7 @@ public class TwitterController {
 
     /****************************************************
      * Gets twitter name.
-     *
+     * 
      * @return String
      ***************************************************/
     public final String getTwitterName() {
@@ -121,7 +120,8 @@ public class TwitterController {
     /****************************************************
      * Gets twitter name.
      * 
-     * @param Long l
+     * @param Long
+     *            l
      * @return String
      ***************************************************/
     public final String getTwitterName(final long l) {
@@ -204,7 +204,7 @@ public class TwitterController {
 
         return null;
     }
-    
+
     /****************************************************
      * gets Smaller Profile image.
      * 
@@ -224,7 +224,7 @@ public class TwitterController {
 
         return null;
     }
-    
+
     /****************************************************
      * gets Smaller Profile image.
      * 
@@ -245,7 +245,6 @@ public class TwitterController {
 
         return null;
     }
-    
 
     /****************************************************
      * Gets profile banner image.
@@ -291,34 +290,35 @@ public class TwitterController {
     /****************************************************
      * Post a new Tweet.
      * 
-     * @param String str
+     * @param String
+     *            str
      * @return Boolean
      ***************************************************/
     public final boolean tweet(final String str) {
         try {
             twitter.updateStatus(str);
             return true;
-            
+
         } catch (TwitterException e) {
             return false;
         }
     }
-    
-    
+
     /****************************************************
-     * Post an image as a Tweet. 
+     * Post an image as a Tweet.
      * 
-     * @param File img
+     * @param File
+     *            img
      * @return Boolean
      ***************************************************/
     public boolean tweetImage(File img, String message) {
-        try{
+        try {
             StatusUpdate status = new StatusUpdate(message);
             status.setMedia(img);
             twitter.updateStatus(status);
             return true;
-            
-        } catch(TwitterException e) {
+
+        } catch (TwitterException e) {
             return false;
         }
     }
@@ -403,7 +403,7 @@ public class TwitterController {
         }
         return users;
     }
-       
+
     /****************************************************
      * Unfollows user.
      * 
@@ -463,7 +463,7 @@ public class TwitterController {
             e.printStackTrace();
         }
     }
-    
+
     /****************************************************
      * Gets trending
      * 
@@ -479,9 +479,9 @@ public class TwitterController {
             e.printStackTrace();
             return null;
         }
-        
+
     }
-    
+
     /****************************************************
      * Gets home timeline.
      * 
@@ -533,25 +533,24 @@ public class TwitterController {
         return requestToken.getAuthorizationURL();
 
     }
-    
+
     /****************************************************
-     * Gets all of the user's messages 
+     * Gets all of the user's messages
      * 
      * @return String Users URL
      ***************************************************/
     public ResponseList<DirectMessage> getAllMessages() {
         ResponseList<DirectMessage> rl = null;
-        
+
         try {
             rl = twitter.getDirectMessages();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return rl;
     }
 
-    
     /****************************************************
      * Gets Direct Messages to the user
      * 
@@ -560,21 +559,22 @@ public class TwitterController {
      ***************************************************/
     public DirectMessage showDirectMessage(long messageId) {
         DirectMessage list = null;
-        
+
         try {
             list = (DirectMessage) twitter.showDirectMessage(messageId);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return list;
     }
-    
+
     /****************************************************
      * Gets Direct Messages to the user
      * 
      * @param long userId
-     * @param String text
+     * @param String
+     *            text
      * @return String Users URL
      ***************************************************/
     public boolean sendDirectMessage(long userId, String text) {
@@ -584,8 +584,35 @@ public class TwitterController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return false;
+    }
+
+    /***************************************************
+     * Get the current user's ID.
+     * 
+     * @return
+     **************************************************/
+    public long getCurrentUserID() {
+        try {
+            return twitter.getId();
+        } catch (IllegalStateException e) {
+        } catch (TwitterException e) {
+        }
+        return 0;
+    }
+
+    /***************************************************
+     * Get the a specified user's ID.
+     * 
+     * @return
+     **************************************************/
+    public User getUser(long id) {
+        try {
+            return twitter.showUser(id);
+        } catch (TwitterException e) {
+        }
+        return null;
     }
 
     /****************************************************
@@ -665,7 +692,8 @@ public class TwitterController {
     /****************************************************
      * sets up controller.
      * 
-     * @param String pin
+     * @param String
+     *            pin
      ***************************************************/
     public final void setUp(final String pin) {
         AccessToken accessToken = null;
@@ -681,7 +709,7 @@ public class TwitterController {
 
     public ResponseList<User> searchUsers(String text) throws TwitterException {
         return twitter.searchUsers(text, 1);
-        
+
     }
 
     public User follow(long l) {
@@ -692,7 +720,7 @@ public class TwitterController {
             e.printStackTrace();
         }
         return null;
-        
+
     }
 
 }

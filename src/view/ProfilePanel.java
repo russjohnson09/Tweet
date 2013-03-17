@@ -10,12 +10,17 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
+
+import twitter4j.User;
 
 import controller.TwitterController;
 
@@ -34,32 +39,66 @@ public class ProfilePanel extends JPanel implements ActionListener {
 
     /** Background and banner image. */
     private Image profileBanner;
-    
+
     private TwitterController controller;
-    
-    
-    
-    public ProfilePanel (TwitterController cntrlr) {
+
+    private User user;
+
+    public ProfilePanel(TwitterController cntrlr) {
         controller = cntrlr;
+        user = controller.showUser(controller.getCurrentUserID());
         displayName = controller.getDisplayName();
         twitterName = controller.getTwitterName();
         description = controller.getDescription();
+        
+        TwitterGUI.loadingPanel.incrementLoadingScreen();
+        
         location = controller.getLocation();
         website = controller.getWebsite();
         profileImage = controller.getProfileImage();
         profileBanner = controller.getProfileBanner();
         TwitterGUI.loadingPanel.incrementLoadingScreen();
-        
-        
-        
+
+        makePanel();
+    }
+
+    public ProfilePanel(User u) {
+        controller = null;
+        user = u;
+        displayName = user.getName();
+        twitterName = user.getScreenName();
+        description = user.getDescription();
+        location = user.getLocation();
+        website = user.getURL();
+        try {
+            profileImage = new ImageIcon(new URL(
+                    user.getBiggerProfileImageURL()));
+        } catch (MalformedURLException e) {
+        }
+
+        try {
+            profileBanner = new ImageIcon(new URL(user.getProfileBannerURL()))
+                    .getImage();
+        } catch (MalformedURLException e) {
+            profileBanner = (new ImageIcon("src/banner.jpeg")).getImage();
+        }
+
+        makePanel();
+    }
+
+    private void makePanel() {
+        TwitterGUI.loadingPanel.incrementLoadingScreen();
+
         JPanel infoPanel = new JPanel() {
             protected void paintComponent(final Graphics g) {
                 final int eight = 8;
                 final int three = 3;
                 final int ten = 10;
-                g.drawImage(profileBanner,
-                        (TwitterGUI.FRAME_WIDTH / 2) - profileBanner.getWidth(null) / 2
-                                - eight, TwitterGUI.FRAME_HEIGHT / three + ten
+                g.drawImage(
+                        profileBanner,
+                        (TwitterGUI.FRAME_WIDTH / 2)
+                                - profileBanner.getWidth(null) / 2 - eight,
+                        TwitterGUI.FRAME_HEIGHT / three + ten
                                 - profileBanner.getHeight(null) / 2, null);
             }
         };
@@ -73,8 +112,8 @@ public class ProfilePanel extends JPanel implements ActionListener {
         ImageIcon img = profileImage;
         c.gridy = 0;
         JButton profImgBtn = getCountButton(0, null);
-        profImgBtn.setPreferredSize(new Dimension(img.getIconWidth() 
-                + 2, img.getIconHeight() + 2));
+        profImgBtn.setPreferredSize(new Dimension(img.getIconWidth() + 2, img
+                .getIconHeight() + 2));
         final int four = 4;
         profImgBtn.setBorder(new LineBorder(Color.WHITE, four));
         profImgBtn.setIcon(img);
@@ -103,7 +142,7 @@ public class ProfilePanel extends JPanel implements ActionListener {
         c.gridy = 1 + 1 + 1;
         c.ipady = 0;
         createDescriptionPanel(infoPanel, c);
-        
+
         TwitterGUI.loadingPanel.incrementLoadingScreen();
 
         // Location
@@ -132,13 +171,12 @@ public class ProfilePanel extends JPanel implements ActionListener {
         cpc.ipadx = thrity;
         countPanel.setOpaque(false);
 
-        followersBtn = getCountButton(controller.getFollowersCount(),
+        followersBtn = getCountButton(user.getFollowersCount(),
                 "Followers");
         followersBtn.addActionListener(this);
-        followingBtn = getCountButton(controller.getFriendsCount(),
-                "Following");
+        followingBtn = getCountButton(user.getFriendsCount(), "Following");
         followingBtn.addActionListener(this);
-        tweetsBtn = getCountButton(controller.getTweetCount(), "Tweets");
+        tweetsBtn = getCountButton(user.getStatusesCount(), "Tweets");
         tweetsBtn.addActionListener(this);
 
         cpc.gridy = 0;
@@ -151,14 +189,13 @@ public class ProfilePanel extends JPanel implements ActionListener {
         countPanel.add(new JLabel(" "), cpc);
 
         /** PROFILE PANEL */
- 
+
         super.setOpaque(false);
         super.setLayout(new BorderLayout());
         super.add(infoPanel, BorderLayout.CENTER);
         super.add(countPanel, BorderLayout.SOUTH);
     }
-    
-    
+
     private void createDescriptionPanel(final JPanel panel,
             final GridBagConstraints c) {
         final int max = 55;
@@ -223,8 +260,7 @@ public class ProfilePanel extends JPanel implements ActionListener {
             panel.add(description3Lbl, c);
         }
     }
-    
-    
+
     /****************************************************
      * Gets plain button for the profile tab page.
      * 
@@ -236,7 +272,7 @@ public class ProfilePanel extends JPanel implements ActionListener {
      ***************************************************/
     private JButton getCountButton(final int count, final String name) {
         String text = "<html><center><font size=6>" + count + "</font><br><i>"
-                      + name + "</i></center></html>";
+                + name + "</i></center></html>";
         JButton tmp = new JButton();
         final int w = 120;
         final int l = 50;
@@ -251,24 +287,19 @@ public class ProfilePanel extends JPanel implements ActionListener {
         tmp.setFocusPainted(false);
         return tmp;
     }
-    
-    
-    
 
     public void setFollowersCount(int count) {
-        followersBtn.setText("<html><center><font size=6>" + count 
+        followersBtn.setText("<html><center><font size=6>" + count
                 + "</font><br><i>Followers</i></center></html>");
     }
 
-
     public void setFollowingCount(int count) {
-        followingBtn.setText("<html><center><font size=6>" + count 
+        followingBtn.setText("<html><center><font size=6>" + count
                 + "</font><br><i>Following</i></center></html>");
     }
 
-
     public void setTweetCount(int count) {
-        tweetsBtn.setText("<html><center><font size=6>" + count 
+        tweetsBtn.setText("<html><center><font size=6>" + count
                 + "</font><br><i>Tweets</i></center></html>");
     }
 
@@ -281,22 +312,24 @@ public class ProfilePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent arg0) {
         Object source = arg0.getSource();
         JTabbedPane tabbedPane = TwitterGUI.tabbedPane;
-        
-        if (source == followersBtn) {
+
+        if (controller != null && source == followersBtn) {
             tabbedPane.setSelectedComponent(TwitterGUI.followersPanel);
         }
-        
-        if (source == followingBtn) {
+
+        if (controller != null && source == followingBtn) {
             tabbedPane.setSelectedComponent(TwitterGUI.followingPanel);
-        } 
-        
-        if (source == tweetsBtn) {
-            DialogTweets x = new DialogTweets(TwitterGUI.frame, controller.getUserTimeline());
+        }
+
+        if (controller != null && source == tweetsBtn) {
+            DialogTweets x = new DialogTweets(TwitterGUI.frame,
+                    controller.getUserTimeline());
             for (long l : x.getRemoveList()) {
                 controller.destroyStatus(l);
             }
             setTweetCount(controller.getTweetCount());
-            TwitterGUI.tweetTotal.setText(controller.getTweetCount() + " Tweets");
+            TwitterGUI.tweetTotal.setText(controller.getTweetCount()
+                    + " Tweets");
         }
     }
 }
