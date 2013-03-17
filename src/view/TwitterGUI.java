@@ -215,7 +215,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
     private JButton fersAllButton;
     
     /** Displays users profile information. */
-    private JButton showProfile;
+    private JButton fersShowProfileBtn;
 
     // Following Panel *****************************************************
     /** Final frame height. */
@@ -253,6 +253,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
     /** serialVersionUID. */
     private JLabel followingTotal;
+    
+    /** Displays users profile information. */
+    private JButton fingShowProfileBtn;
 
     // Messages Panel *********************************************************
     /** Messages Panel */
@@ -401,9 +404,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         fersAllButton.setFocusPainted(false);
         fersAllButton.addActionListener(this);
         
-        showProfile = new JButton("Show Profile");
-        showProfile.setFocusPainted(false);
-        showProfile.addActionListener(this);
+        
         
         fersgbc.gridx = 0;
         fersgbc.gridy = 0;
@@ -463,17 +464,29 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
         followersPanel.add(scrollPane, fersgbc);
         
-        fersgbc.gridx = 3;
-        fersgbc.gridy = 3;
-        followersPanel.add(showProfile, fersgbc);
+        
 
         followersTotal = new JLabel(controller.getFollowersCount()
                 + " Followers");
+        followersTotal.setHorizontalAlignment(JLabel.LEFT);
+        followersTotal.setHorizontalTextPosition(JLabel.LEFT);
         fersgbc.gridx = 0;
         fersgbc.gridy = 2;
         fersgbc.gridwidth = 1;
         fersgbc.fill = 1;
         followersPanel.add(followersTotal, fersgbc);
+        
+        
+        fersShowProfileBtn = new JButton("Show Profile");
+        fersShowProfileBtn.setFocusPainted(false);
+        fersShowProfileBtn.addActionListener(this);
+        fersShowProfileBtn.setHorizontalAlignment(JButton.RIGHT);
+        fersShowProfileBtn.setHorizontalTextPosition(JButton.RIGHT);
+        fersgbc.gridx = 1;
+        fersgbc.gridwidth = 2;
+        fersgbc.fill = 0; 
+        fersgbc.anchor = GridBagConstraints.EAST;
+        followersPanel.add(fersShowProfileBtn, fersgbc);
     }
 
     /****************************************************
@@ -549,24 +562,41 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
         followingPanel.add(fingScrollPane, finggbc);
 
-        unfollow = new JButton("Unfollow");
-        unfollow.addActionListener(this);
+        
+        followingTotal = new JLabel(controller.getFriendsCount()
+                + " Following");
+        followingTotal.setHorizontalAlignment(JLabel.LEFT);
+        followingTotal.setHorizontalTextPosition(JLabel.LEFT);
         finggbc.gridx = 0;
         finggbc.gridy = 2;
-        finggbc.gridwidth = 2;
-        finggbc.fill = 1;
+        finggbc.gridwidth = 1;
+        finggbc.fill = 0;
+        followingPanel.add(followingTotal, finggbc);
+        
+        
+        unfollow = new JButton("Unfollow");
+        unfollow.addActionListener(this);
+        unfollow.setFocusPainted(false);
+        unfollow.setHorizontalTextPosition(JButton.RIGHT);
+        unfollow.setHorizontalAlignment(JButton.RIGHT);
+        finggbc.gridx = 1;
+        finggbc.gridwidth = 1;
+        finggbc.fill = GridBagConstraints.EAST;
         followingPanel.add(unfollow, finggbc);
 
-        followingTotal = new JLabel("  Following "
-                + controller.getFriendsCount());
+        fingShowProfileBtn = new JButton("Show Profile");
+        fingShowProfileBtn.setFocusPainted(false);
+        fingShowProfileBtn.addActionListener(this);
+        fingShowProfileBtn.setHorizontalAlignment(JButton.RIGHT);
+        fingShowProfileBtn.setHorizontalTextPosition(JButton.RIGHT);
         finggbc.gridx = 2;
-        finggbc.gridy = 2;
         finggbc.gridwidth = 1;
-        finggbc.fill = 1;
-        followingPanel.add(followingTotal, finggbc);
-
+        finggbc.fill = GridBagConstraints.EAST; 
+        finggbc.anchor = GridBagConstraints.EAST;
+        followingPanel.add(fingShowProfileBtn, finggbc);
     }
 
+    
     /****************************************************
      * Display a temporary profile panel for any user
      * 
@@ -1098,7 +1128,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             JOptionPane
                     .showMessageDialog(
                             null,
-                            "HashTagSwag\n\nCorey Alberda\nRuss Johnson\nNick Olesak\nVincenzo Pavano\n\n03/18/2013\nv.2.0");
+                            "HashTagSwag\n\n" +
+                            "Corey Alberda\n" +
+                            "Russ Johnson\n" +
+                            "Nick Olesak\n" +
+                            "Vincenzo Pavano\n\n" +
+                            "03/18/2013\nv.2.0");
         }
 
         if (source == cancel) {
@@ -1110,6 +1145,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             attachImg.setText("Attach Image");
         }
 
+        
         if (source == tweetShow) {
             DialogTweets x = new DialogTweets(this,
                     controller.getUserTimeline());
@@ -1137,7 +1173,15 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             }
         }
         
-        if (source == showProfile) {
+        if (source == fingShowProfileBtn && jlistFollowing
+                .getSelectedIndex() > 0) {
+            User u = controller.getUser(following.showId(jlistFollowing
+                    .getSelectedIndex()));
+            displayUserProfile(u);
+        }
+        
+        if (source == fersShowProfileBtn && jlistFollowers
+                .getSelectedIndex() > 0) {
             User u = controller.getUser(followers.showId(jlistFollowers
                     .getSelectedIndex()));
             displayUserProfile(u);

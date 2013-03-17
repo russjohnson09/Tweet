@@ -196,7 +196,7 @@ public class ProfilePanel extends JPanel implements ActionListener {
         super.add(countPanel, BorderLayout.SOUTH);
     }
 
-    private void createDescriptionPanel(final JPanel panel,
+    private void createDescriptionPanel(JPanel panel,
             final GridBagConstraints c) {
         final int max = 55;
         final int fontsize = 14;
@@ -231,33 +231,37 @@ public class ProfilePanel extends JPanel implements ActionListener {
 
             // triple line
         } else {
-            String d1, d2, d3;
-            String[] w = description.split(" ");
-            int wThird = (w.length / (1 + 2)) + 1;
-            int dThird = description.length() / (1 + 2);
 
-            d1 = description.substring(0,
-                    description.indexOf(w[wThird], dThird));
-            d2 = description.substring(description.indexOf(w[wThird], dThird),
-                    description.indexOf(w[wThird * 2], dThird * 2));
-            d3 = description.substring(description.indexOf(w[wThird * 2],
-                    dThird * 2));
-
-            JLabel description1Lbl = new JLabel(d1);
-            description1Lbl.setFont(new Font("arial", Font.PLAIN, fontsize));
-            description1Lbl.setForeground(Color.WHITE);
-            JLabel description2Lbl = new JLabel(d2);
-            description2Lbl.setFont(new Font("arial", Font.PLAIN, fontsize));
-            description2Lbl.setForeground(Color.WHITE);
-            JLabel description3Lbl = new JLabel(d3);
-            description3Lbl.setFont(new Font("arial", Font.PLAIN, fontsize));
-            description3Lbl.setForeground(Color.WHITE);
-
-            panel.add(description1Lbl, c);
-            c.gridy = 2 + 2;
-            panel.add(description2Lbl, c);
-            c.gridy = 2 + 2 + 1;
-            panel.add(description3Lbl, c);
+            try { //bug in this code block that needs to be addressed
+                String d1, d2, d3;
+                String[] w = description.split(" ");
+                int wThird = (w.length / (1 + 2));  //7
+                int dThird = description.length() / (1 + 2); //44
+                            
+                d1 = description.substring(0, description.indexOf(w[wThird], dThird+25));
+                d2 = description.substring(description.indexOf(w[wThird], dThird),
+                        description.indexOf(w[wThird * 2], dThird * 2 + 15));
+                d3 = description.substring(description.indexOf(w[wThird * 2],
+                        description.length()));
+    
+                JLabel description1Lbl = new JLabel(d1);
+                description1Lbl.setFont(new Font("arial", Font.PLAIN, fontsize));
+                description1Lbl.setForeground(Color.WHITE);
+                JLabel description2Lbl = new JLabel(d2);
+                description2Lbl.setFont(new Font("arial", Font.PLAIN, fontsize));
+                description2Lbl.setForeground(Color.WHITE);
+                JLabel description3Lbl = new JLabel(d3);
+                description3Lbl.setFont(new Font("arial", Font.PLAIN, fontsize));
+                description3Lbl.setForeground(Color.WHITE);
+    
+                panel.add(description1Lbl, c);
+                c.gridy = 2 + 2;
+                panel.add(description2Lbl, c);
+                c.gridy = 2 + 2 + 1;
+                panel.add(description3Lbl, c);
+            } catch (Exception e) {
+                panel = null;
+            }
         }
     }
 
