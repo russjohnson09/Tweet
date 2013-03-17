@@ -37,7 +37,7 @@ Planned for Future Releases
 
 Contributors
 ------------------
-Vincenzo Pavano <pavanov@mail.gvsu.edu>
-Corey Alberda <alberdac@mail.gvsu.edu>
-Nick Olesak <olesakn@mail.gvsu.edu>
-Russjohnson09 <russjohnson09@gmail.com>
+* Vincenzo Pavano <pavanov@mail.gvsu.edu>
+* Corey Alberda <alberdac@mail.gvsu.edu>
+* Nick Olesak <olesakn@mail.gvsu.edu>
+* Russjohnson09 <russjohnson09@gmail.com>
