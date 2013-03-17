@@ -213,7 +213,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
     /** Display all followers. */
     private JButton fersAllButton;
-    
+
     /** Displays users profile information. */
     private JButton fersShowProfileBtn;
 
@@ -253,7 +253,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
     /** serialVersionUID. */
     private JLabel followingTotal;
-    
+
     /** Displays users profile information. */
     private JButton fingShowProfileBtn;
 
@@ -403,9 +403,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         fersAllButton = new JButton("Show All");
         fersAllButton.setFocusPainted(false);
         fersAllButton.addActionListener(this);
-        
-        
-        
+
         fersgbc.gridx = 0;
         fersgbc.gridy = 0;
         fersgbc.gridwidth = 1;
@@ -422,6 +420,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
         final int FERS_SIZE = 18;
         fersSearchTextArea = new JTextArea();
+        fersSearchTextArea.addKeyListener(this);
         fersSearchTextArea.setFont(new Font("arial", Font.PLAIN, FERS_SIZE));
         fersSearchTextArea
                 .setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -430,9 +429,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         fersgbc.gridwidth = 1;
         fersgbc.fill = 1;
         followersPanel.add(fersSearchTextArea, fersgbc);
-        
-        
-        
+
         jlistFollowers = new JList<String>(followers);
         jlistFollowers.addMouseListener(this);
         jlistFollowers.setCellRenderer(new DefaultListCellRenderer() {
@@ -463,8 +460,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 FOLLOWERS_HEIGHT));
 
         followersPanel.add(scrollPane, fersgbc);
-        
-        
 
         followersTotal = new JLabel(controller.getFollowersCount()
                 + " Followers");
@@ -475,8 +470,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         fersgbc.gridwidth = 1;
         fersgbc.fill = 1;
         followersPanel.add(followersTotal, fersgbc);
-        
-        
+
         fersShowProfileBtn = new JButton("Show Profile");
         fersShowProfileBtn.setFocusPainted(false);
         fersShowProfileBtn.addActionListener(this);
@@ -484,7 +478,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         fersShowProfileBtn.setHorizontalTextPosition(JButton.RIGHT);
         fersgbc.gridx = 1;
         fersgbc.gridwidth = 2;
-        fersgbc.fill = 0; 
+        fersgbc.fill = 0;
         fersgbc.anchor = GridBagConstraints.EAST;
         followersPanel.add(fersShowProfileBtn, fersgbc);
     }
@@ -523,6 +517,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         followingPanel.add(fingSearchButton, finggbc);
 
         fingSearchTextArea = new JTextArea();
+        fingSearchTextArea.addKeyListener(this);
         fingSearchTextArea.setFont(new Font("arial", Font.PLAIN, 18));
         fingSearchTextArea
                 .setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -562,9 +557,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
         followingPanel.add(fingScrollPane, finggbc);
 
-        
-        followingTotal = new JLabel(controller.getFriendsCount()
-                + " Following");
+        followingTotal = new JLabel(controller.getFriendsCount() + " Following");
         followingTotal.setHorizontalAlignment(JLabel.LEFT);
         followingTotal.setHorizontalTextPosition(JLabel.LEFT);
         finggbc.gridx = 0;
@@ -572,8 +565,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         finggbc.gridwidth = 1;
         finggbc.fill = 0;
         followingPanel.add(followingTotal, finggbc);
-        
-        
+
         unfollow = new JButton("Unfollow");
         unfollow.addActionListener(this);
         unfollow.setFocusPainted(false);
@@ -591,12 +583,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         fingShowProfileBtn.setHorizontalTextPosition(JButton.RIGHT);
         finggbc.gridx = 2;
         finggbc.gridwidth = 1;
-        finggbc.fill = GridBagConstraints.EAST; 
+        finggbc.fill = GridBagConstraints.EAST;
         finggbc.anchor = GridBagConstraints.EAST;
         followingPanel.add(fingShowProfileBtn, finggbc);
     }
 
-    
     /****************************************************
      * Display a temporary profile panel for any user
      * 
@@ -778,12 +769,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         };
 
         ResponseList<DirectMessage> rl = controller.getAllMessages();
-        
-        // EXAMPLE
-        //DirectMessage dm = rl.get(0);
-        //User sender = dm.getSender();
-        //String text = dm.getText();
 
+        // EXAMPLE
+        // DirectMessage dm = rl.get(0);
+        // User sender = dm.getSender();
+        // String text = dm.getText();
 
         final JPanel mlPanel = new JPanel();
         mlPanel.setBackground(Color.WHITE);
@@ -1125,15 +1115,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         }
 
         if (source == about) {
-            JOptionPane
-                    .showMessageDialog(
-                            null,
-                            "HashTagSwag\n\n" +
-                            "Corey Alberda\n" +
-                            "Russ Johnson\n" +
-                            "Nick Olesak\n" +
-                            "Vincenzo Pavano\n\n" +
-                            "03/18/2013\nv.2.0");
+            JOptionPane.showMessageDialog(null, "HashTagSwag\n\n"
+                    + "Corey Alberda\n" + "Russ Johnson\n" + "Nick Olesak\n"
+                    + "Vincenzo Pavano\n\n" + "03/18/2013\nv.2.0");
         }
 
         if (source == cancel) {
@@ -1145,7 +1129,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             attachImg.setText("Attach Image");
         }
 
-        
         if (source == tweetShow) {
             DialogTweets x = new DialogTweets(this,
                     controller.getUserTimeline());
@@ -1172,16 +1155,16 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 attachImg.setEnabled(false);
             }
         }
-        
-        if (source == fingShowProfileBtn && jlistFollowing
-                .getSelectedIndex() > 0) {
+
+        if (source == fingShowProfileBtn
+                && jlistFollowing.getSelectedIndex() > 0) {
             User u = controller.getUser(following.showId(jlistFollowing
                     .getSelectedIndex()));
             displayUserProfile(u);
         }
-        
-        if (source == fersShowProfileBtn && jlistFollowers
-                .getSelectedIndex() > 0) {
+
+        if (source == fersShowProfileBtn
+                && jlistFollowers.getSelectedIndex() > 0) {
             User u = controller.getUser(followers.showId(jlistFollowers
                     .getSelectedIndex()));
             displayUserProfile(u);
@@ -1271,6 +1254,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
     @Override
     public void keyTyped(final KeyEvent e) {
+        
         if (tabbedPane.getSelectedComponent() == tweetPanel) {
             int charCount = tweetText.getText().length();
 
@@ -1278,6 +1262,21 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 charsRemaining.setText("" + 140);
             else
                 charsRemaining.setText("" + (140 - charCount));
+        }
+
+        if (tabbedPane.getSelectedComponent() == followingPanel
+                && e.getKeyCode() == KeyEvent.VK_ENTER) {
+            
+            if (fingSearchTextArea.getText().length() > 0) {
+                following.search(fingSearchTextArea.getText());
+            }
+        }
+        if (tabbedPane.getSelectedComponent() == followersPanel
+                && e.getKeyCode() == KeyEvent.VK_H) {
+            
+            if (fersSearchTextArea.getText().length() > 0) {
+                followers.search(fersSearchTextArea.getText());
+            }
         }
     }
 
