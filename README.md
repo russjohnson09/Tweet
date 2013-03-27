@@ -3,6 +3,19 @@ Twitter Project
 
 Class project for software engineering.
 
+Release 3.0
+---------------------
+* Retweet/Favorite button - Corey?
+* Trending/Timeline Panel- Corey
+* Messages Panel - Vincenzo
+* System Refresh - Nick
+* @tag pulls up followers name while tweeting - Nick
+* location - Vincenzo
+* interactions/mentions feed - Russ
+
+* usename/password DB incorporation - if time
+* alerts for interactions/mentions - if time
+
 Current Features - Version 2.0
 ----------------
 * easy to use account authentication process
@@ -18,21 +31,6 @@ Current Features - Version 2.0
 * view trending topics
 * view user timeline
 * application loaded-percentage screen
-* 
-
-Planned for Future Releases
----------------------
-* Trending/Timeline Panel
-* Messages Panel
-* System Refresh
-* @tag pulls up followers name while tweetinh
-* news feed
-* usename/password DB incorporation
-* location
-* account settings changes
-* interactions feed
-* mentions feed
-* alerts for interactions/mentions
 
 
 Contributors
