@@ -155,9 +155,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
     /** Timeline JList. */
     private JList<String> jlistTimeline;
 
-    /** Tweets. */
-    private Tweets tweets;
-
     /** Timeline JScrollPane. */
     private JScrollPane TimelineScrollPane;
 
@@ -330,6 +327,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
             /** Confirm Pin Button Action Listener */
             confirmPinButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(final ActionEvent arg0) {
                     if (pinTF.getText().length() > 0) {
                         controller.setUp(pinTF.getText());
@@ -343,6 +341,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
             /** Browser Button Action Listener */
             browserButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(final ActionEvent arg0) {
                     if (Desktop.isDesktopSupported()) {
                         authFrame.toFront();
@@ -388,6 +387,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
      ***************************************************/
     private void createFollowersPanel() {
         followersPanel = new JPanel() {
+            @Override
             protected void paintComponent(final Graphics g) {
                 g.drawImage(backgroundImage, 0, 0, null);
                 super.paintComponent(g);
@@ -488,6 +488,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
      ***************************************************/
     private void createFollowingPanel() {
         followingPanel = new JPanel() {
+            @Override
             protected void paintComponent(final Graphics g) {
                 g.drawImage(backgroundImage, 0, 0, null);
                 super.paintComponent(g);
@@ -610,6 +611,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
      ***************************************************/
     private void createTweetPanel() {
         tweetPanel = new JPanel() {
+            @Override
             protected void paintComponent(final Graphics g) {
                 g.drawImage(backgroundImage, 0, 0, null);
                 super.paintComponent(g);
@@ -713,6 +715,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
      ***************************************************/
     private void createTimelinePanel() {
         timelinePanel = new JPanel() {
+            @Override
             protected void paintComponent(final Graphics g) {
                 g.drawImage(backgroundImage, 0, 0, null);
                 super.paintComponent(g);
@@ -741,8 +744,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         GridBagConstraints timelinegbc = new GridBagConstraints();
 
         JPanel timelinePnl = new JPanel();
-        tweets = controller.getHomeTimeline();
-        jlistTimeline = new JList<String>(tweets);
+        jlistTimeline = new JList<String>(controller.initTimeline());
 
         TimelineScrollPane = new JScrollPane(jlistTimeline);
         TimelineScrollPane.setPreferredSize(new Dimension(TIMELINE_WIDTH,
@@ -762,6 +764,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
      ***************************************************/
     private void createMessagesPanel() {
         messagesPanel = new JPanel() {
+            @Override
             protected void paintComponent(final Graphics g) {
                 g.drawImage(backgroundImage, 0, 0, null);
                 super.paintComponent(g);
@@ -801,6 +804,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 FRAME_WIDTH));
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent evt) {
                 int row = table.rowAtPoint(evt.getPoint());
                 viewMessage(row);
@@ -847,7 +851,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 // Reply stuff
                 tweetSubmit = new JButton("Send Message");
                 tweetSubmit.setFocusable(false);
-                // tweetSubmit.addActionListener(this);
+                // tweetSubmit.addActionListener(tweetListener);
                 gbc.gridx = 0;
                 gbc.gridy = 3;
                 msgPanel.add(tweetSubmit, gbc);
@@ -900,6 +904,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
     private void createAddFollowingPanel() {
         addFollowingPanel = new JPanel() {
+            @Override
             protected void paintComponent(final Graphics g) {
                 g.drawImage(backgroundImage, 0, 0, null);
                 super.paintComponent(g);
@@ -1232,6 +1237,13 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         if (source == compose) {
 
         }
+
+        if (source == homeTlBtn) {
+            controller.homeTimeline();
+        }
+        if (source == userTlBtn) {
+            controller.userTimeline();
+        }
     }
 
     /****************************************************
@@ -1254,7 +1266,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
     @Override
     public void keyTyped(final KeyEvent e) {
-        
+
         if (tabbedPane.getSelectedComponent() == tweetPanel) {
             int charCount = tweetText.getText().length();
 
@@ -1266,26 +1278,29 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
         if (tabbedPane.getSelectedComponent() == followingPanel
                 && e.getKeyCode() == KeyEvent.VK_ENTER) {
-            
+
             if (fingSearchTextArea.getText().length() > 0) {
                 following.search(fingSearchTextArea.getText());
             }
         }
         if (tabbedPane.getSelectedComponent() == followersPanel
                 && e.getKeyCode() == KeyEvent.VK_H) {
-            
+
             if (fersSearchTextArea.getText().length() > 0) {
                 followers.search(fersSearchTextArea.getText());
             }
         }
     }
 
+    @Override
     public void keyPressed(final KeyEvent e) {
     }
 
+    @Override
     public void keyReleased(final KeyEvent e) {
     }
 
+    @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2 && e.getSource() == jlistFollowing) {
             User u = controller.getUser(following.showId(jlistFollowing
@@ -1299,15 +1314,19 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         }
     }
 
+    @Override
     public void mouseEntered(MouseEvent arg0) {
     }
 
+    @Override
     public void mouseExited(MouseEvent arg0) {
     }
 
+    @Override
     public void mousePressed(MouseEvent arg0) {
     }
 
+    @Override
     public void mouseReleased(MouseEvent arg0) {
     }
 

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 
 import model.Tweets;
 import model.TwitterModel;
@@ -40,6 +41,9 @@ import twitter4j.auth.RequestToken;
  * @date March 18, 2013
  ***************************************************/
 public class TwitterController {
+
+    private Tweets timeline;
+    private boolean isHomeTimeline;
 
     /** TwitterModel. */
     private static TwitterModel model = new TwitterModel();
@@ -488,7 +492,7 @@ public class TwitterController {
      * @return tweets from timeline
      ***************************************************/
     public final Tweets getHomeTimeline() {
-        Tweets tweets = new Tweets();
+        Tweets tweets = new Tweets(twitter);
         ResponseList<Status> statuses = null;
         try {
             statuses = twitter.getHomeTimeline();
@@ -509,7 +513,7 @@ public class TwitterController {
      * @return Tweets
      ***************************************************/
     public final Tweets getUserTimeline() {
-        Tweets tweets = new Tweets();
+        Tweets tweets = new Tweets(twitter);
         ResponseList<Status> statuses = null;
         try {
             statuses = twitter.getUserTimeline();
@@ -561,7 +565,7 @@ public class TwitterController {
         DirectMessage list = null;
 
         try {
-            list = (DirectMessage) twitter.showDirectMessage(messageId);
+            list = twitter.showDirectMessage(messageId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -720,6 +724,29 @@ public class TwitterController {
             e.printStackTrace();
         }
         return null;
+
+    }
+
+    public ListModel<String> initTimeline() {
+        timeline = new Tweets(twitter);
+        timeline.homeTimeline();
+        isHomeTimeline = true;
+        return timeline;
+    }
+
+    public void homeTimeline() {
+        if (!isHomeTimeline) {
+            timeline.homeTimeline();
+            isHomeTimeline = true;
+        }
+
+    }
+
+    public void userTimeline() {
+        if (isHomeTimeline) {
+            timeline.userTimeline();
+            isHomeTimeline = false;
+        }
 
     }
 
