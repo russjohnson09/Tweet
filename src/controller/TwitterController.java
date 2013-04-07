@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JList;
@@ -46,7 +47,7 @@ public class TwitterController {
     private boolean isHomeTimeline;
 
     /** TwitterModel. */
-    private static TwitterModel model = new TwitterModel();
+    private static TwitterModel model;
 
     /** Boolean if the controller is set up. */
     private boolean isSetUp = false;
@@ -67,8 +68,6 @@ public class TwitterController {
      * Twitter Controller constructor.
      ***************************************************/
     public TwitterController() {
-        model = new TwitterModel();
-
         twitter = new TwitterFactory().getInstance();
         twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_KEY_SECRET);
 
@@ -86,6 +85,8 @@ public class TwitterController {
                 e.printStackTrace();
             }
         }
+
+        model = new TwitterModel(twitter);
     }
 
     /****************************************************
@@ -94,15 +95,7 @@ public class TwitterController {
      * @return String
      ****************************************************/
     public final String getDisplayName() {
-        try {
-            return twitter.showUser(twitter.getId()).getName();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return model.getName();
     }
 
     /****************************************************
@@ -111,14 +104,7 @@ public class TwitterController {
      * @return String
      ***************************************************/
     public final String getTwitterName() {
-        try {
-            return "@" + twitter.showUser(twitter.getId()).getScreenName();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return model.getScreenName();
     }
 
     /****************************************************
@@ -129,14 +115,7 @@ public class TwitterController {
      * @return String
      ***************************************************/
     public final String getTwitterName(final long l) {
-        try {
-            return "@" + twitter.showUser(l).getScreenName();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return model.getScreenName(l);
     }
 
     /****************************************************
@@ -145,14 +124,7 @@ public class TwitterController {
      * @return String
      ***************************************************/
     public final String getDescription() {
-        try {
-            return twitter.showUser(twitter.getId()).getDescription();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return model.getDescription();
     }
 
     /****************************************************
@@ -161,16 +133,7 @@ public class TwitterController {
      * @return String
      ***************************************************/
     public final String getWebsite() {
-        String str = null;
-        try {
-            str = twitter.showUser(twitter.getId()).getURL();
-            return str;
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return model.getURL();
     }
 
     /****************************************************
@@ -179,14 +142,7 @@ public class TwitterController {
      * @return String
      ***************************************************/
     public final String getLocation() {
-        try {
-            return twitter.showUser(twitter.getId()).getLocation();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return model.getLocation();
     }
 
     /****************************************************
@@ -195,18 +151,7 @@ public class TwitterController {
      * @return ImageIcon profile picture
      ***************************************************/
     public final ImageIcon getProfileImage() {
-        try {
-            return new ImageIcon(new URL(twitter.showUser(twitter.getId())
-                    .getBiggerProfileImageURL()));
-        } catch (MalformedURLException e) {
-            return null;
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return model.getProfileImage();
     }
 
     /****************************************************
@@ -215,18 +160,7 @@ public class TwitterController {
      * @return ImageIcon profile picture
      ***************************************************/
     public final ImageIcon getSmallerProfileImage() {
-        try {
-            return new ImageIcon(new URL(twitter.showUser(twitter.getId())
-                    .getProfileImageURL()));
-        } catch (MalformedURLException e) {
-            return null;
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return model.getSmallerProfileImage();
     }
 
     /****************************************************
@@ -236,18 +170,7 @@ public class TwitterController {
      * @return ImageIcon profile picture
      ***************************************************/
     public final ImageIcon getSmallerProfileImage(long userId) {
-        try {
-            return new ImageIcon(new URL(twitter.showUser(userId)
-                    .getProfileImageURL()));
-        } catch (MalformedURLException e) {
-            return null;
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return model.getSmallerProfileImage(userId);
     }
 
     /****************************************************
@@ -256,20 +179,7 @@ public class TwitterController {
      * @return image
      ***************************************************/
     public final Image getProfileBanner() {
-        Image img = null;
-        try {
-            img = (new ImageIcon(new URL(twitter.showUser(twitter.getId())
-                    .getProfileBannerURL())).getImage());
-        } catch (MalformedURLException e) {
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        if (img == null) {
-            img = (new ImageIcon("src/banner.jpeg")).getImage();
-        }
-        return img;
+        return model.getProfileBanner();
     }
 
     /****************************************************
@@ -299,13 +209,7 @@ public class TwitterController {
      * @return Boolean
      ***************************************************/
     public final boolean tweet(final String str) {
-        try {
-            twitter.updateStatus(str);
-            return true;
-
-        } catch (TwitterException e) {
-            return false;
-        }
+        return model.updateStatus(str);
     }
 
     /****************************************************
@@ -316,15 +220,7 @@ public class TwitterController {
      * @return Boolean
      ***************************************************/
     public boolean tweetImage(File img, String message) {
-        try {
-            StatusUpdate status = new StatusUpdate(message);
-            status.setMedia(img);
-            twitter.updateStatus(status);
-            return true;
-
-        } catch (TwitterException e) {
-            return false;
-        }
+        return model.tweetImage(img, message);
     }
 
     /****************************************************
@@ -333,14 +229,7 @@ public class TwitterController {
      * @return int
      ***************************************************/
     public final int getTweetCount() {
-        try {
-            return twitter.showUser(twitter.getId()).getStatusesCount();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return 0;
+        return model.getTweetCount();
     }
 
     /****************************************************
@@ -349,11 +238,7 @@ public class TwitterController {
      * @return long[]
      ***************************************************/
     public final long[] getFriendsIDs() {
-        try {
-            return twitter.getFriendsIDs(-1).getIDs();
-        } catch (TwitterException e) {
-            return null;
-        }
+        return model.getFriendsIDs();
     }
 
     /****************************************************
@@ -362,14 +247,7 @@ public class TwitterController {
      * @return int number of friends
      ***************************************************/
     public final int getFriendsCount() {
-        try {
-            return twitter.showUser(twitter.getId()).getFriendsCount();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return 0;
+        return model.getFriendsCount();
     }
 
     /****************************************************
@@ -377,17 +255,8 @@ public class TwitterController {
      * 
      * @return ArrayList<User>
      ***************************************************/
-    public final ArrayList<User> getFollowers() {
-        ArrayList<User> users = new ArrayList<User>();
-        try {
-            long[] list = twitter.getFollowersIDs(-1).getIDs();
-            for (long l : list) {
-                users.add(twitter.showUser(l));
-            }
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return users;
+    public final List<User> getFollowers() {
+        return model.getFollowers();
     }
 
     /****************************************************
