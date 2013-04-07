@@ -6,10 +6,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.ImageIcon;
 
+import twitter4j.DirectMessage;
+import twitter4j.ResponseList;
+import twitter4j.Status;
 import twitter4j.StatusUpdate;
+import twitter4j.Trends;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.User;
@@ -19,7 +25,9 @@ import twitter4j.User;
  ***************************************************/
 public class TwitterModel {
 
-    Twitter t;
+    private static final int CHICAGO = 2379574;
+
+    private Twitter t;
 
     private String name;
     private String screenName;
@@ -35,9 +43,20 @@ public class TwitterModel {
 
     private long[] friendsIDs;
 
+    private List<User> followers;
+
+    private List<User> following;
+
+    private int followersCount;
     private int friendsCount;
 
-    private List<User> followers;
+    private Trends trending;
+
+    private Tweets homeTimeline;
+
+    private Tweets userTimeline;
+
+    private List<DirectMessage> messages;
 
     /****************************************************
      * Twitter model.
@@ -45,12 +64,16 @@ public class TwitterModel {
 
     public TwitterModel(Twitter twitter) {
         t = twitter;
-        followers = new ArrayList<User>();
         refresh();
 
     }
 
     public void refresh() {
+        List<Status> statuses;
+        followers = new ArrayList<User>();
+        following = new ArrayList<User>();
+        homeTimeline = new Tweets(t);
+        userTimeline = new Tweets(t);
         try {
             User u = t.showUser(t.getId());
             name = u.getName();
@@ -59,13 +82,30 @@ public class TwitterModel {
             url = u.getURL();
             location = u.getLocation();
             tweetCount = u.getStatusesCount();
+            friendsCount = u.getFriendsCount();
+            followersCount = u.getFollowersCount();
+            trending = t.getPlaceTrends(CHICAGO);
+
+            statuses = t.getHomeTimeline();
+            if (statuses != null)
+                for (Status s : statuses)
+                    homeTimeline.add(s);
+            statuses = t.getUserTimeline();
+            if (statuses != null)
+                for (Status s : statuses)
+                    userTimeline.add(s);
 
             friendsIDs = t.getFriendsIDs(-1).getIDs();
-            friendsCount = u.getFriendsCount();
 
             long[] list = t.getFollowersIDs(-1).getIDs();
             for (long l : list)
                 followers.add(t.showUser(l));
+
+            list = t.getFriendsIDs(-1).getIDs();
+            for (long l : list)
+                following.add(t.showUser(l));
+
+            messages = t.getDirectMessages();
 
             refreshImage(u);
 
@@ -159,6 +199,7 @@ public class TwitterModel {
     public boolean updateStatus(String str) {
         try {
             t.updateStatus(str);
+            tweetCount++;
             return true;
 
         } catch (TwitterException e) {
@@ -171,6 +212,7 @@ public class TwitterModel {
             StatusUpdate status = new StatusUpdate(message);
             status.setMedia(img);
             t.updateStatus(status);
+            tweetCount++;
             return true;
 
         } catch (TwitterException e) {
@@ -192,6 +234,124 @@ public class TwitterModel {
 
     public List<User> getFollowers() {
         return followers;
+    }
+
+    public List<User> getFollowing() {
+        return following;
+    }
+
+    public boolean unfollow(long l) {
+        try {
+            t.destroyFriendship(l);
+            friendsCount--;
+            return true;
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public User showUser(long l) {
+        try {
+            return t.showUser(l);
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    public boolean destroyStatus(Long l) {
+        try {
+            t.destroyStatus(l);
+            tweetCount--;
+            return true;
+        } catch (TwitterException e) {
+            return false;
+        }
+    }
+
+    public Trends getTrending() {
+        return trending;
+
+    }
+
+    public Tweets getHomeTimeline() {
+        return homeTimeline;
+    }
+
+    public Tweets getUserTimeline() {
+        return userTimeline;
+    }
+
+    public List<DirectMessage> getAllMessages() {
+        return messages;
+    }
+
+    public DirectMessage showDirectMessage(long messageId) {
+        try {
+            return t.showDirectMessage(messageId);
+        } catch (TwitterException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public boolean sendDirectMessage(long userId, String text) {
+        try {
+            t.sendDirectMessage(userId, text);
+            return true;
+        } catch (TwitterException e) {
+            return false;
+        }
+    }
+
+    public long getCurrentUserID() {
+        try {
+            return t.getId();
+        } catch (IllegalStateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (TwitterException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public User getUser(long id) {
+        try {
+            return t.showUser(id);
+        } catch (TwitterException e) {
+
+        }
+        return null;
+    }
+
+    public User follow(long l) {
+        try {
+            User u = t.createFriendship(l);
+            friendsCount++;
+            return u;
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ResponseList<User> searchUsers(String text) {
+        try {
+            return t.searchUsers(text, 1);
+        } catch (TwitterException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

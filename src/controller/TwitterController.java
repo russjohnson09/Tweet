@@ -1,20 +1,14 @@
 package controller;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 
 import model.Tweets;
@@ -25,8 +19,6 @@ import org.json.simple.parser.JSONParser;
 
 import twitter4j.DirectMessage;
 import twitter4j.ResponseList;
-import twitter4j.Status;
-import twitter4j.StatusUpdate;
 import twitter4j.Trends;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -264,17 +256,8 @@ public class TwitterController {
      * 
      * @return ArrayList<User>
      ***************************************************/
-    public final ArrayList<User> getFollowing() {
-        ArrayList<User> users = new ArrayList<User>();
-        try {
-            long[] list = twitter.getFriendsIDs(-1).getIDs();
-            for (long l : list) {
-                users.add(twitter.showUser(l));
-            }
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return users;
+    public final List<User> getFollowing() {
+        return model.getFollowing();
     }
 
     /****************************************************
@@ -284,13 +267,7 @@ public class TwitterController {
      * @return boolean
      ***************************************************/
     public final boolean unfollow(final long l) {
-        try {
-            twitter.destroyFriendship(l);
-            return true;
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return false;
+        return model.unfollow(l);
     }
 
     /****************************************************
@@ -300,12 +277,7 @@ public class TwitterController {
      * @return User
      ***************************************************/
     public final User showUser(final long l) {
-        try {
-            return twitter.showUser(l);
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return model.showUser(l);
     }
 
     /****************************************************
@@ -314,14 +286,7 @@ public class TwitterController {
      * @return int number of followers
      ***************************************************/
     public final int getFollowersCount() {
-        try {
-            return twitter.showUser(twitter.getId()).getFollowersCount();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        return 0;
+        return model.getFollowersCount();
     }
 
     /****************************************************
@@ -329,12 +294,8 @@ public class TwitterController {
      * 
      * @param long l
      ***************************************************/
-    public final void destroyStatus(final Long l) {
-        try {
-            twitter.destroyStatus(l);
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
+    public final boolean destroyStatus(final Long l) {
+        return model.destroyStatus(l);
     }
 
     /****************************************************
@@ -343,16 +304,7 @@ public class TwitterController {
      * @return Trends
      ***************************************************/
     public final Trends getTrending() {
-        Trends trends;
-        try {
-            trends = twitter.getPlaceTrends(2379574);
-            // This is chicago's WOEID
-            return trends;
-        } catch (TwitterException e) {
-            e.printStackTrace();
-            return null;
-        }
-
+        return model.getTrending();
     }
 
     /****************************************************
@@ -361,19 +313,7 @@ public class TwitterController {
      * @return tweets from timeline
      ***************************************************/
     public final Tweets getHomeTimeline() {
-        Tweets tweets = new Tweets(twitter);
-        ResponseList<Status> statuses = null;
-        try {
-            statuses = twitter.getHomeTimeline();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        if (statuses != null) {
-            for (Status s : statuses) {
-                tweets.add(s);
-            }
-        }
-        return tweets;
+        return model.getHomeTimeline();
     }
 
     /****************************************************
@@ -382,19 +322,7 @@ public class TwitterController {
      * @return Tweets
      ***************************************************/
     public final Tweets getUserTimeline() {
-        Tweets tweets = new Tweets(twitter);
-        ResponseList<Status> statuses = null;
-        try {
-            statuses = twitter.getUserTimeline();
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        if (statuses != null) {
-            for (Status s : statuses) {
-                tweets.add(s);
-            }
-        }
-        return tweets;
+        return model.getUserTimeline();
     }
 
     /****************************************************
@@ -412,16 +340,8 @@ public class TwitterController {
      * 
      * @return String Users URL
      ***************************************************/
-    public ResponseList<DirectMessage> getAllMessages() {
-        ResponseList<DirectMessage> rl = null;
-
-        try {
-            rl = twitter.getDirectMessages();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return rl;
+    public List<DirectMessage> getAllMessages() {
+        return model.getAllMessages();
     }
 
     /****************************************************
@@ -431,15 +351,7 @@ public class TwitterController {
      * @return String Users URL
      ***************************************************/
     public DirectMessage showDirectMessage(long messageId) {
-        DirectMessage list = null;
-
-        try {
-            list = twitter.showDirectMessage(messageId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return list;
+        return model.showDirectMessage(messageId);
     }
 
     /****************************************************
@@ -451,14 +363,7 @@ public class TwitterController {
      * @return String Users URL
      ***************************************************/
     public boolean sendDirectMessage(long userId, String text) {
-        try {
-            twitter.sendDirectMessage(userId, text);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return false;
+        return model.sendDirectMessage(userId, text);
     }
 
     /***************************************************
@@ -467,25 +372,16 @@ public class TwitterController {
      * @return
      **************************************************/
     public long getCurrentUserID() {
-        try {
-            return twitter.getId();
-        } catch (IllegalStateException e) {
-        } catch (TwitterException e) {
-        }
-        return 0;
+        return model.getCurrentUserID();
     }
 
     /***************************************************
-     * Get the a specified user's ID.
+     * Get the a specified user.
      * 
      * @return
      **************************************************/
     public User getUser(long id) {
-        try {
-            return twitter.showUser(id);
-        } catch (TwitterException e) {
-        }
-        return null;
+        return model.getUser(id);
     }
 
     /****************************************************
@@ -493,6 +389,7 @@ public class TwitterController {
      * 
      * @param accessToken
      ***************************************************/
+    @SuppressWarnings("unchecked")
     private void addToFile(final AccessToken accessToken) {
         JSONObject obj = new JSONObject();
 
@@ -581,18 +478,11 @@ public class TwitterController {
     }
 
     public ResponseList<User> searchUsers(String text) throws TwitterException {
-        return twitter.searchUsers(text, 1);
-
+        return model.searchUsers(text);
     }
 
     public User follow(long l) {
-        try {
-            return twitter.createFriendship(l);
-        } catch (TwitterException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
+        return model.follow(l);
 
     }
 

@@ -1,13 +1,10 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
-import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.Event;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -15,10 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.ScrollPane;
 import java.awt.TextField;
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -33,16 +27,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -58,18 +48,12 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
 
-import twitter4j.DirectMessage;
-import twitter4j.ResponseList;
-import twitter4j.Trends;
-import twitter4j.Trend;
-import twitter4j.TwitterException;
-import twitter4j.User;
-
-import model.Tweets;
 import model.Users;
+import twitter4j.DirectMessage;
+import twitter4j.Trend;
+import twitter4j.Trends;
+import twitter4j.User;
 import controller.TwitterController;
 
 /**********************************************************************
@@ -771,7 +755,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             }
         };
 
-        ResponseList<DirectMessage> rl = controller.getAllMessages();
+        List<DirectMessage> rl = controller.getAllMessages();
 
         // EXAMPLE
         // DirectMessage dm = rl.get(0);
