@@ -94,7 +94,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
     private JMenu fileMenu, tweetMenu, messagesMenu, aboutMenu;
 
     /** Items in the menu bar. */
-    private JMenuItem exit, newTweet, delete, about, showAll, compose, inbox;
+    private JMenuItem exit, refresh, newTweet, delete, about, showAll, compose, inbox;
 
     /** Tabbed pane. */
     static JTabbedPane tabbedPane;
@@ -971,6 +971,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
                 Event.CTRL_MASK));
         fileMenu.add(exit);
+        
+        refresh = new JMenuItem("Refresh");
+        refresh.addActionListener(this);
+        refresh.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,
+                Event.CTRL_MASK));
+        fileMenu.add(refresh);
 
         // Tweet Menu
         tweetMenu = new JMenu("Tweet");
@@ -1054,6 +1060,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
         if (source == exit) {
             System.exit(0);
+        }
+        if (source == refresh) {
+            //Refresh method goes here *****
         }
         if (source == newTweet) {
             tabbedPane.setSelectedComponent(tweetPanel);

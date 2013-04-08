@@ -276,7 +276,6 @@ public class TwitterModel {
 
     public Trends getTrending() {
         return trending;
-
     }
 
     public Tweets getHomeTimeline() {
