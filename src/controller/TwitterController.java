@@ -55,6 +55,9 @@ public class TwitterController {
 
     /** Consumer key secret. */
     public static final String CONSUMER_KEY_SECRET = "8SIq5OXfeIKabtB3B2CBHJVIkrjQbSPloHoTmxtis4";
+    
+    /** Trending WOEIDs */
+    private int[] woeidArray = {1,2,3,4,5,6,7,8};
 
     /****************************************************
      * Twitter Controller constructor.
@@ -300,11 +303,12 @@ public class TwitterController {
 
     /****************************************************
      * Gets trending
+     * @param woeid 
      * 
      * @return Trends
      ***************************************************/
-    public final Trends getTrending() {
-        return model.getTrending();
+    public final Trends getTrending(int position) {
+        return model.getTrending(woeidArray[position]);
     }
 
     /****************************************************

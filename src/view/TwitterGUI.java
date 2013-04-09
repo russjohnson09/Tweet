@@ -33,6 +33,7 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -162,11 +163,17 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
     private File attachedFile;
 
     /** Final frame height. */
-    private static final int TRENDING_HEIGHT = 250;
+    private static final int TRENDING_HEIGHT = 235;
 
     /** Final frame width. */
     private static final int TRENDING_WIDTH = 200;
-
+    
+    /** Button to search trending by woeid */
+    private JButton searchTrending;
+    
+    /** JComboBox to search by woeid */
+    private JComboBox trendingComboBox;
+    
     // Followers Panel *****************************************************
     /** Final frame height. */
     private static final int FOLLOWERS_HEIGHT = 300;
@@ -675,8 +682,26 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
         // This is the trending half
         JPanel trendingPnl = new JPanel();
+        trendingPnl.setLayout(new GridBagLayout());
+        GridBagConstraints trendinggbc = new GridBagConstraints();
+        
+        //JComboBox
+        String twitterWOEIDs[] = {"Worldwide","Michigan","Chicago","Detroit"};
+        trendingComboBox = new JComboBox<String>(twitterWOEIDs);
+        trendinggbc.gridx = 0;
+        trendinggbc.gridy = 0;
+        trendingPnl.add(trendingComboBox, trendinggbc);
 
-        Trends rawTrends = controller.getTrending();
+        //WOEID search Button
+        searchTrending = new JButton("Search");
+        searchTrending.addActionListener(this);
+        trendinggbc.gridx = 1;
+        trendinggbc.gridy = 0;
+        trendinggbc.fill = GridBagConstraints.HORIZONTAL;
+        trendingPnl.add(searchTrending, trendinggbc);
+        
+        //Trending JList
+        Trends rawTrends = controller.getTrending(1);
         Trend[] trendArray = rawTrends.getTrends();
         String[] strTrends = new String[10];
         for (int x = 0; x < 10; x++) {
@@ -684,10 +709,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         }
         JList<String> jlistTrending = new JList<String>(strTrends);
         JScrollPane TrendingScrollPane = new JScrollPane(jlistTrending);
-
-        trendingPnl.add(TrendingScrollPane);
-        TrendingScrollPane.setPreferredSize(new Dimension(TRENDING_WIDTH,
-                TRENDING_HEIGHT));
+        trendinggbc.gridx = 0;
+        trendinggbc.gridy = 1;
+        trendinggbc.gridwidth = 2;
+        trendingPnl.add(TrendingScrollPane, trendinggbc);
+        TrendingScrollPane.setPreferredSize(new Dimension(TRENDING_WIDTH,TRENDING_HEIGHT));
         trendingPnl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         panelgbc.gridx = 1;
         tweetPanel.add(trendingPnl, panelgbc);
@@ -1236,6 +1262,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         }
         if (source == userTlBtn) {
             controller.userTimeline();
+        }
+        if (source == searchTrending){
+            controller.getTrending(trendingComboBox.getSelectedIndex());
         }
     }
 

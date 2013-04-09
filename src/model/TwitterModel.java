@@ -25,7 +25,7 @@ import twitter4j.User;
  ***************************************************/
 public class TwitterModel {
 
-    private static final int CHICAGO = 2379574;
+    //private static final int CHICAGO = 2379574;
 
     private Twitter t;
 
@@ -84,7 +84,7 @@ public class TwitterModel {
             tweetCount = u.getStatusesCount();
             friendsCount = u.getFriendsCount();
             followersCount = u.getFollowersCount();
-            trending = t.getPlaceTrends(CHICAGO);
+            trending = t.getPlaceTrends(1);
 
             statuses = t.getHomeTimeline();
             if (statuses != null)
@@ -274,7 +274,12 @@ public class TwitterModel {
         }
     }
 
-    public Trends getTrending() {
+    public Trends getTrending(int woeid) {
+        try {
+            trending = t.getPlaceTrends(woeid);
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
         return trending;
     }
 
