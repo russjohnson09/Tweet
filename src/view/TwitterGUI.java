@@ -174,6 +174,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
     /** JComboBox to search by woeid */
     private JComboBox trendingComboBox;
     
+    private JList<String> jlistTrending;
+    
+    private JScrollPane TrendingScrollPane;
+    
     // Followers Panel *****************************************************
     /** Final frame height. */
     private static final int FOLLOWERS_HEIGHT = 300;
@@ -717,8 +721,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         for (int x = 0; x < 10; x++) {
             strTrends[x] = trendArray[x].getName();
         }
-        JList<String> jlistTrending = new JList<String>(strTrends);
-        JScrollPane TrendingScrollPane = new JScrollPane(jlistTrending);
+        jlistTrending = new JList<String>(strTrends);
+        TrendingScrollPane = new JScrollPane(jlistTrending);
         trendinggbc.gridx = 0;
         trendinggbc.gridy = 1;
         trendinggbc.gridwidth = 2;
@@ -1274,7 +1278,14 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             controller.userTimeline();
         }
         if (source == searchTrending){
-            controller.getTrending(trendingComboBox.getSelectedIndex());
+            Trends rawTrends = controller.getTrending(trendingComboBox.getSelectedIndex());            
+            Trend[] trendArray = rawTrends.getTrends();
+            String[] strTrends = new String[10];
+            for (int x = 0; x < 10; x++) {
+                strTrends[x] = trendArray[x].getName();
+            }
+            jlistTrending = new JList<String>(strTrends);
+            TrendingScrollPane = new JScrollPane(jlistTrending);
         }
     }
 
