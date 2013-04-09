@@ -686,7 +686,17 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         GridBagConstraints trendinggbc = new GridBagConstraints();
         
         //JComboBox
-        String twitterWOEIDs[] = {"Worldwide","Michigan","Chicago","Detroit"};
+        String twitterWOEIDs[] = {"Worldwide","United Kingdom","United States",
+                "Amsterdam","Argentina","Atlanta","Australia","Berlin","Boston",
+                "Brazil","Canada","Chicago","Columbus","Dallas","Delhi","Detroit",
+                "France","Germany","Houston","India","Indonesia","Italy",
+                "Jackson","Japan","Kyoto","Las Vagas","London","Madrid",
+                "Memphis","Mexico","Miami","Montreal","Moscow","Mumbai",
+                "Netherlands","New Orleans","New York","New Zealand","Orlando",
+                "Paris","Philippines","Portland","Rio De Janeiro","Russia",
+                "Sacramento","Salt Lake City","San Diego","Seattle","Singapore",
+                "South Africa","Spain","St. Louis","Sydney","Tampa","Tokyo",
+                "Toronto","Vancouver","Venezuela","Washington"};
         trendingComboBox = new JComboBox<String>(twitterWOEIDs);
         trendinggbc.gridx = 0;
         trendinggbc.gridy = 0;
