@@ -176,7 +176,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
     
     private JList<String> jlistTrending;
     
-    private JScrollPane TrendingScrollPane;
+    private JScrollPane trendingScrollPane;
     
     // Followers Panel *****************************************************
     /** Final frame height. */
@@ -269,15 +269,16 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             add(loadingPanel);
             setVisible(true);
 
+            loadingPanel.incrementLoadingScreen();
             setUpController();
-
+            loadingPanel.incrementLoadingScreen();
             backgroundImage = controller.getBackgroundImage();
             loadingPanel.incrementLoadingScreen();
 
             // Create components
             profilePanel = new ProfilePanel(controller);
             createTweetPanel();
-            loadingPanel.incrementLoadingScreen();
+            
             createTimelinePanel();
             loadingPanel.incrementLoadingScreen();
             createFollowingPanel();
@@ -722,12 +723,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             strTrends[x] = trendArray[x].getName();
         }
         jlistTrending = new JList<String>(strTrends);
-        TrendingScrollPane = new JScrollPane(jlistTrending);
+        trendingScrollPane = new JScrollPane(jlistTrending);
         trendinggbc.gridx = 0;
         trendinggbc.gridy = 1;
         trendinggbc.gridwidth = 2;
-        trendingPnl.add(TrendingScrollPane, trendinggbc);
-        TrendingScrollPane.setPreferredSize(new Dimension(TRENDING_WIDTH,TRENDING_HEIGHT));
+        trendingPnl.add(trendingScrollPane, trendinggbc);
+        trendingScrollPane.setPreferredSize(new Dimension(TRENDING_WIDTH,TRENDING_HEIGHT));
         trendingPnl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         panelgbc.gridx = 1;
         tweetPanel.add(trendingPnl, panelgbc);
@@ -775,7 +776,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 TIMELINE_HEIGHT));
 
         timelinePnl.add(TimelineScrollPane);
-
         timelinePanelgbc.gridy = 1;
         timelinegbc.fill = GridBagConstraints.HORIZONTAL;
         timelinePnl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -1285,7 +1285,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 strTrends[x] = trendArray[x].getName();
             }
             jlistTrending = new JList<String>(strTrends);
-            TrendingScrollPane = new JScrollPane(jlistTrending);
+            //trendingScrollPane = new JScrollPane(jlistTrending);
+            trendingScrollPane.setViewportView(jlistTrending);
         }
     }
 
@@ -1327,7 +1328,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             }
         }
         if (tabbedPane.getSelectedComponent() == followersPanel
-                && e.getKeyCode() == KeyEvent.VK_H) {
+                && e.getKeyCode() == KeyEvent.VK_ENTER) {
 
             if (fersSearchTextArea.getText().length() > 0) {
                 followers.search(fersSearchTextArea.getText());

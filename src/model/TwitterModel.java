@@ -298,10 +298,7 @@ public class TwitterModel {
     public DirectMessage showDirectMessage(long messageId) {
         try {
             return t.showDirectMessage(messageId);
-        } catch (TwitterException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        } catch (TwitterException e) {}
         return null;
 
     }
@@ -318,13 +315,9 @@ public class TwitterModel {
     public long getCurrentUserID() {
         try {
             return t.getId();
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        } 
+        catch (IllegalStateException e) {} 
+        catch (TwitterException e) {}
         return 0;
     }
 
@@ -351,10 +344,7 @@ public class TwitterModel {
     public ResponseList<User> searchUsers(String text) {
         try {
             return t.searchUsers(text, 1);
-        } catch (TwitterException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        } catch (TwitterException e) {}
         return null;
     }
 
