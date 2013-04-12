@@ -105,17 +105,21 @@ public class Users extends AbstractListModel<String> {
      * Returns a subset of users based on search.
      ***************************************************/
     public void search(String query) {
-        query = query.toLowerCase();
-        String str1;
-        String str2;
-        for (int i = visible.size() - 1; i >= 0; i--) {
-            str1 = visible.get(i).getScreenName().toLowerCase();
-            str2 = visible.get(i).getName().toLowerCase();
-            if (!(str1.startsWith(query) || str2.startsWith(query))) {
-                visible.remove(i);
+        if (query.length() == 0)
+            showAll();
+        else {   
+            query = query.toLowerCase();
+            String str1;
+            String str2;
+            for (int i = visible.size() - 1; i >= 0; i--) {
+                str1 = visible.get(i).getScreenName().toLowerCase();
+                str2 = visible.get(i).getName().toLowerCase();
+                if (!(str1.startsWith(query) || str2.startsWith(query))) {
+                    visible.remove(i);
+                }
             }
+            fireIntervalRemoved(this, 0, visible.size());
         }
-        fireIntervalRemoved(this, 0, visible.size());
     }
 
     public void searchTwitter(String text, TwitterController controller) {

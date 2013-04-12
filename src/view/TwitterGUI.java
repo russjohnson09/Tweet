@@ -1319,30 +1319,27 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             else
                 charsRemaining.setText("" + (140 - charCount));
         }
-
-        if (tabbedPane.getSelectedComponent() == followingPanel
-                && e.getKeyCode() == KeyEvent.VK_ENTER) {
-
-            if (fingSearchTextArea.getText().length() > 0) {
+        if (tabbedPane.getSelectedComponent() == followingPanel) {    
+            following.search(fingSearchTextArea.getText());
+        }
+        if (tabbedPane.getSelectedComponent() == followersPanel) { 
+            followers.search(fersSearchTextArea.getText());
+        }
+        if (e.getKeyChar() == '\b') {
+            if (tabbedPane.getSelectedComponent() == followingPanel) {    
                 following.search(fingSearchTextArea.getText());
             }
-        }
-        if (tabbedPane.getSelectedComponent() == followersPanel
-                && e.getKeyCode() == KeyEvent.VK_ENTER) {
-
-            if (fersSearchTextArea.getText().length() > 0) {
+            if (tabbedPane.getSelectedComponent() == followersPanel) { 
                 followers.search(fersSearchTextArea.getText());
             }
         }
     }
 
     @Override
-    public void keyPressed(final KeyEvent e) {
-    }
+    public void keyPressed(final KeyEvent e) {}
 
     @Override
-    public void keyReleased(final KeyEvent e) {
-    }
+    public void keyReleased(final KeyEvent e) {}
 
     @Override
     public void mouseClicked(MouseEvent e) {
