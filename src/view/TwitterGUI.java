@@ -51,6 +51,7 @@ import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 
+import model.Tweets;
 import model.Users;
 import twitter4j.DirectMessage;
 import twitter4j.GeoQuery;
@@ -133,11 +134,17 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
     /** Final frame width. */
     private static final int TIMELINE_WIDTH = 600;
 
+    /** Tweets on the timeline. */
+    Tweets timelineTweets;
+    
     /** Home table button. */
     private JButton homeTlBtn;
 
     /** User table button. */
     private JButton userTlBtn;
+    
+    /** Favorite status button. */
+    private JButton favoriteBtn;
 
     /** Timeline JList. */
     private JList<String> jlistTimeline;
@@ -187,9 +194,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
     /** Final frame width. */
     private static final int FOLLOWERS_WIDTH = 450;
 
-    /** Following Search Button. */
-    private JButton fersSearchButton;
-
     /** Following Search text area. */
     private JTextArea fersSearchTextArea;
 
@@ -224,9 +228,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
     /** Display all following. */
     private JButton fingAllButton;
 
-    /** Following Search Button. */
-    private JButton fingSearchButton;
-
     /** Following ScrollPane. */
     private JScrollPane fingScrollPane;
 
@@ -255,6 +256,18 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
     /** Messages Panel */
     // private JPanel messages;
 
+    
+    
+    /****************************************************
+     * Main Method
+     * @param String [] args
+     ***************************************************/
+    public static void main(final String[] args) {
+        new TwitterGUI();
+    }
+    
+    
+
     /****************************************************
      * Graphical User Interface.
      ***************************************************/
@@ -271,6 +284,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             add(loadingPanel);
             setVisible(true);
 
+            
             loadingPanel.incrementLoadingScreen();
             setUpController();
             loadingPanel.incrementLoadingScreen();
@@ -286,14 +300,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             createFollowingPanel();
             loadingPanel.incrementLoadingScreen();
             createFollowersPanel();
-            loadingPanel.incrementLoadingScreen();
             createAddFollowingPanel();
             loadingPanel.incrementLoadingScreen();
             createMessagesPanel();
             createMenu();
             loadingPanel.incrementLoadingScreen();
             createTabbedPane();
-            loadingPanel.incrementLoadingScreen();
             remove(loadingPanel);
 
             // fixes bug in linux
@@ -313,8 +325,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
      ***************************************************/
     private void setUpController() {
         controller = new TwitterController();
-
-        if (!controller.getIsSetUp()) {
+        if (controller.getIsSetUp())
+            controller.setupModel();
+        
+        else {
             final String authUrl = controller.getAuthUrl();
             final TextField pinTF = new TextField(10);
             final JFrame authFrame = new JFrame();
@@ -374,12 +388,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             authFrame.add(pnl);
             authFrame.setTitle("Authorization");
             authFrame.setVisible(true);
-            while (!controller.getIsSetUp()) {
-                authFrame.toFront();
-            }
+            controller.setupModel();
         }
     }
 
+    
     /****************************************************
      * Creates followers panel and its components.
      ***************************************************/
@@ -408,13 +421,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         fersgbc.fill = 1;
         followersPanel.add(fersAllButton, fersgbc);
 
-        fersSearchButton = new JButton("Search");
-        fersSearchButton.addActionListener(this);
+        JLabel fersSearchLbl = new JLabel("  Search: ");
         fersgbc.gridx = 1;
-        fersgbc.gridy = 0;
-        fersgbc.gridwidth = 1;
-        fersgbc.fill = 1;
-        followersPanel.add(fersSearchButton, fersgbc);
+        followersPanel.add(fersSearchLbl, fersgbc);
 
         final int FERS_SIZE = 18;
         fersSearchTextArea = new JTextArea();
@@ -423,9 +432,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         fersSearchTextArea
                 .setBorder(BorderFactory.createLineBorder(Color.GRAY));
         fersgbc.gridx = 2;
-        fersgbc.gridy = 0;
-        fersgbc.gridwidth = 1;
-        fersgbc.fill = 1;
         followersPanel.add(fersSearchTextArea, fersgbc);
 
         jlistFollowers = new JList<String>(followers);
@@ -500,6 +506,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         following = new Users(controller.getFollowing());
 
         fingAllButton = new JButton("Show All");
+        fingAllButton.setFocusPainted(false);
         fingAllButton.addActionListener(this);
         finggbc.gridx = 0;
         finggbc.gridy = 0;
@@ -507,23 +514,18 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         finggbc.fill = 1;
         followingPanel.add(fingAllButton, finggbc);
 
-        fingSearchButton = new JButton("Search");
-        fingSearchButton.addActionListener(this);
+        
+        JLabel fingSearchLbl = new JLabel("  Search: ");
         finggbc.gridx = 1;
-        finggbc.gridy = 0;
-        finggbc.gridwidth = 1;
-        finggbc.fill = 1;
-        followingPanel.add(fingSearchButton, finggbc);
-
+        followingPanel.add(fingSearchLbl, finggbc);   
+        
+        final int FING_SIZE = 18;
         fingSearchTextArea = new JTextArea();
         fingSearchTextArea.addKeyListener(this);
-        fingSearchTextArea.setFont(new Font("arial", Font.PLAIN, 18));
+        fingSearchTextArea.setFont(new Font("arial", Font.PLAIN, FING_SIZE));
         fingSearchTextArea
                 .setBorder(BorderFactory.createLineBorder(Color.GRAY));
         finggbc.gridx = 2;
-        finggbc.gridy = 0;
-        finggbc.gridwidth = 1;
-        finggbc.fill = 1;
         followingPanel.add(fingSearchTextArea, finggbc);
 
         jlistFollowing = new JList<String>(following);
@@ -757,7 +759,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         JPanel tlButtonPnl = new JPanel();
         tlButtonPnl.setLayout(new GridLayout(1, 2));
         homeTlBtn = new JButton("Home Timeline");
+        homeTlBtn.setFocusPainted(false);
+        homeTlBtn.setBackground(Color.CYAN);
         userTlBtn = new JButton("User Timeline");
+        userTlBtn.setFocusPainted(false);
+        userTlBtn.setBackground(Color.WHITE);
         homeTlBtn.addActionListener(this);
         userTlBtn.addActionListener(this);
         tlButtonPnl.add(homeTlBtn);
@@ -771,7 +777,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         GridBagConstraints timelinegbc = new GridBagConstraints();
 
         JPanel timelinePnl = new JPanel();
-        jlistTimeline = new JList<String>(controller.initTimeline());
+        timelineTweets = (Tweets) controller.initTimeline();
+        jlistTimeline = new JList<String>(timelineTweets);
 
         TimelineScrollPane = new JScrollPane(jlistTimeline);
         TimelineScrollPane.setPreferredSize(new Dimension(TIMELINE_WIDTH,
@@ -783,6 +790,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         timelinePnl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         timelinePanel.add(timelinePnl, timelinePanelgbc);
 
+        favoriteBtn = new JButton("Favorite");
+        favoriteBtn.setFocusPainted(false);
+        favoriteBtn.setBackground(Color.WHITE);
+        favoriteBtn.addActionListener(this);
+        timelinePanelgbc.gridy = 2;
+        timelinePanel.add(favoriteBtn, timelinePanelgbc);
     }
 
     /****************************************************
@@ -925,7 +938,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
          * messages[i][3] = dm.getSenderScreenName(); messages[i][4] =
          * dm.getText(); }
          */
-
     }
 
     private void createAddFollowingPanel() {
@@ -940,10 +952,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         addFollowingPanel.setOpaque(false);
         addFollowingPanel.setLayout(new GridBagLayout());
         fersgbc = new GridBagConstraints();
-
         followingSearch = new Users();
 
-        addFollowingSearchButton = new JButton("Search");
+        addFollowingSearchButton = new JButton("   Search");
         addFollowingSearchButton.setFocusable(false);
         addFollowingSearchButton.addActionListener(this);
         fersgbc.gridx = 1;
@@ -1170,9 +1181,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         }
 
         if (source == tweetShow) {
-            DialogTweets x = new DialogTweets(this,
+            DialogTweets tweets = new DialogTweets(this,
                     controller.getUserTimeline());
-            for (long l : x.getRemoveList()) {
+            for (long l : tweets.getRemoveList()) {
                 controller.destroyStatus(l);
             }
             updateTweetCount();
@@ -1214,16 +1225,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             following.showAll();
         }
 
-        if (source == fingSearchButton) {
-            following.search(fingSearchTextArea.getText());
-        }
-
         if (source == fersAllButton) {
             followers.showAll();
-        }
-
-        if (source == fersSearchButton) {
-            followers.search(fersSearchTextArea.getText());
         }
 
         if (source == addFollowingSearchButton) {
@@ -1269,16 +1272,24 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             tabbedPane.setSelectedComponent(messagesPanel);
         }
 
-        if (source == compose) {
-
-        }
-
         if (source == homeTlBtn) {
+            favoriteBtn.setEnabled(true);
+            homeTlBtn.setBackground(Color.CYAN);
+            userTlBtn.setBackground(Color.WHITE);
             controller.homeTimeline();
         }
         if (source == userTlBtn) {
+            favoriteBtn.setEnabled(false);
+            userTlBtn.setBackground(Color.CYAN);
+            homeTlBtn.setBackground(Color.WHITE);
             controller.userTimeline();
         }
+        
+        if (source == favoriteBtn) {
+            controller.favoriteStatus(jlistTimeline.getSelectedIndex());
+            JOptionPane.showMessageDialog(null, "Favorite successful!");
+        }
+        
         if (source == searchTrending){
             Trends rawTrends = controller.getTrending(trendingComboBox.getSelectedIndex());            
             Trend[] trendArray = rawTrends.getTrends();
@@ -1287,7 +1298,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 strTrends[x] = trendArray[x].getName();
             }
             jlistTrending = new JList<String>(strTrends);
-            //trendingScrollPane = new JScrollPane(jlistTrending);
             trendingScrollPane.setViewportView(jlistTrending);
         }
     }
@@ -1300,16 +1310,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         tweetTotal.setText(controller.getTweetCount() + " Tweets");
     }
 
+    
     /****************************************************
-     * Main Method
-     * 
-     * @param String
-     *            [] args
+     * Key Events
+     * @param e
      ***************************************************/
-    public static void main(final String[] args) {
-        new TwitterGUI();
-    }
-
     @Override
     public void keyTyped(final KeyEvent e) {
 
@@ -1343,6 +1348,11 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
     @Override
     public void keyReleased(final KeyEvent e) {}
 
+    
+    /****************************************************
+     * Mouse Events
+     * @param e
+     ***************************************************/
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2 && e.getSource() == jlistFollowing) {
@@ -1358,19 +1368,15 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
     }
 
     @Override
-    public void mouseEntered(MouseEvent arg0) {
-    }
+    public void mouseEntered(MouseEvent arg0) {}
 
     @Override
-    public void mouseExited(MouseEvent arg0) {
-    }
+    public void mouseExited(MouseEvent arg0) {}
 
     @Override
-    public void mousePressed(MouseEvent arg0) {
-    }
+    public void mousePressed(MouseEvent arg0) {}
 
     @Override
-    public void mouseReleased(MouseEvent arg0) {
-    }
+    public void mouseReleased(MouseEvent arg0) {}
 
 }

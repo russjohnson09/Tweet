@@ -119,4 +119,8 @@ public class Tweets extends AbstractListModel<String> {
             }
         }
     }
+    
+    public long showId(int index) {
+        return tweets.get(index).getId();
+    }
 }
