@@ -1,7 +1,9 @@
 package model;
 
 import java.awt.Image;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -214,17 +216,31 @@ public class TwitterModel {
     public boolean tweetImage(File img, String message) {
         try {
             StatusUpdate status = new StatusUpdate(message);
-            GeoQuery gq = new GeoQuery(InetAddress.getLocalHost().getHostAddress());
-            status.setLocation(gq.getLocation());
+            String ip = getIP();
+            GeoQuery gq = new GeoQuery(ip);
             System.out.println(gq);
             status.setMedia(img);
-            t.updateStatus(status);
+            //t.updateStatus(status);
             tweetCount++;
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+    }
+    
+    public String getIP() {
+        // Get external IP by going through Vincenzo's server
+        String ip = "";
+        try {
+            URL ipURL = new URL("http://www.vincenzopavano.com/ip.php");
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(ipURL.openStream()));
+            ip = br.readLine();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ip;
     }
 
     public int getTweetCount() {

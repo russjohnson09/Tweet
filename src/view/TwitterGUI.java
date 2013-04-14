@@ -861,10 +861,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                         .getSmallerProfileImage((long) messages[row][4]);
                 gbc.gridx = 0;
                 gbc.gridy = 1;
-                JButton pic = new JButton();
+                JButton pic = ((ProfilePanel) profilePanel).getCountButton(0, null);
                 pic.setIcon(icon);
-                pic.setPreferredSize(new Dimension(SMALL_PROFILE_IMAGE,
-                        SMALL_PROFILE_IMAGE));
+                pic.setPreferredSize(new Dimension(icon.getIconWidth() + 2, 
+                        icon.getIconHeight() + 2));
                 msgPanel.add(pic, gbc);
 
                 // Text

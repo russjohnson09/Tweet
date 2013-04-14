@@ -274,7 +274,7 @@ public class ProfilePanel extends JPanel implements ActionListener {
      *            line2
      * @return JButton
      ***************************************************/
-    private JButton getCountButton(final int count, final String name) {
+    protected JButton getCountButton(final int count, final String name) {
         String text = "<html><center><font size=6>" + count + "</font><br><i>"
                 + name + "</i></center></html>";
         JButton tmp = new JButton();
