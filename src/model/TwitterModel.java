@@ -218,7 +218,7 @@ public class TwitterModel {
             status.setLocation(gq.getLocation());
             System.out.println(gq);
             status.setMedia(img);
-            //t.updateStatus(status);
+            t.updateStatus(status);
             tweetCount++;
             return true;
         } catch (Exception e) {
