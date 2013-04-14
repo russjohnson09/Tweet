@@ -863,6 +863,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 gbc.gridy = 1;
                 JButton pic = ((ProfilePanel) profilePanel).getCountButton(0, null);
                 pic.setIcon(icon);
+                
                 pic.setPreferredSize(new Dimension(icon.getIconWidth() + 2, 
                         icon.getIconHeight() + 2));
                 msgPanel.add(pic, gbc);

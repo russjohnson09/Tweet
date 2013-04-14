@@ -33,6 +33,7 @@ public class TwitterModel {
 
     //private static final int CHICAGO = 2379574;
 
+    
     private Twitter t;
 
     private String name;

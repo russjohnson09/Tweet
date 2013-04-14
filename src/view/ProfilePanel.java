@@ -111,6 +111,7 @@ public class ProfilePanel extends JPanel implements ActionListener {
         // Profile Image
         ImageIcon img = profileImage;
         c.gridy = 0;
+        
         JButton profImgBtn = getCountButton(0, null);
         profImgBtn.setPreferredSize(new Dimension(img.getIconWidth() + 2, img
                 .getIconHeight() + 2));
