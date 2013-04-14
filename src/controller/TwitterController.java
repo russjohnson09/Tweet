@@ -28,14 +28,15 @@ import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
 /****************************************************
- * Tweets Class.
- * 
- * @author Nick, Vincenzo, Corey, Russ
- * @date March 18, 2013
+ *Tweets Class.
+ *@author Nick, Vincenzo, Corey, Russ
  ***************************************************/
 public class TwitterController {
 
+    /** Tweets timeline. */
     private Tweets timeline;
+
+    /** boolean isHomeTimeline. */
     private boolean isHomeTimeline;
 
     /** TwitterModel. */
@@ -54,14 +55,20 @@ public class TwitterController {
     public static final String CONSUMER_KEY = "yNBLlBrsFHz89PyCfjrAw";
 
     /** Consumer key secret. */
-    public static final String CONSUMER_KEY_SECRET = "8SIq5OXfeIKabtB3B2CBHJVIkrjQbSPloHoTmxtis4";
-    
-    /** Trending WOEIDs */
-    private int[] woeidArray = {1,23424975,12,727232,23424747,2357024,23424748,638242,2367105,23424768,23424775,2379574,
-            2383660,2388929,20070458,2391585,23424819,23424829,2424766,23424848,23424846,23424853,2428184,23424856,
-            15015372,2436704,44418,766273,2449323,23424900,2450022,3534,2122265,2295411,23424909,2458833,2459115,
-            23424916,2466256,615702,23424934,2475687,455825,23424936,2486340,2487610,2487889,2490383,23424948,23424942,
-            23424950,2486982,1105779,2503863,1118370,4118,9807,23424982,2514815};
+    public static final String CONSUMER_KEY_SECRET =
+            "8SIq5OXfeIKabtB3B2CBHJVIkrjQbSPloHoTmxtis4";
+
+    /** Trending WOEIDs. */
+    private int[] woeidArray = {1, 23424975, 12, 727232, 23424747, 2357024,
+            23424748, 638242, 2367105, 23424768, 23424775, 2379574,
+            2383660, 2388929, 20070458, 2391585, 23424819, 23424829,
+            2424766, 23424848, 23424846, 23424853, 2428184, 23424856,
+            15015372, 2436704, 44418, 766273, 2449323, 23424900, 2450022,
+            3534, 2122265, 2295411, 23424909, 2458833, 2459115,
+            23424916, 2466256, 615702, 23424934, 2475687, 455825, 23424936,
+            2486340, 2487610, 2487889, 2490383, 23424948, 23424942,
+            23424950, 2486982, 1105779, 2503863, 1118370, 4118, 9807,
+            23424982, 2514815};
 
     /****************************************************
      * Twitter Controller constructor.
@@ -90,7 +97,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets Display Name.
-     * 
      * @return String
      ****************************************************/
     public final String getDisplayName() {
@@ -99,7 +105,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets twitter name.
-     * 
      * @return String
      ***************************************************/
     public final String getTwitterName() {
@@ -108,9 +113,7 @@ public class TwitterController {
 
     /****************************************************
      * Gets twitter name.
-     * 
-     * @param Long
-     *            l
+     * @param l Long
      * @return String
      ***************************************************/
     public final String getTwitterName(final long l) {
@@ -119,7 +122,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets description.
-     * 
      * @return String
      ***************************************************/
     public final String getDescription() {
@@ -128,7 +130,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets website.
-     * 
      * @return String
      ***************************************************/
     public final String getWebsite() {
@@ -137,7 +138,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets location.
-     * 
      * @return String
      ***************************************************/
     public final String getLocation() {
@@ -146,7 +146,6 @@ public class TwitterController {
 
     /****************************************************
      * gets Profile image.
-     * 
      * @return ImageIcon profile picture
      ***************************************************/
     public final ImageIcon getProfileImage() {
@@ -155,7 +154,6 @@ public class TwitterController {
 
     /****************************************************
      * gets Smaller Profile image.
-     * 
      * @return ImageIcon profile picture
      ***************************************************/
     public final ImageIcon getSmallerProfileImage() {
@@ -164,17 +162,15 @@ public class TwitterController {
 
     /****************************************************
      * gets Smaller Profile image.
-     * 
-     * @param long userId
+     * @param userId long
      * @return ImageIcon profile picture
      ***************************************************/
-    public final ImageIcon getSmallerProfileImage(long userId) {
+    public final ImageIcon getSmallerProfileImage(final long userId) {
         return model.getSmallerProfileImage(userId);
     }
 
     /****************************************************
      * Gets profile banner image.
-     * 
      * @return image
      ***************************************************/
     public final Image getProfileBanner() {
@@ -183,7 +179,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets text color.
-     * 
      * @return Color white
      ***************************************************/
     public final Color getTextColor() {
@@ -192,7 +187,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets background image.
-     * 
      * @return Banner
      ***************************************************/
     public final Image getBackgroundImage() {
@@ -202,9 +196,7 @@ public class TwitterController {
 
     /****************************************************
      * Post a new Tweet.
-     * 
-     * @param String
-     *            str
+     * @param str String
      * @return Boolean
      ***************************************************/
     public final boolean tweet(final String str) {
@@ -213,18 +205,16 @@ public class TwitterController {
 
     /****************************************************
      * Post an image as a Tweet.
-     * 
-     * @param File
-     *            img
+     * @param img File
+     * @param message String
      * @return Boolean
      ***************************************************/
-    public boolean tweetImage(File img, String message) {
+    public final boolean tweetImage(final File img, final String message) {
         return model.tweetImage(img, message);
     }
 
     /****************************************************
      * Gets tweet count.
-     * 
      * @return int
      ***************************************************/
     public final int getTweetCount() {
@@ -233,7 +223,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets friends IDs.
-     * 
      * @return long[]
      ***************************************************/
     public final long[] getFriendsIDs() {
@@ -242,7 +231,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets friend count.
-     * 
      * @return int number of friends
      ***************************************************/
     public final int getFriendsCount() {
@@ -251,7 +239,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets followers.
-     * 
      * @return ArrayList<User>
      ***************************************************/
     public final List<User> getFollowers() {
@@ -260,7 +247,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets following.
-     * 
      * @return ArrayList<User>
      ***************************************************/
     public final List<User> getFollowing() {
@@ -269,8 +255,7 @@ public class TwitterController {
 
     /****************************************************
      * Unfollows user.
-     * 
-     * @param long l
+     * @param l long
      * @return boolean
      ***************************************************/
     public final boolean unfollow(final long l) {
@@ -279,8 +264,7 @@ public class TwitterController {
 
     /****************************************************
      * ShowsUser.
-     * 
-     * @param long l
+     * @param l long
      * @return User
      ***************************************************/
     public final User showUser(final long l) {
@@ -289,7 +273,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets follower Count.
-     * 
      * @return int number of followers
      ***************************************************/
     public final int getFollowersCount() {
@@ -298,26 +281,24 @@ public class TwitterController {
 
     /****************************************************
      * destroys Status.
-     * 
-     * @param long l
+     * @param l long
+     * @return destroyStatus l
      ***************************************************/
     public final boolean destroyStatus(final Long l) {
         return model.destroyStatus(l);
     }
 
     /****************************************************
-     * Gets trending
-     * @param woeid 
-     * 
+     * Gets trending.
+     * @param position int woeid
      * @return Trends
      ***************************************************/
-    public final Trends getTrending(int position) {
+    public final Trends getTrending(final int position) {
         return model.getTrending(woeidArray[position]);
     }
 
     /****************************************************
      * Gets home timeline.
-     * 
      * @return tweets from timeline
      ***************************************************/
     public final Tweets getHomeTimeline() {
@@ -326,7 +307,6 @@ public class TwitterController {
 
     /****************************************************
      * gets users timeline.
-     * 
      * @return Tweets
      ***************************************************/
     public final Tweets getUserTimeline() {
@@ -335,7 +315,6 @@ public class TwitterController {
 
     /****************************************************
      * gets authorsURL.
-     * 
      * @return String Users URL
      ***************************************************/
     public final String getAuthUrl() {
@@ -344,58 +323,53 @@ public class TwitterController {
     }
 
     /****************************************************
-     * Gets all of the user's messages
-     * 
+     * Gets all of the user's messages.
      * @return String Users URL
      ***************************************************/
-    public List<DirectMessage> getAllMessages() {
+    public final List<DirectMessage> getAllMessages() {
         return model.getAllMessages();
     }
 
     /****************************************************
-     * Gets Direct Messages to the user
-     * 
-     * @param long messageId
+     * Gets Direct Messages to the user.
+     * @param messageId long
      * @return String Users URL
      ***************************************************/
-    public DirectMessage showDirectMessage(long messageId) {
+    public final DirectMessage showDirectMessage(final long messageId) {
         return model.showDirectMessage(messageId);
     }
 
     /****************************************************
-     * Gets Direct Messages to the user
-     * 
-     * @param long userId
-     * @param String
-     *            text
+     * Gets Direct Messages to the user.
+     * @param userId long
+     * @param text String
      * @return String Users URL
      ***************************************************/
-    public boolean sendDirectMessage(long userId, String text) {
+    public final boolean sendDirectMessage(final long userId,
+            final String text) {
         return model.sendDirectMessage(userId, text);
     }
 
     /***************************************************
      * Get the current user's ID.
-     * 
-     * @return
+     * @return get user ID
      **************************************************/
-    public long getCurrentUserID() {
+    public final long getCurrentUserID() {
         return model.getCurrentUserID();
     }
 
     /***************************************************
      * Get the a specified user.
-     * 
-     * @return
+     * @param id long
+     * @return id
      **************************************************/
-    public User getUser(long id) {
+    public final User getUser(final long id) {
         return model.getUser(id);
     }
 
     /****************************************************
      * adds access token to file.
-     * 
-     * @param accessToken
+     * @param accessToken AccessToken
      ***************************************************/
     @SuppressWarnings("unchecked")
     private void addToFile(final AccessToken accessToken) {
@@ -420,7 +394,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets access token.
-     * 
      * @return String access token
      ***************************************************/
     private String getAccessToken() {
@@ -440,7 +413,6 @@ public class TwitterController {
 
     /****************************************************
      * Gets access token.
-     * 
      * @return String access token
      ***************************************************/
     private String getAccessTokenSecret() {
@@ -460,7 +432,6 @@ public class TwitterController {
 
     /****************************************************
      * Boolean if controller is setup.
-     * 
      * @return Boolean is set up
      ***************************************************/
     public final boolean getIsSetUp() {
@@ -469,9 +440,7 @@ public class TwitterController {
 
     /****************************************************
      * sets up controller.
-     * 
-     * @param String
-     *            pin
+     * @param pin String
      ***************************************************/
     public final void setUp(final String pin) {
         AccessToken accessToken = null;
@@ -485,23 +454,42 @@ public class TwitterController {
 
     }
 
-    public ResponseList<User> searchUsers(String text) throws TwitterException {
+    /****************************************************
+     * ResponseList<User> searchUsers(String text).
+     * @param text String
+     * @return text
+     * @throws TwitterException twitterException
+     ***************************************************/
+    public final ResponseList<User> searchUsers(final String text)
+            throws TwitterException {
         return model.searchUsers(text);
     }
 
-    public User follow(long l) {
+    /****************************************************
+     * Follow.
+     * @param l long
+     * @return model.follow
+     ***************************************************/
+    public final User follow(final long l) {
         return model.follow(l);
 
     }
 
-    public ListModel<String> initTimeline() {
+    /****************************************************
+     * ResponseList<User> searchUsers(String text).
+     * @return timeline
+     ***************************************************/
+    public final ListModel<String> initTimeline() {
         timeline = new Tweets(twitter);
         timeline.homeTimeline();
         isHomeTimeline = true;
         return timeline;
     }
 
-    public void homeTimeline() {
+    /****************************************************
+     * ResponseList<User> searchUsers(String text).
+     ***************************************************/
+    public final void homeTimeline() {
         if (!isHomeTimeline) {
             timeline.homeTimeline();
             isHomeTimeline = true;
@@ -509,7 +497,10 @@ public class TwitterController {
 
     }
 
-    public void userTimeline() {
+    /****************************************************
+     * ResponseList<User> searchUsers(String text).
+     ***************************************************/
+    public final void userTimeline() {
         if (isHomeTimeline) {
             timeline.userTimeline();
             isHomeTimeline = false;
