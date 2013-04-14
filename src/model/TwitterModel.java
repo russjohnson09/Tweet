@@ -2,8 +2,10 @@ package model;
 
 import java.awt.Image;
 import java.io.File;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -12,6 +14,8 @@ import java.util.Observer;
 import javax.swing.ImageIcon;
 
 import twitter4j.DirectMessage;
+import twitter4j.GeoLocation;
+import twitter4j.GeoQuery;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
@@ -210,12 +214,15 @@ public class TwitterModel {
     public boolean tweetImage(File img, String message) {
         try {
             StatusUpdate status = new StatusUpdate(message);
+            GeoQuery gq = new GeoQuery(InetAddress.getLocalHost().getHostAddress());
+            status.setLocation(gq.getLocation());
+            System.out.println(gq);
             status.setMedia(img);
-            t.updateStatus(status);
+            //t.updateStatus(status);
             tweetCount++;
             return true;
-
-        } catch (TwitterException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

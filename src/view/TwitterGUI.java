@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -52,6 +53,7 @@ import javax.swing.ListSelectionModel;
 
 import model.Users;
 import twitter4j.DirectMessage;
+import twitter4j.GeoQuery;
 import twitter4j.Trend;
 import twitter4j.Trends;
 import twitter4j.User;
@@ -794,7 +796,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 super.paintComponent(g);
             }
         };
-
+        
         List<DirectMessage> rl = controller.getAllMessages();
 
         // EXAMPLE
@@ -1155,7 +1157,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         if (source == about) {
             JOptionPane.showMessageDialog(null, "HashTagSwag\n\n"
                     + "Corey Alberda\n" + "Russ Johnson\n" + "Nick Olesak\n"
-                    + "Vincenzo Pavano\n\n" + "03/18/2013\nv.2.0");
+                    + "Vincenzo Pavano\n\n" + "04/15/2013\nv.3.0");
         }
 
         if (source == cancel) {
