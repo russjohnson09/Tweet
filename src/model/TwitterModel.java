@@ -5,16 +5,12 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.ImageIcon;
 
 import twitter4j.DirectMessage;
-import twitter4j.GeoLocation;
 import twitter4j.GeoQuery;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -29,50 +25,77 @@ import twitter4j.User;
  ***************************************************/
 public class TwitterModel {
 
-    //private static final int CHICAGO = 2379574;
-
+    /** Twitter. */
     private Twitter t;
 
+    /** name. */
     private String name;
+
+    /**  screen name. */
     private String screenName;
+
+    /** description. */
     private String description;
+
+    /** url. */
     private String url;
+
+    /** location. */
     private String location;
+
+    /** profileImage. */
     private ImageIcon profileImage;
+
+    /** smaller image. */
     private ImageIcon smallerProfileImage;
 
+    /** profile banner. */
     private Image profileBanner;
 
+    /** tweet Count. */
     private int tweetCount = 0;
 
+    /** friends ID. */
     private long[] friendsIDs;
 
+    /** followers. */
     private List<User> followers;
 
+    /** following. */
     private List<User> following;
 
+    /** followers count. */
     private int followersCount;
+
+    /** friends Count. */
     private int friendsCount;
 
+    /** trending. */
     private Trends trending;
 
+    /** homeTimeline. */
     private Tweets homeTimeline;
 
+    /** userTimeline. */
     private Tweets userTimeline;
 
+    /** message. */
     private List<DirectMessage> messages;
 
     /****************************************************
      * Twitter model.
+     * @param twitter Twitter
      ***************************************************/
-
-    public TwitterModel(Twitter twitter) {
+    public TwitterModel(final Twitter twitter) {
         t = twitter;
         refresh();
 
     }
 
-    public void refresh() {
+    /****************************************************
+     * Refresh.
+     ***************************************************/
+    public final void refresh() {
         List<Status> statuses;
         followers = new ArrayList<User>();
         following = new ArrayList<User>();
@@ -91,24 +114,28 @@ public class TwitterModel {
             trending = t.getPlaceTrends(1);
 
             statuses = t.getHomeTimeline();
-            if (statuses != null)
-                for (Status s : statuses)
+            if (statuses != null) {
+                for (Status s : statuses) {
                     homeTimeline.add(s);
+                }
+            }
             statuses = t.getUserTimeline();
-            if (statuses != null)
-                for (Status s : statuses)
+            if (statuses != null) {
+                for (Status s : statuses) {
                     userTimeline.add(s);
+                }
+            }
 
             friendsIDs = t.getFriendsIDs(-1).getIDs();
 
             long[] list = t.getFollowersIDs(-1).getIDs();
-            for (long l : list)
+            for (long l : list) {
                 followers.add(t.showUser(l));
-
+            }
             list = t.getFriendsIDs(-1).getIDs();
-            for (long l : list)
+            for (long l : list) {
                 following.add(t.showUser(l));
-
+            }
             messages = t.getDirectMessages();
 
             refreshImage(u);
@@ -121,15 +148,21 @@ public class TwitterModel {
 
     }
 
-    private void refreshImage(User u) {
+    /****************************************************
+     * Refresh Image.
+     * @param u User
+     ***************************************************/
+    private void refreshImage(final User u) {
         try {
             profileImage = new ImageIcon(new URL(u.getBiggerProfileImageURL()));
-            smallerProfileImage = new ImageIcon(new URL(u.getProfileImageURL()));
+            smallerProfileImage = new ImageIcon(
+                    new URL(u.getProfileImageURL()));
             profileBanner = (new ImageIcon(new URL(u.getProfileBannerURL()))
                     .getImage());
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             // e.printStackTrace();
+            System.out.println();
         } catch (IllegalStateException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -141,16 +174,28 @@ public class TwitterModel {
 
     }
 
-    public String getName() {
+    /****************************************************
+     * getName.
+     * @return name
+     ***************************************************/
+    public final String getName() {
         return name;
-
     }
 
-    public String getScreenName() {
+    /****************************************************
+     * get Screen Name.
+     * @return screenName
+     ***************************************************/
+    public final String getScreenName() {
         return screenName;
     }
 
-    public String getScreenName(long l) {
+    /****************************************************
+     * get Screen Name.
+     * @param l long
+     * @return name
+     ***************************************************/
+    public final String getScreenName(final long l) {
         try {
             return "@" + t.showUser(l).getScreenName();
         } catch (IllegalStateException e) {
@@ -161,27 +206,52 @@ public class TwitterModel {
         return null;
     }
 
-    public String getDescription() {
+    /****************************************************
+     * get Description.
+     * @return description
+     ***************************************************/
+    public final String getDescription() {
         return description;
     }
 
-    public String getURL() {
+    /****************************************************
+     * get URL.
+     * @return url
+     ***************************************************/
+    public final String getURL() {
         return url;
     }
 
-    public String getLocation() {
+    /****************************************************
+     * get Location.
+     * @return location
+     ***************************************************/
+    public final String getLocation() {
         return location;
     }
 
-    public ImageIcon getProfileImage() {
+    /****************************************************
+     * get profile Image.
+     * @return image
+     ***************************************************/
+    public final ImageIcon getProfileImage() {
         return profileImage;
     }
 
-    public ImageIcon getSmallerProfileImage() {
+    /****************************************************
+     * get small image.
+     * @return smaller image
+     ***************************************************/
+    public final ImageIcon getSmallerProfileImage() {
         return smallerProfileImage;
     }
 
-    public ImageIcon getSmallerProfileImage(long userId) {
+    /****************************************************
+     * get smaller image.
+     * @param userId long
+     * @return smaller image
+     ***************************************************/
+    public final ImageIcon getSmallerProfileImage(final long userId) {
         try {
             return new ImageIcon(new URL(t.showUser(userId)
                     .getProfileImageURL()));
@@ -196,11 +266,20 @@ public class TwitterModel {
         return null;
     }
 
-    public Image getProfileBanner() {
+    /****************************************************
+     * get profile banner.
+     * @return banner
+     ***************************************************/
+    public final Image getProfileBanner() {
         return profileBanner;
     }
 
-    public boolean updateStatus(String str) {
+    /****************************************************
+     * update status.
+     * @param str string
+     * @return boolean
+     ***************************************************/
+    public final boolean updateStatus(final String str) {
         try {
             t.updateStatus(str);
             tweetCount++;
@@ -211,10 +290,17 @@ public class TwitterModel {
         }
     }
 
-    public boolean tweetImage(File img, String message) {
+    /****************************************************
+     * tweetImage.
+     * @param img File
+     * @param message String
+     * @return description
+     ***************************************************/
+    public final boolean tweetImage(final File img, final String message) {
         try {
             StatusUpdate status = new StatusUpdate(message);
-            GeoQuery gq = new GeoQuery(InetAddress.getLocalHost().getHostAddress());
+            GeoQuery gq = new GeoQuery(InetAddress.getLocalHost()
+                    .getHostAddress());
             status.setLocation(gq.getLocation());
             System.out.println(gq);
             status.setMedia(img);
@@ -227,27 +313,52 @@ public class TwitterModel {
         }
     }
 
-    public int getTweetCount() {
+    /****************************************************
+     * get tweet count.
+     * @return tweet count
+     ***************************************************/
+    public final int getTweetCount() {
         return tweetCount;
     }
 
-    public long[] getFriendsIDs() {
+    /****************************************************
+     * get Friends ID.
+     * @return friends ID
+     ***************************************************/
+    public final long[] getFriendsIDs() {
         return friendsIDs;
     }
 
-    public int getFriendsCount() {
+    /****************************************************
+     * get Friends Count.
+     * @return friend Count
+     ***************************************************/
+    public final int getFriendsCount() {
         return friendsCount;
     }
 
-    public List<User> getFollowers() {
+    /****************************************************
+     * get followers.
+     * @return followers
+     ***************************************************/
+    public final List<User> getFollowers() {
         return followers;
     }
 
-    public List<User> getFollowing() {
+    /****************************************************
+     * get following.
+     * @return following
+     ***************************************************/
+    public final List<User> getFollowing() {
         return following;
     }
 
-    public boolean unfollow(long l) {
+    /****************************************************
+     * unfollow.
+     * @param l long
+     * @return boolean
+     ***************************************************/
+    public final boolean unfollow(final long l) {
         try {
             t.destroyFriendship(l);
             friendsCount--;
@@ -258,7 +369,12 @@ public class TwitterModel {
         return false;
     }
 
-    public User showUser(long l) {
+    /****************************************************
+     * get Description.
+     * @param l long
+     * @return discription
+     ***************************************************/
+    public final User showUser(final long l) {
         try {
             return t.showUser(l);
         } catch (TwitterException e) {
@@ -267,11 +383,20 @@ public class TwitterModel {
         return null;
     }
 
-    public int getFollowersCount() {
+    /****************************************************
+     * get Followers count.
+     * @return followersCount
+     ***************************************************/
+    public final int getFollowersCount() {
         return followersCount;
     }
 
-    public boolean destroyStatus(Long l) {
+    /****************************************************
+     * get Description.
+     * @param l long
+     * @return boolean
+     ***************************************************/
+    public final boolean destroyStatus(final Long l) {
         try {
             t.destroyStatus(l);
             tweetCount--;
@@ -281,7 +406,12 @@ public class TwitterModel {
         }
     }
 
-    public Trends getTrending(int woeid) {
+    /****************************************************
+     * get Trending.
+     * @param woeid int
+     * @return trending
+     ***************************************************/
+    public final Trends getTrending(final int woeid) {
         try {
             trending = t.getPlaceTrends(woeid);
         } catch (TwitterException e) {
@@ -290,27 +420,53 @@ public class TwitterModel {
         return trending;
     }
 
-    public Tweets getHomeTimeline() {
+    /****************************************************
+     * get Home timeline.
+     * @return home timeline
+     ***************************************************/
+    public final Tweets getHomeTimeline() {
         return homeTimeline;
     }
 
-    public Tweets getUserTimeline() {
+    /****************************************************
+     * get user timeline.
+     * @return user timeline
+     ***************************************************/
+    public final Tweets getUserTimeline() {
         return userTimeline;
     }
 
-    public List<DirectMessage> getAllMessages() {
+    /****************************************************
+     * get Description.
+     * @return discription
+     ***************************************************/
+    public final List<DirectMessage> getAllMessages() {
         return messages;
     }
 
-    public DirectMessage showDirectMessage(long messageId) {
+    /****************************************************
+     * get Description.
+     * @param messageId long
+     * @return description
+     ***************************************************/
+    public final DirectMessage showDirectMessage(final long messageId) {
         try {
             return t.showDirectMessage(messageId);
-        } catch (TwitterException e) {}
+        } catch (TwitterException e) {
+            System.out.println("Error");
+        }
         return null;
 
     }
 
-    public boolean sendDirectMessage(long userId, String text) {
+    /****************************************************
+     * get Description.
+     * @param userId long
+     * @param text String
+     * @return description
+     ***************************************************/
+    public final boolean sendDirectMessage(final long userId,
+            final String text) {
         try {
             t.sendDirectMessage(userId, text);
             return true;
@@ -319,25 +475,41 @@ public class TwitterModel {
         }
     }
 
-    public long getCurrentUserID() {
+    /****************************************************
+     * get CurrentUser ID.
+     * @return userId
+     ***************************************************/
+    public final long getCurrentUserID() {
         try {
             return t.getId();
-        } 
-        catch (IllegalStateException e) {} 
-        catch (TwitterException e) {}
+        } catch (IllegalStateException e) {
+            System.out.println("Error");
+        } catch (TwitterException e) {
+            System.out.println("Error");
+        }
         return 0;
     }
 
-    public User getUser(long id) {
+    /****************************************************
+     * get Description.
+     * @param id Long
+     * @return discription
+     ***************************************************/
+    public final User getUser(final long id) {
         try {
             return t.showUser(id);
         } catch (TwitterException e) {
-
+            System.out.println("Error");
         }
         return null;
     }
 
-    public User follow(long l) {
+    /****************************************************
+     * follow.
+     * @param l long
+     * @return discription
+     ***************************************************/
+    public final User follow(final long l) {
         try {
             User u = t.createFriendship(l);
             friendsCount++;
@@ -348,10 +520,17 @@ public class TwitterModel {
         return null;
     }
 
-    public ResponseList<User> searchUsers(String text) {
+    /****************************************************
+     * search Users.
+     * @param text String
+     * @return discription
+     ***************************************************/
+    public final ResponseList<User> searchUsers(final String text) {
         try {
             return t.searchUsers(text, 1);
-        } catch (TwitterException e) {}
+        } catch (TwitterException e) {
+            System.out.println("Error");
+        }
         return null;
     }
 
