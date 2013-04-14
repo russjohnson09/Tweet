@@ -325,10 +325,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
      ***************************************************/
     private void setUpController() {
         controller = new TwitterController();
-        if (controller.getIsSetUp())
-            controller.setupModel();
-        
-        else {
+        if (!controller.getIsSetUp()) {
             final String authUrl = controller.getAuthUrl();
             final TextField pinTF = new TextField(10);
             final JFrame authFrame = new JFrame();
@@ -388,7 +385,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             authFrame.add(pnl);
             authFrame.setTitle("Authorization");
             authFrame.setVisible(true);
-            controller.setupModel();
         }
     }
 

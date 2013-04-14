@@ -485,6 +485,12 @@ public class TwitterController {
         isHomeTimeline = true;
         return timeline;
     }
+    
+    /****************************************************
+     * Favorite Status.
+     * @param index
+     ***************************************************/
+    public void favoriteStatus (int index) {}
 
     /****************************************************
      * ResponseList<User> searchUsers(String text).
