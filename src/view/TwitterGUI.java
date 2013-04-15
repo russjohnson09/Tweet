@@ -1109,7 +1109,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             System.exit(0);
         }
         if (source == refresh) {
-            //Refresh method goes here *****
+            controller.refresh();
         }
         if (source == newTweet) {
             tabbedPane.setSelectedComponent(tweetPanel);

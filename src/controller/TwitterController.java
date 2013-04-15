@@ -514,4 +514,9 @@ public class TwitterController {
 
     }
 
+    public void refresh() {
+        model.refresh();
+        
+    }
+
 }
