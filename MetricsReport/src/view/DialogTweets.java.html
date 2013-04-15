@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>view.DialogTweets (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">DialogTweets.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<FONT ID="LN">1   </FONT><A NAME="1"></A><FONT ID="Package">package</FONT> view;
+<FONT ID="LN">2   </FONT><A NAME="2"></A>
+<FONT ID="LN">3   </FONT><A NAME="3"></A><FONT ID="Import">import</FONT> java.awt.BorderLayout;
+<FONT ID="LN">4   </FONT><A NAME="4"></A><FONT ID="Import">import</FONT> java.awt.Dimension;
+<FONT ID="LN">5   </FONT><A NAME="5"></A><FONT ID="Import">import</FONT> java.awt.event.ActionEvent;
+<FONT ID="LN">6   </FONT><A NAME="6"></A><FONT ID="Import">import</FONT> java.awt.event.ActionListener;
+<FONT ID="LN">7   </FONT><A NAME="7"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<FONT ID="LN">8   </FONT><A NAME="8"></A>
+<FONT ID="LN">9   </FONT><A NAME="9"></A><FONT ID="Import">import</FONT> javax.swing.JButton;
+<FONT ID="LN">10  </FONT><A NAME="10"></A><FONT ID="Import">import</FONT> javax.swing.JDialog;
+<FONT ID="LN">11  </FONT><A NAME="11"></A><FONT ID="Import">import</FONT> javax.swing.JFrame;
+<FONT ID="LN">12  </FONT><A NAME="12"></A><FONT ID="Import">import</FONT> javax.swing.JList;
+<FONT ID="LN">13  </FONT><A NAME="13"></A><FONT ID="Import">import</FONT> javax.swing.JOptionPane;
+<FONT ID="LN">14  </FONT><A NAME="14"></A><FONT ID="Import">import</FONT> javax.swing.JScrollPane;
+<FONT ID="LN">15  </FONT><A NAME="15"></A>
+<FONT ID="LN">16  </FONT><A NAME="16"></A><FONT ID="Import">import</FONT> <A HREF="../model/Tweets.java.html">model.Tweets</A>;
+<FONT ID="LN">17  </FONT><A NAME="17"></A>
+<FONT ID="LN">18  </FONT><A NAME="18"></A><FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">19  </FONT><A NAME="19"></A> * DialogTweets Class.
+<FONT ID="LN">20  </FONT><A NAME="20"></A> ***************************************************/</FONT>
+<FONT ID="LN">21  </FONT><A NAME="21"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> DialogTweets <FONT ID="Extends">extends</FONT> JDialog <FONT ID="Implements">implements</FONT> ActionListener {
+<FONT ID="LN">22  </FONT><A NAME="22"></A>
+<FONT ID="LN">23  </FONT><A NAME="23"></A>    <FONT ID="FormalComment">/** Remove button. */</FONT>
+<FONT ID="LN">24  </FONT><A NAME="24"></A>    <FONT ID="Private">private</FONT> JButton remove;
+<FONT ID="LN">25  </FONT><A NAME="25"></A>
+<FONT ID="LN">26  </FONT><A NAME="26"></A>    <FONT ID="FormalComment">/** Jlist of tweets. */</FONT>
+<FONT ID="LN">27  </FONT><A NAME="27"></A>    <FONT ID="Private">private</FONT> JList&lt;String&gt; list;
+<FONT ID="LN">28  </FONT><A NAME="28"></A>
+<FONT ID="LN">29  </FONT><A NAME="29"></A>    <FONT ID="FormalComment">/** list of tweets to be removed. */</FONT>
+<FONT ID="LN">30  </FONT><A NAME="30"></A>    <FONT ID="Private">private</FONT> ArrayList&lt;Long&gt; removeList = <FONT ID="New">new</FONT> ArrayList&lt;Long&gt;();
+<FONT ID="LN">31  </FONT><A NAME="31"></A>
+<FONT ID="LN">32  </FONT><A NAME="32"></A>    <FONT ID="FormalComment">/** Tweet. */</FONT>
+<FONT ID="LN">33  </FONT><A NAME="33"></A>    <FONT ID="Private">private</FONT> <A HREF="../model/Tweets.java.html">Tweets</A> tweets;
+<FONT ID="LN">34  </FONT><A NAME="34"></A>
+<FONT ID="LN">35  </FONT><A NAME="35"></A>    <FONT ID="FormalComment">/** Width of JDialog. */</FONT>
+<FONT ID="LN">36  </FONT><A NAME="36"></A>    <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> w = <FONT ID="IntegerLiteral">400</FONT>;
+<FONT ID="LN">37  </FONT><A NAME="37"></A>    <FONT ID="FormalComment">/** Length of JDialog. */</FONT>
+<FONT ID="LN">38  </FONT><A NAME="38"></A>    <FONT ID="Private">private</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> l = <FONT ID="IntegerLiteral">300</FONT>;
+<FONT ID="LN">39  </FONT><A NAME="39"></A>
+<FONT ID="LN">40  </FONT><A NAME="40"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">41  </FONT><A NAME="41"></A>     * DialogTweets Class.
+<FONT ID="LN">42  </FONT><A NAME="42"></A>     * 
+<FONT ID="LN">43  </FONT><A NAME="43"></A>     * @param parent
+<FONT ID="LN">44  </FONT><A NAME="44"></A>     *            JFrame
+<FONT ID="LN">45  </FONT><A NAME="45"></A>     * @param t
+<FONT ID="LN">46  </FONT><A NAME="46"></A>     *            Tweets
+<FONT ID="LN">47  </FONT><A NAME="47"></A>     ***************************************************/</FONT>
+<FONT ID="LN">48  </FONT><A NAME="48"></A>    <FONT ID="Public">public</FONT> DialogTweets(<FONT ID="Final">final</FONT> JFrame parent, <FONT ID="Final">final</FONT> <A HREF="../model/Tweets.java.html">Tweets</A> t) {
+<FONT ID="LN">49  </FONT><A NAME="49"></A>        <FONT ID="Super">super</FONT>(parent, <FONT ID="True">true</FONT>);
+<FONT ID="LN">50  </FONT><A NAME="50"></A>
+<FONT ID="LN">51  </FONT><A NAME="51"></A>        setLayout(<FONT ID="New">new</FONT> BorderLayout());
+<FONT ID="LN">52  </FONT><A NAME="52"></A>
+<FONT ID="LN">53  </FONT><A NAME="53"></A>        tweets = t;
+<FONT ID="LN">54  </FONT><A NAME="54"></A>
+<FONT ID="LN">55  </FONT><A NAME="55"></A>        setTitle(<FONT ID="StringLiteral">"Tweets"</FONT>);
+<FONT ID="LN">56  </FONT><A NAME="56"></A>        setPreferredSize(<FONT ID="New">new</FONT> Dimension(w, l));
+<FONT ID="LN">57  </FONT><A NAME="57"></A>
+<FONT ID="LN">58  </FONT><A NAME="58"></A>        list = <FONT ID="New">new</FONT> JList&lt;String&gt;(tweets);
+<FONT ID="LN">59  </FONT><A NAME="59"></A>
+<FONT ID="LN">60  </FONT><A NAME="60"></A>        JScrollPane scrollpane = <FONT ID="New">new</FONT> JScrollPane(list);
+<FONT ID="LN">61  </FONT><A NAME="61"></A>        add(scrollpane, BorderLayout.CENTER);
+<FONT ID="LN">62  </FONT><A NAME="62"></A>
+<FONT ID="LN">63  </FONT><A NAME="63"></A>        remove = <FONT ID="New">new</FONT> JButton(<FONT ID="StringLiteral">"Remove"</FONT>);
+<FONT ID="LN">64  </FONT><A NAME="64"></A>        remove.addActionListener(<FONT ID="This">this</FONT>);
+<FONT ID="LN">65  </FONT><A NAME="65"></A>
+<FONT ID="LN">66  </FONT><A NAME="66"></A>        add(remove, BorderLayout.SOUTH);
+<FONT ID="LN">67  </FONT><A NAME="67"></A>
+<FONT ID="LN">68  </FONT><A NAME="68"></A>        pack();
+<FONT ID="LN">69  </FONT><A NAME="69"></A>        setVisible(<FONT ID="True">true</FONT>);
+<FONT ID="LN">70  </FONT><A NAME="70"></A>    }
+<FONT ID="LN">71  </FONT><A NAME="71"></A>
+<FONT ID="LN">72  </FONT><A NAME="72"></A>    @Override
+<FONT ID="LN">73  </FONT><A NAME="73"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Void">void</FONT> actionPerformed(<FONT ID="Final">final</FONT> ActionEvent e) {
+<FONT ID="LN">74  </FONT><A NAME="74"></A>        <FONT ID="If">if</FONT> (e.getSource() == remove) {
+<FONT ID="LN">75  </FONT><A NAME="75"></A>            <FONT ID="Int">int</FONT> i = list.getSelectedIndex();
+<FONT ID="LN">76  </FONT><A NAME="76"></A>            <FONT ID="If">if</FONT> (i &gt;= <FONT ID="IntegerLiteral">0</FONT>) {
+<FONT ID="LN">77  </FONT><A NAME="77"></A>                removeList.add(tweets.remove(i));
+<FONT ID="LN">78  </FONT><A NAME="78"></A>            } <FONT ID="Else">else</FONT> {
+<FONT ID="LN">79  </FONT><A NAME="79"></A>                JOptionPane.showMessageDialog(<FONT ID="Null">null</FONT>,
+<FONT ID="LN">80  </FONT><A NAME="80"></A>                        <FONT ID="StringLiteral">"Please first select a tweet"</FONT>, <FONT ID="StringLiteral">"Oops!"</FONT>,
+<FONT ID="LN">81  </FONT><A NAME="81"></A>                        JOptionPane.PLAIN_MESSAGE);
+<FONT ID="LN">82  </FONT><A NAME="82"></A>            }
+<FONT ID="LN">83  </FONT><A NAME="83"></A>        }
+<FONT ID="LN">84  </FONT><A NAME="84"></A>    }
+<FONT ID="LN">85  </FONT><A NAME="85"></A>
+<FONT ID="LN">86  </FONT><A NAME="86"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">87  </FONT><A NAME="87"></A>     * Removes list.
+<FONT ID="LN">88  </FONT><A NAME="88"></A>     * 
+<FONT ID="LN">89  </FONT><A NAME="89"></A>     * @return ArrayList&lt;Lsong&gt;
+<FONT ID="LN">90  </FONT><A NAME="90"></A>     ***************************************************/</FONT>
+<FONT ID="LN">91  </FONT><A NAME="91"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> ArrayList&lt;Long&gt; getRemoveList() {
+<FONT ID="LN">92  </FONT><A NAME="92"></A>        <FONT ID="Return">return</FONT> removeList;
+<FONT ID="LN">93  </FONT><A NAME="93"></A>    }
+<FONT ID="LN">94  </FONT><A NAME="94"></A>}
+<FONT ID="LN">95  </FONT><A NAME="95"></A></pre>
+</BODY>
+</HTML>

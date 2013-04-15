@@ -23,14 +23,12 @@ public class Users extends AbstractListModel<String> {
     /** Arraylist of users. */
     private List<User> users;
 
-    /** ArrayList of users currently being viewed */
+    /** ArrayList of users currently being viewed. */
     private List<User> visible;
 
     /****************************************************
      * Users Constructor.
-     * 
-     * @param f
-     *            ArrayList<User>
+     * @param f ArrayList<User>
      ***************************************************/
     public Users(final List<User> f) {
         super();
@@ -38,6 +36,9 @@ public class Users extends AbstractListModel<String> {
         visible = new ArrayList<User>(f);
     }
 
+    /****************************************************
+     * Users Constructor.
+     ***************************************************/
     public Users() {
         users = new ArrayList<User>();
         visible = new ArrayList<User>();
@@ -50,11 +51,17 @@ public class Users extends AbstractListModel<String> {
         return str;
     }
 
+    /****************************************************
+     * Get user.
+     * @param i int
+     * @return visible.get(i)
+     ***************************************************/
     public final User getUser(final int i) {
-        if (i < visible.size())
+        if (i < visible.size()) {
             return visible.get(i);
-        else
+        } else {
             return null;
+        }
     }
 
     @Override
@@ -67,9 +74,7 @@ public class Users extends AbstractListModel<String> {
 
     /****************************************************
      * Adds User.
-     * 
-     * @param u
-     *            User
+     * @param u User
      ***************************************************/
     public final void add(final User u) {
         users.add(u);
@@ -79,8 +84,7 @@ public class Users extends AbstractListModel<String> {
 
     /****************************************************
      * Removes user.
-     * 
-     * @param index
+     * @param index int
      * @return long
      ***************************************************/
     public final long remove(final int index) {
@@ -96,6 +100,9 @@ public class Users extends AbstractListModel<String> {
         return l;
     }
 
+    /****************************************************
+     * Show all.
+     ***************************************************/
     public final void showAll() {
         visible = new ArrayList<User>(users);
         fireIntervalAdded(this, 0, visible.size());
@@ -103,18 +110,20 @@ public class Users extends AbstractListModel<String> {
 
     /****************************************************
      * Returns a subset of users based on search.
+     * @param query String
      ***************************************************/
-    public void search(String query) {
-        if (query.length() == 0)
+    public final void search(final String query) {
+        if (query.length() == 0) {
             showAll();
-        else {   
-            query = query.toLowerCase();
+        } else {
+            String query2;
+            query2 = query.toLowerCase();
             String str1;
             String str2;
             for (int i = visible.size() - 1; i >= 0; i--) {
                 str1 = visible.get(i).getScreenName().toLowerCase();
                 str2 = visible.get(i).getName().toLowerCase();
-                if (!(str1.startsWith(query) || str2.startsWith(query))) {
+                if (!(str1.startsWith(query2) || str2.startsWith(query2))) {
                     visible.remove(i);
                 }
             }
@@ -122,7 +131,13 @@ public class Users extends AbstractListModel<String> {
         }
     }
 
-    public void searchTwitter(String text, TwitterController controller) {
+    /****************************************************
+     * Search Twitter.
+     * @param text String
+     * @param controller TwitterController
+     ***************************************************/
+    public final void searchTwitter(final String text,
+            final TwitterController controller) {
         users.clear();
         visible.clear();
         try {
@@ -130,11 +145,17 @@ public class Users extends AbstractListModel<String> {
                 add(u);
             }
         } catch (TwitterException e) {
+            System.out.print("I hate checkstyle");
         }
 
     }
 
-    public long showId(int index) {
+    /****************************************************
+     * Users Constructor.
+     * @param index int
+     * @return user
+     ***************************************************/
+    public final long showId(final int index) {
         return visible.get(index).getId();
     }
 }

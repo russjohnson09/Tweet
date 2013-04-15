@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -16,6 +15,7 @@ import twitter4j.TwitterException;
  ***************************************************/
 public class Tweets extends AbstractListModel<String> {
 
+    /** twitter. */
     private Twitter t;
 
     /** serialVersionUID. */
@@ -26,22 +26,26 @@ public class Tweets extends AbstractListModel<String> {
 
     /****************************************************
      * Tweets Constructor.
+     * @param t Twitter
      ***************************************************/
-    public Tweets(Twitter t) {
+    public Tweets(final Twitter t) {
         super();
         this.t = t;
         tweets = new ArrayList<Status>();
     }
 
     /****************************************************
-     * returns Tweets arraylist
+     * returns Tweets arraylist.
+     * @return tweets
      ***************************************************/
-    public List<Status> getTweets() {
+    public final List<Status> getTweets() {
         return tweets;
     }
 
     /****************************************************
-     * gets element at specified location
+     * gets element at specified location.
+     * @param i int
+     * @return string
      ***************************************************/
     @Override
     public final String getElementAt(final int i) {
@@ -65,7 +69,6 @@ public class Tweets extends AbstractListModel<String> {
 
     /****************************************************
      * Adds tweet.
-     * 
      * @param s
      *            Status
      ***************************************************/
@@ -76,9 +79,7 @@ public class Tweets extends AbstractListModel<String> {
 
     /****************************************************
      * Removes Tweet.
-     * 
-     * @param index
-     *            int
+     * @param index int
      * @return l long
      ***************************************************/
     public final long remove(final int index) {
@@ -88,7 +89,10 @@ public class Tweets extends AbstractListModel<String> {
         return l;
     }
 
-    public void homeTimeline() {
+    /****************************************************
+     * homeTimeline.
+     ***************************************************/
+    public final void homeTimeline() {
         List<Status> statuses = null;
         try {
             statuses = t.getHomeTimeline();
@@ -104,7 +108,10 @@ public class Tweets extends AbstractListModel<String> {
         }
     }
 
-    public void userTimeline() {
+    /****************************************************
+     * User Timeline.
+     ***************************************************/
+    public final void userTimeline() {
         List<Status> statuses = null;
         try {
             statuses = t.getUserTimeline();
@@ -118,5 +125,14 @@ public class Tweets extends AbstractListModel<String> {
                 fireContentsChanged(this, 0, tweets.size());
             }
         }
+    }
+
+    /****************************************************
+     * Show Id.
+     * @param index int
+     * @return l long
+     ***************************************************/
+    public final long showId(final int index) {
+        return tweets.get(index).getId();
     }
 }

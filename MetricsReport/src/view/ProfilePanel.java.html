@@ -1,0 +1,359 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>view.ProfilePanel (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">ProfilePanel.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<FONT ID="LN">1   </FONT><A NAME="1"></A><FONT ID="Package">package</FONT> view;
+<FONT ID="LN">2   </FONT><A NAME="2"></A>
+<FONT ID="LN">3   </FONT><A NAME="3"></A><FONT ID="Import">import</FONT> java.awt.BorderLayout;
+<FONT ID="LN">4   </FONT><A NAME="4"></A><FONT ID="Import">import</FONT> java.awt.Color;
+<FONT ID="LN">5   </FONT><A NAME="5"></A><FONT ID="Import">import</FONT> java.awt.Dimension;
+<FONT ID="LN">6   </FONT><A NAME="6"></A><FONT ID="Import">import</FONT> java.awt.Font;
+<FONT ID="LN">7   </FONT><A NAME="7"></A><FONT ID="Import">import</FONT> java.awt.Graphics;
+<FONT ID="LN">8   </FONT><A NAME="8"></A><FONT ID="Import">import</FONT> java.awt.GridBagConstraints;
+<FONT ID="LN">9   </FONT><A NAME="9"></A><FONT ID="Import">import</FONT> java.awt.GridBagLayout;
+<FONT ID="LN">10  </FONT><A NAME="10"></A><FONT ID="Import">import</FONT> java.awt.Image;
+<FONT ID="LN">11  </FONT><A NAME="11"></A><FONT ID="Import">import</FONT> java.awt.event.ActionEvent;
+<FONT ID="LN">12  </FONT><A NAME="12"></A><FONT ID="Import">import</FONT> java.awt.event.ActionListener;
+<FONT ID="LN">13  </FONT><A NAME="13"></A><FONT ID="Import">import</FONT> java.net.MalformedURLException;
+<FONT ID="LN">14  </FONT><A NAME="14"></A><FONT ID="Import">import</FONT> java.net.URL;
+<FONT ID="LN">15  </FONT><A NAME="15"></A>
+<FONT ID="LN">16  </FONT><A NAME="16"></A><FONT ID="Import">import</FONT> javax.swing.ImageIcon;
+<FONT ID="LN">17  </FONT><A NAME="17"></A><FONT ID="Import">import</FONT> javax.swing.JButton;
+<FONT ID="LN">18  </FONT><A NAME="18"></A><FONT ID="Import">import</FONT> javax.swing.JLabel;
+<FONT ID="LN">19  </FONT><A NAME="19"></A><FONT ID="Import">import</FONT> javax.swing.JPanel;
+<FONT ID="LN">20  </FONT><A NAME="20"></A><FONT ID="Import">import</FONT> javax.swing.JTabbedPane;
+<FONT ID="LN">21  </FONT><A NAME="21"></A><FONT ID="Import">import</FONT> javax.swing.border.LineBorder;
+<FONT ID="LN">22  </FONT><A NAME="22"></A>
+<FONT ID="LN">23  </FONT><A NAME="23"></A><FONT ID="Import">import</FONT> twitter4j.User;
+<FONT ID="LN">24  </FONT><A NAME="24"></A>
+<FONT ID="LN">25  </FONT><A NAME="25"></A><FONT ID="Import">import</FONT> <A HREF="../controller/TwitterController.java.html">controller.TwitterController</A>;
+<FONT ID="LN">26  </FONT><A NAME="26"></A>
+<FONT ID="LN">27  </FONT><A NAME="27"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> ProfilePanel <FONT ID="Extends">extends</FONT> JPanel <FONT ID="Implements">implements</FONT> ActionListener {
+<FONT ID="LN">28  </FONT><A NAME="28"></A>
+<FONT ID="LN">29  </FONT><A NAME="29"></A>    <FONT ID="Private">private</FONT> <FONT ID="Static">static</FONT> <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> serialVersionUID = <FONT ID="IntegerLiteral">1L</FONT>;
+<FONT ID="LN">30  </FONT><A NAME="30"></A>
+<FONT ID="LN">31  </FONT><A NAME="31"></A>    <FONT ID="FormalComment">/** Strings for profile information. */</FONT>
+<FONT ID="LN">32  </FONT><A NAME="32"></A>    <FONT ID="Private">private</FONT> String displayName, twitterName, description, location, website;
+<FONT ID="LN">33  </FONT><A NAME="33"></A>
+<FONT ID="LN">34  </FONT><A NAME="34"></A>    <FONT ID="FormalComment">/** Buttons for profile: Followers, Following, and number of tweets. */</FONT>
+<FONT ID="LN">35  </FONT><A NAME="35"></A>    <FONT ID="Private">private</FONT> JButton followersBtn, followingBtn, tweetsBtn;
+<FONT ID="LN">36  </FONT><A NAME="36"></A>
+<FONT ID="LN">37  </FONT><A NAME="37"></A>    <FONT ID="FormalComment">/** Profile Image. */</FONT>
+<FONT ID="LN">38  </FONT><A NAME="38"></A>    <FONT ID="Private">private</FONT> ImageIcon profileImage;
+<FONT ID="LN">39  </FONT><A NAME="39"></A>
+<FONT ID="LN">40  </FONT><A NAME="40"></A>    <FONT ID="FormalComment">/** Background and banner image. */</FONT>
+<FONT ID="LN">41  </FONT><A NAME="41"></A>    <FONT ID="Private">private</FONT> Image profileBanner;
+<FONT ID="LN">42  </FONT><A NAME="42"></A>
+<FONT ID="LN">43  </FONT><A NAME="43"></A>    <FONT ID="Private">private</FONT> <A HREF="../controller/TwitterController.java.html">TwitterController</A> controller;
+<FONT ID="LN">44  </FONT><A NAME="44"></A>
+<FONT ID="LN">45  </FONT><A NAME="45"></A>    <FONT ID="Private">private</FONT> User user;
+<FONT ID="LN">46  </FONT><A NAME="46"></A>
+<FONT ID="LN">47  </FONT><A NAME="47"></A>    <FONT ID="Public">public</FONT> ProfilePanel(<A HREF="../controller/TwitterController.java.html">TwitterController</A> cntrlr) {
+<FONT ID="LN">48  </FONT><A NAME="48"></A>        controller = cntrlr;
+<FONT ID="LN">49  </FONT><A NAME="49"></A>        user = controller.showUser(controller.getCurrentUserID());
+<FONT ID="LN">50  </FONT><A NAME="50"></A>        displayName = controller.getDisplayName();
+<FONT ID="LN">51  </FONT><A NAME="51"></A>        twitterName = controller.getTwitterName();
+<FONT ID="LN">52  </FONT><A NAME="52"></A>        description = controller.getDescription();
+<FONT ID="LN">53  </FONT><A NAME="53"></A>        
+<FONT ID="LN">54  </FONT><A NAME="54"></A>        TwitterGUI.loadingPanel.incrementLoadingScreen();
+<FONT ID="LN">55  </FONT><A NAME="55"></A>        
+<FONT ID="LN">56  </FONT><A NAME="56"></A>        location = controller.getLocation();
+<FONT ID="LN">57  </FONT><A NAME="57"></A>        website = controller.getWebsite();
+<FONT ID="LN">58  </FONT><A NAME="58"></A>        profileImage = controller.getProfileImage();
+<FONT ID="LN">59  </FONT><A NAME="59"></A>        profileBanner = controller.getProfileBanner();
+<FONT ID="LN">60  </FONT><A NAME="60"></A>        TwitterGUI.loadingPanel.incrementLoadingScreen();
+<FONT ID="LN">61  </FONT><A NAME="61"></A>
+<FONT ID="LN">62  </FONT><A NAME="62"></A>        makePanel();
+<FONT ID="LN">63  </FONT><A NAME="63"></A>    }
+<FONT ID="LN">64  </FONT><A NAME="64"></A>
+<FONT ID="LN">65  </FONT><A NAME="65"></A>    <FONT ID="Public">public</FONT> ProfilePanel(User u) {
+<FONT ID="LN">66  </FONT><A NAME="66"></A>        controller = <FONT ID="Null">null</FONT>;
+<FONT ID="LN">67  </FONT><A NAME="67"></A>        user = u;
+<FONT ID="LN">68  </FONT><A NAME="68"></A>        displayName = user.getName();
+<FONT ID="LN">69  </FONT><A NAME="69"></A>        twitterName = user.getScreenName();
+<FONT ID="LN">70  </FONT><A NAME="70"></A>        description = user.getDescription();
+<FONT ID="LN">71  </FONT><A NAME="71"></A>        location = user.getLocation();
+<FONT ID="LN">72  </FONT><A NAME="72"></A>        website = user.getURL();
+<FONT ID="LN">73  </FONT><A NAME="73"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">74  </FONT><A NAME="74"></A>            profileImage = <FONT ID="New">new</FONT> ImageIcon(<FONT ID="New">new</FONT> URL(
+<FONT ID="LN">75  </FONT><A NAME="75"></A>                    user.getBiggerProfileImageURL()));
+<FONT ID="LN">76  </FONT><A NAME="76"></A>        } <FONT ID="Catch">catch</FONT> (MalformedURLException e) {
+<FONT ID="LN">77  </FONT><A NAME="77"></A>        }
+<FONT ID="LN">78  </FONT><A NAME="78"></A>
+<FONT ID="LN">79  </FONT><A NAME="79"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">80  </FONT><A NAME="80"></A>            profileBanner = <FONT ID="New">new</FONT> ImageIcon(<FONT ID="New">new</FONT> URL(user.getProfileBannerURL()))
+<FONT ID="LN">81  </FONT><A NAME="81"></A>                    .getImage();
+<FONT ID="LN">82  </FONT><A NAME="82"></A>        } <FONT ID="Catch">catch</FONT> (MalformedURLException e) {
+<FONT ID="LN">83  </FONT><A NAME="83"></A>            profileBanner = (<FONT ID="New">new</FONT> ImageIcon(<FONT ID="StringLiteral">"src/banner.jpeg"</FONT>)).getImage();
+<FONT ID="LN">84  </FONT><A NAME="84"></A>        }
+<FONT ID="LN">85  </FONT><A NAME="85"></A>
+<FONT ID="LN">86  </FONT><A NAME="86"></A>        makePanel();
+<FONT ID="LN">87  </FONT><A NAME="87"></A>    }
+<FONT ID="LN">88  </FONT><A NAME="88"></A>
+<FONT ID="LN">89  </FONT><A NAME="89"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> makePanel() {
+<FONT ID="LN">90  </FONT><A NAME="90"></A>        TwitterGUI.loadingPanel.incrementLoadingScreen();
+<FONT ID="LN">91  </FONT><A NAME="91"></A>
+<FONT ID="LN">92  </FONT><A NAME="92"></A>        JPanel infoPanel = <FONT ID="New">new</FONT> JPanel() {
+<FONT ID="LN">93  </FONT><A NAME="93"></A>            <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> paintComponent(<FONT ID="Final">final</FONT> Graphics g) {
+<FONT ID="LN">94  </FONT><A NAME="94"></A>                <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> eight = <FONT ID="IntegerLiteral">8</FONT>;
+<FONT ID="LN">95  </FONT><A NAME="95"></A>                <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> three = <FONT ID="IntegerLiteral">3</FONT>;
+<FONT ID="LN">96  </FONT><A NAME="96"></A>                <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> ten = <FONT ID="IntegerLiteral">10</FONT>;
+<FONT ID="LN">97  </FONT><A NAME="97"></A>                g.drawImage(
+<FONT ID="LN">98  </FONT><A NAME="98"></A>                        profileBanner,
+<FONT ID="LN">99  </FONT><A NAME="99"></A>                        (TwitterGUI.FRAME_WIDTH / <FONT ID="IntegerLiteral">2</FONT>)
+<FONT ID="LN">100 </FONT><A NAME="100"></A>                                - profileBanner.getWidth(<FONT ID="Null">null</FONT>) / <FONT ID="IntegerLiteral">2</FONT> - eight,
+<FONT ID="LN">101 </FONT><A NAME="101"></A>                        TwitterGUI.FRAME_HEIGHT / three + ten
+<FONT ID="LN">102 </FONT><A NAME="102"></A>                                - profileBanner.getHeight(<FONT ID="Null">null</FONT>) / <FONT ID="IntegerLiteral">2</FONT>, <FONT ID="Null">null</FONT>);
+<FONT ID="LN">103 </FONT><A NAME="103"></A>            }
+<FONT ID="LN">104 </FONT><A NAME="104"></A>        };
+<FONT ID="LN">105 </FONT><A NAME="105"></A>        infoPanel.setOpaque(<FONT ID="False">false</FONT>);
+<FONT ID="LN">106 </FONT><A NAME="106"></A>        infoPanel.setLayout(<FONT ID="New">new</FONT> GridBagLayout());
+<FONT ID="LN">107 </FONT><A NAME="107"></A>        GridBagConstraints c = <FONT ID="New">new</FONT> GridBagConstraints();
+<FONT ID="LN">108 </FONT><A NAME="108"></A>        infoPanel.paintComponents(<FONT ID="Null">null</FONT>);
+<FONT ID="LN">109 </FONT><A NAME="109"></A>        c.fill = GridBagConstraints.NONE;
+<FONT ID="LN">110 </FONT><A NAME="110"></A>
+<FONT ID="LN">111 </FONT><A NAME="111"></A>        <FONT ID="SingleLineComment">// Profile Image
+<FONT ID="LN">112 </FONT><A NAME="112"></A></FONT>        ImageIcon img = profileImage;
+<FONT ID="LN">113 </FONT><A NAME="113"></A>        c.gridy = <FONT ID="IntegerLiteral">0</FONT>;
+<FONT ID="LN">114 </FONT><A NAME="114"></A>        JButton profImgBtn = getCountButton(<FONT ID="IntegerLiteral">0</FONT>, <FONT ID="Null">null</FONT>);
+<FONT ID="LN">115 </FONT><A NAME="115"></A>        profImgBtn.setPreferredSize(<FONT ID="New">new</FONT> Dimension(img.getIconWidth() + <FONT ID="IntegerLiteral">2</FONT>, img
+<FONT ID="LN">116 </FONT><A NAME="116"></A>                .getIconHeight() + <FONT ID="IntegerLiteral">2</FONT>));
+<FONT ID="LN">117 </FONT><A NAME="117"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> four = <FONT ID="IntegerLiteral">4</FONT>;
+<FONT ID="LN">118 </FONT><A NAME="118"></A>        profImgBtn.setBorder(<FONT ID="New">new</FONT> LineBorder(Color.WHITE, four));
+<FONT ID="LN">119 </FONT><A NAME="119"></A>        profImgBtn.setIcon(img);
+<FONT ID="LN">120 </FONT><A NAME="120"></A>        infoPanel.add(profImgBtn, c);
+<FONT ID="LN">121 </FONT><A NAME="121"></A>
+<FONT ID="LN">122 </FONT><A NAME="122"></A>        <FONT ID="SingleLineComment">// Display Name
+<FONT ID="LN">123 </FONT><A NAME="123"></A></FONT>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> five = <FONT ID="IntegerLiteral">5</FONT>;
+<FONT ID="LN">124 </FONT><A NAME="124"></A>        c.ipady = five;
+<FONT ID="LN">125 </FONT><A NAME="125"></A>        c.gridy = <FONT ID="IntegerLiteral">1</FONT>;
+<FONT ID="LN">126 </FONT><A NAME="126"></A>        JLabel displayNameLbl = <FONT ID="New">new</FONT> JLabel(displayName);
+<FONT ID="LN">127 </FONT><A NAME="127"></A>        displayNameLbl.setFont(<FONT ID="New">new</FONT> Font(<FONT ID="StringLiteral">"arial"</FONT>, Font.BOLD, five * five - <FONT ID="IntegerLiteral">1</FONT>));
+<FONT ID="LN">128 </FONT><A NAME="128"></A>        displayNameLbl.setForeground(Color.WHITE);
+<FONT ID="LN">129 </FONT><A NAME="129"></A>        infoPanel.add(displayNameLbl, c);
+<FONT ID="LN">130 </FONT><A NAME="130"></A>
+<FONT ID="LN">131 </FONT><A NAME="131"></A>        <FONT ID="SingleLineComment">// Twitter Name
+<FONT ID="LN">132 </FONT><A NAME="132"></A></FONT>        c.gridy = <FONT ID="IntegerLiteral">2</FONT>;
+<FONT ID="LN">133 </FONT><A NAME="133"></A>        JLabel twitterNameLbl = <FONT ID="New">new</FONT> JLabel(twitterName);
+<FONT ID="LN">134 </FONT><A NAME="134"></A>        twitterNameLbl
+<FONT ID="LN">135 </FONT><A NAME="135"></A>                .setFont(<FONT ID="New">new</FONT> Font(<FONT ID="StringLiteral">"arial"</FONT>, Font.PLAIN, five + five + five));
+<FONT ID="LN">136 </FONT><A NAME="136"></A>        twitterNameLbl.setForeground(Color.WHITE);
+<FONT ID="LN">137 </FONT><A NAME="137"></A>        infoPanel.add(twitterNameLbl, c);
+<FONT ID="LN">138 </FONT><A NAME="138"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> thirty = <FONT ID="IntegerLiteral">30</FONT>;
+<FONT ID="LN">139 </FONT><A NAME="139"></A>        c.ipady = thirty; <FONT ID="SingleLineComment">// more padding
+<FONT ID="LN">140 </FONT><A NAME="140"></A></FONT>
+<FONT ID="LN">141 </FONT><A NAME="141"></A>        <FONT ID="SingleLineComment">// Description
+<FONT ID="LN">142 </FONT><A NAME="142"></A></FONT>        c.gridy = <FONT ID="IntegerLiteral">1</FONT> + <FONT ID="IntegerLiteral">1</FONT> + <FONT ID="IntegerLiteral">1</FONT>;
+<FONT ID="LN">143 </FONT><A NAME="143"></A>        c.ipady = <FONT ID="IntegerLiteral">0</FONT>;
+<FONT ID="LN">144 </FONT><A NAME="144"></A>        createDescriptionPanel(infoPanel, c);
+<FONT ID="LN">145 </FONT><A NAME="145"></A>
+<FONT ID="LN">146 </FONT><A NAME="146"></A>        TwitterGUI.loadingPanel.incrementLoadingScreen();
+<FONT ID="LN">147 </FONT><A NAME="147"></A>
+<FONT ID="LN">148 </FONT><A NAME="148"></A>        <FONT ID="SingleLineComment">// Location
+<FONT ID="LN">149 </FONT><A NAME="149"></A></FONT>        c.ipady = five;
+<FONT ID="LN">150 </FONT><A NAME="150"></A>        c.gridy = five + <FONT ID="IntegerLiteral">1</FONT>;
+<FONT ID="LN">151 </FONT><A NAME="151"></A>        JLabel locationLbl = <FONT ID="New">new</FONT> JLabel(location);
+<FONT ID="LN">152 </FONT><A NAME="152"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> fifteen = <FONT ID="IntegerLiteral">15</FONT>;
+<FONT ID="LN">153 </FONT><A NAME="153"></A>        locationLbl.setFont(<FONT ID="New">new</FONT> Font(<FONT ID="StringLiteral">"arial"</FONT>, Font.BOLD, fifteen));
+<FONT ID="LN">154 </FONT><A NAME="154"></A>        locationLbl.setForeground(Color.WHITE);
+<FONT ID="LN">155 </FONT><A NAME="155"></A>        infoPanel.add(locationLbl, c);
+<FONT ID="LN">156 </FONT><A NAME="156"></A>
+<FONT ID="LN">157 </FONT><A NAME="157"></A>        <FONT ID="SingleLineComment">// Website
+<FONT ID="LN">158 </FONT><A NAME="158"></A></FONT>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> seven = <FONT ID="IntegerLiteral">7</FONT>;
+<FONT ID="LN">159 </FONT><A NAME="159"></A>        c.gridy = seven;
+<FONT ID="LN">160 </FONT><A NAME="160"></A>        JLabel websiteLbl = <FONT ID="New">new</FONT> JLabel(website);
+<FONT ID="LN">161 </FONT><A NAME="161"></A>        websiteLbl.setFont(<FONT ID="New">new</FONT> Font(<FONT ID="StringLiteral">"arial"</FONT>, Font.PLAIN, seven + seven));
+<FONT ID="LN">162 </FONT><A NAME="162"></A>        websiteLbl.setForeground(Color.WHITE);
+<FONT ID="LN">163 </FONT><A NAME="163"></A>        infoPanel.add(websiteLbl, c);
+<FONT ID="LN">164 </FONT><A NAME="164"></A>
+<FONT ID="LN">165 </FONT><A NAME="165"></A>        <FONT ID="FormalComment">/** COUNT PANEL */</FONT>
+<FONT ID="LN">166 </FONT><A NAME="166"></A>        JPanel countPanel = <FONT ID="New">new</FONT> JPanel();
+<FONT ID="LN">167 </FONT><A NAME="167"></A>        countPanel.setLayout(<FONT ID="New">new</FONT> GridBagLayout());
+<FONT ID="LN">168 </FONT><A NAME="168"></A>        GridBagConstraints cpc = <FONT ID="New">new</FONT> GridBagConstraints();
+<FONT ID="LN">169 </FONT><A NAME="169"></A>        cpc.fill = GridBagConstraints.NONE;
+<FONT ID="LN">170 </FONT><A NAME="170"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> thrity = <FONT ID="IntegerLiteral">30</FONT>;
+<FONT ID="LN">171 </FONT><A NAME="171"></A>        cpc.ipadx = thrity;
+<FONT ID="LN">172 </FONT><A NAME="172"></A>        countPanel.setOpaque(<FONT ID="False">false</FONT>);
+<FONT ID="LN">173 </FONT><A NAME="173"></A>
+<FONT ID="LN">174 </FONT><A NAME="174"></A>        followersBtn = getCountButton(user.getFollowersCount(),
+<FONT ID="LN">175 </FONT><A NAME="175"></A>                <FONT ID="StringLiteral">"Followers"</FONT>);
+<FONT ID="LN">176 </FONT><A NAME="176"></A>        followersBtn.addActionListener(<FONT ID="This">this</FONT>);
+<FONT ID="LN">177 </FONT><A NAME="177"></A>        followingBtn = getCountButton(user.getFriendsCount(), <FONT ID="StringLiteral">"Following"</FONT>);
+<FONT ID="LN">178 </FONT><A NAME="178"></A>        followingBtn.addActionListener(<FONT ID="This">this</FONT>);
+<FONT ID="LN">179 </FONT><A NAME="179"></A>        tweetsBtn = getCountButton(user.getStatusesCount(), <FONT ID="StringLiteral">"Tweets"</FONT>);
+<FONT ID="LN">180 </FONT><A NAME="180"></A>        tweetsBtn.addActionListener(<FONT ID="This">this</FONT>);
+<FONT ID="LN">181 </FONT><A NAME="181"></A>
+<FONT ID="LN">182 </FONT><A NAME="182"></A>        cpc.gridy = <FONT ID="IntegerLiteral">0</FONT>;
+<FONT ID="LN">183 </FONT><A NAME="183"></A>        countPanel.add(followersBtn, cpc);
+<FONT ID="LN">184 </FONT><A NAME="184"></A>        countPanel.add(<FONT ID="New">new</FONT> JLabel(<FONT ID="StringLiteral">" "</FONT>), cpc);
+<FONT ID="LN">185 </FONT><A NAME="185"></A>        countPanel.add(followingBtn, cpc);
+<FONT ID="LN">186 </FONT><A NAME="186"></A>        countPanel.add(<FONT ID="New">new</FONT> JLabel(<FONT ID="StringLiteral">" "</FONT>), cpc);
+<FONT ID="LN">187 </FONT><A NAME="187"></A>        countPanel.add(tweetsBtn, cpc);
+<FONT ID="LN">188 </FONT><A NAME="188"></A>        cpc.gridy = <FONT ID="IntegerLiteral">1</FONT>;
+<FONT ID="LN">189 </FONT><A NAME="189"></A>        countPanel.add(<FONT ID="New">new</FONT> JLabel(<FONT ID="StringLiteral">" "</FONT>), cpc);
+<FONT ID="LN">190 </FONT><A NAME="190"></A>
+<FONT ID="LN">191 </FONT><A NAME="191"></A>        <FONT ID="FormalComment">/** PROFILE PANEL */</FONT>
+<FONT ID="LN">192 </FONT><A NAME="192"></A>
+<FONT ID="LN">193 </FONT><A NAME="193"></A>        <FONT ID="Super">super</FONT>.setOpaque(<FONT ID="False">false</FONT>);
+<FONT ID="LN">194 </FONT><A NAME="194"></A>        <FONT ID="Super">super</FONT>.setLayout(<FONT ID="New">new</FONT> BorderLayout());
+<FONT ID="LN">195 </FONT><A NAME="195"></A>        <FONT ID="Super">super</FONT>.add(infoPanel, BorderLayout.CENTER);
+<FONT ID="LN">196 </FONT><A NAME="196"></A>        <FONT ID="Super">super</FONT>.add(countPanel, BorderLayout.SOUTH);
+<FONT ID="LN">197 </FONT><A NAME="197"></A>    }
+<FONT ID="LN">198 </FONT><A NAME="198"></A>
+<FONT ID="LN">199 </FONT><A NAME="199"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> createDescriptionPanel(JPanel panel,
+<FONT ID="LN">200 </FONT><A NAME="200"></A>            <FONT ID="Final">final</FONT> GridBagConstraints c) {
+<FONT ID="LN">201 </FONT><A NAME="201"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> max = <FONT ID="IntegerLiteral">55</FONT>;
+<FONT ID="LN">202 </FONT><A NAME="202"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> fontsize = <FONT ID="IntegerLiteral">14</FONT>;
+<FONT ID="LN">203 </FONT><A NAME="203"></A>
+<FONT ID="LN">204 </FONT><A NAME="204"></A>        <FONT ID="SingleLineComment">// single line
+<FONT ID="LN">205 </FONT><A NAME="205"></A></FONT>        <FONT ID="If">if</FONT> (description.length() &lt; max) {
+<FONT ID="LN">206 </FONT><A NAME="206"></A>            JLabel descriptionLbl = <FONT ID="New">new</FONT> JLabel(description);
+<FONT ID="LN">207 </FONT><A NAME="207"></A>            descriptionLbl.setFont(<FONT ID="New">new</FONT> Font(<FONT ID="StringLiteral">"arial"</FONT>, Font.PLAIN, fontsize));
+<FONT ID="LN">208 </FONT><A NAME="208"></A>            descriptionLbl.setForeground(Color.WHITE);
+<FONT ID="LN">209 </FONT><A NAME="209"></A>            panel.add(descriptionLbl, c);
+<FONT ID="LN">210 </FONT><A NAME="210"></A>
+<FONT ID="LN">211 </FONT><A NAME="211"></A>            <FONT ID="SingleLineComment">// double line
+<FONT ID="LN">212 </FONT><A NAME="212"></A></FONT>        } <FONT ID="Else">else</FONT> <FONT ID="If">if</FONT> (description.length() &lt; max + max) {
+<FONT ID="LN">213 </FONT><A NAME="213"></A>            String d1, d2;
+<FONT ID="LN">214 </FONT><A NAME="214"></A>
+<FONT ID="LN">215 </FONT><A NAME="215"></A>            String[] w = description.split(<FONT ID="StringLiteral">" "</FONT>);
+<FONT ID="LN">216 </FONT><A NAME="216"></A>            <FONT ID="Int">int</FONT> wMid = (w.length / <FONT ID="IntegerLiteral">2</FONT>) + <FONT ID="IntegerLiteral">1</FONT>;
+<FONT ID="LN">217 </FONT><A NAME="217"></A>            <FONT ID="Int">int</FONT> dMid = description.length() / <FONT ID="IntegerLiteral">2</FONT>;
+<FONT ID="LN">218 </FONT><A NAME="218"></A>            d1 = description.substring(<FONT ID="IntegerLiteral">0</FONT>,
+<FONT ID="LN">219 </FONT><A NAME="219"></A>                    description.indexOf(w[wMid], dMid - <FONT ID="IntegerLiteral">1</FONT>));
+<FONT ID="LN">220 </FONT><A NAME="220"></A>            d2 = description.substring(description.indexOf(w[wMid], dMid - <FONT ID="IntegerLiteral">1</FONT>));
+<FONT ID="LN">221 </FONT><A NAME="221"></A>
+<FONT ID="LN">222 </FONT><A NAME="222"></A>            JLabel description1Lbl = <FONT ID="New">new</FONT> JLabel(d1);
+<FONT ID="LN">223 </FONT><A NAME="223"></A>            JLabel description2Lbl = <FONT ID="New">new</FONT> JLabel(d2);
+<FONT ID="LN">224 </FONT><A NAME="224"></A>            description1Lbl.setFont(<FONT ID="New">new</FONT> Font(<FONT ID="StringLiteral">"arial"</FONT>, Font.PLAIN, fontsize));
+<FONT ID="LN">225 </FONT><A NAME="225"></A>            description1Lbl.setForeground(Color.WHITE);
+<FONT ID="LN">226 </FONT><A NAME="226"></A>            description2Lbl.setFont(<FONT ID="New">new</FONT> Font(<FONT ID="StringLiteral">"arial"</FONT>, Font.PLAIN, fontsize));
+<FONT ID="LN">227 </FONT><A NAME="227"></A>            description2Lbl.setForeground(Color.WHITE);
+<FONT ID="LN">228 </FONT><A NAME="228"></A>            panel.add(description1Lbl, c);
+<FONT ID="LN">229 </FONT><A NAME="229"></A>            c.gridy = <FONT ID="IntegerLiteral">2</FONT> + <FONT ID="IntegerLiteral">2</FONT>;
+<FONT ID="LN">230 </FONT><A NAME="230"></A>            panel.add(description2Lbl, c);
+<FONT ID="LN">231 </FONT><A NAME="231"></A>
+<FONT ID="LN">232 </FONT><A NAME="232"></A>            <FONT ID="SingleLineComment">// triple line
+<FONT ID="LN">233 </FONT><A NAME="233"></A></FONT>        } <FONT ID="Else">else</FONT> {
+<FONT ID="LN">234 </FONT><A NAME="234"></A>
+<FONT ID="LN">235 </FONT><A NAME="235"></A>            <FONT ID="Try">try</FONT> { <FONT ID="SingleLineComment">//bug in this code block that needs to be addressed
+<FONT ID="LN">236 </FONT><A NAME="236"></A></FONT>                String d1, d2, d3;
+<FONT ID="LN">237 </FONT><A NAME="237"></A>                String[] w = description.split(<FONT ID="StringLiteral">" "</FONT>);
+<FONT ID="LN">238 </FONT><A NAME="238"></A>                <FONT ID="Int">int</FONT> wThird = (w.length / (<FONT ID="IntegerLiteral">1</FONT> + <FONT ID="IntegerLiteral">2</FONT>));  <FONT ID="SingleLineComment">//7
+<FONT ID="LN">239 </FONT><A NAME="239"></A></FONT>                <FONT ID="Int">int</FONT> dThird = description.length() / (<FONT ID="IntegerLiteral">1</FONT> + <FONT ID="IntegerLiteral">2</FONT>); <FONT ID="SingleLineComment">//44
+<FONT ID="LN">240 </FONT><A NAME="240"></A></FONT>                            
+<FONT ID="LN">241 </FONT><A NAME="241"></A>                d1 = description.substring(<FONT ID="IntegerLiteral">0</FONT>, description.indexOf(w[wThird], dThird+<FONT ID="IntegerLiteral">25</FONT>));
+<FONT ID="LN">242 </FONT><A NAME="242"></A>                d2 = description.substring(description.indexOf(w[wThird], dThird),
+<FONT ID="LN">243 </FONT><A NAME="243"></A>                        description.indexOf(w[wThird * <FONT ID="IntegerLiteral">2</FONT>], dThird * <FONT ID="IntegerLiteral">2</FONT> + <FONT ID="IntegerLiteral">15</FONT>));
+<FONT ID="LN">244 </FONT><A NAME="244"></A>                d3 = description.substring(description.indexOf(w[wThird * <FONT ID="IntegerLiteral">2</FONT>],
+<FONT ID="LN">245 </FONT><A NAME="245"></A>                        description.length()));
+<FONT ID="LN">246 </FONT><A NAME="246"></A>    
+<FONT ID="LN">247 </FONT><A NAME="247"></A>                JLabel description1Lbl = <FONT ID="New">new</FONT> JLabel(d1);
+<FONT ID="LN">248 </FONT><A NAME="248"></A>                description1Lbl.setFont(<FONT ID="New">new</FONT> Font(<FONT ID="StringLiteral">"arial"</FONT>, Font.PLAIN, fontsize));
+<FONT ID="LN">249 </FONT><A NAME="249"></A>                description1Lbl.setForeground(Color.WHITE);
+<FONT ID="LN">250 </FONT><A NAME="250"></A>                JLabel description2Lbl = <FONT ID="New">new</FONT> JLabel(d2);
+<FONT ID="LN">251 </FONT><A NAME="251"></A>                description2Lbl.setFont(<FONT ID="New">new</FONT> Font(<FONT ID="StringLiteral">"arial"</FONT>, Font.PLAIN, fontsize));
+<FONT ID="LN">252 </FONT><A NAME="252"></A>                description2Lbl.setForeground(Color.WHITE);
+<FONT ID="LN">253 </FONT><A NAME="253"></A>                JLabel description3Lbl = <FONT ID="New">new</FONT> JLabel(d3);
+<FONT ID="LN">254 </FONT><A NAME="254"></A>                description3Lbl.setFont(<FONT ID="New">new</FONT> Font(<FONT ID="StringLiteral">"arial"</FONT>, Font.PLAIN, fontsize));
+<FONT ID="LN">255 </FONT><A NAME="255"></A>                description3Lbl.setForeground(Color.WHITE);
+<FONT ID="LN">256 </FONT><A NAME="256"></A>    
+<FONT ID="LN">257 </FONT><A NAME="257"></A>                panel.add(description1Lbl, c);
+<FONT ID="LN">258 </FONT><A NAME="258"></A>                c.gridy = <FONT ID="IntegerLiteral">2</FONT> + <FONT ID="IntegerLiteral">2</FONT>;
+<FONT ID="LN">259 </FONT><A NAME="259"></A>                panel.add(description2Lbl, c);
+<FONT ID="LN">260 </FONT><A NAME="260"></A>                c.gridy = <FONT ID="IntegerLiteral">2</FONT> + <FONT ID="IntegerLiteral">2</FONT> + <FONT ID="IntegerLiteral">1</FONT>;
+<FONT ID="LN">261 </FONT><A NAME="261"></A>                panel.add(description3Lbl, c);
+<FONT ID="LN">262 </FONT><A NAME="262"></A>            } <FONT ID="Catch">catch</FONT> (Exception e) {
+<FONT ID="LN">263 </FONT><A NAME="263"></A>                panel = <FONT ID="Null">null</FONT>;
+<FONT ID="LN">264 </FONT><A NAME="264"></A>            }
+<FONT ID="LN">265 </FONT><A NAME="265"></A>        }
+<FONT ID="LN">266 </FONT><A NAME="266"></A>    }
+<FONT ID="LN">267 </FONT><A NAME="267"></A>
+<FONT ID="LN">268 </FONT><A NAME="268"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">269 </FONT><A NAME="269"></A>     * Gets plain button for the profile tab page.
+<FONT ID="LN">270 </FONT><A NAME="270"></A>     * 
+<FONT ID="LN">271 </FONT><A NAME="271"></A>     * @param String
+<FONT ID="LN">272 </FONT><A NAME="272"></A>     *            line1
+<FONT ID="LN">273 </FONT><A NAME="273"></A>     * @param String
+<FONT ID="LN">274 </FONT><A NAME="274"></A>     *            line2
+<FONT ID="LN">275 </FONT><A NAME="275"></A>     * @return JButton
+<FONT ID="LN">276 </FONT><A NAME="276"></A>     ***************************************************/</FONT>
+<FONT ID="LN">277 </FONT><A NAME="277"></A>    <FONT ID="Private">private</FONT> JButton getCountButton(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> count, <FONT ID="Final">final</FONT> String name) {
+<FONT ID="LN">278 </FONT><A NAME="278"></A>        String text = <FONT ID="StringLiteral">"&lt;html&gt;&lt;center&gt;&lt;font size=6&gt;"</FONT> + count + <FONT ID="StringLiteral">"&lt;/font&gt;&lt;br&gt;&lt;i&gt;"</FONT>
+<FONT ID="LN">279 </FONT><A NAME="279"></A>                + name + <FONT ID="StringLiteral">"&lt;/i&gt;&lt;/center&gt;&lt;/html&gt;"</FONT>;
+<FONT ID="LN">280 </FONT><A NAME="280"></A>        JButton tmp = <FONT ID="New">new</FONT> JButton();
+<FONT ID="LN">281 </FONT><A NAME="281"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> w = <FONT ID="IntegerLiteral">120</FONT>;
+<FONT ID="LN">282 </FONT><A NAME="282"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> l = <FONT ID="IntegerLiteral">50</FONT>;
+<FONT ID="LN">283 </FONT><A NAME="283"></A>        <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> fontsize = <FONT ID="IntegerLiteral">15</FONT>;
+<FONT ID="LN">284 </FONT><A NAME="284"></A>        tmp.setPreferredSize(<FONT ID="New">new</FONT> Dimension(w, l));
+<FONT ID="LN">285 </FONT><A NAME="285"></A>        tmp.setFont(<FONT ID="New">new</FONT> Font(<FONT ID="StringLiteral">"Arial"</FONT>, Font.BOLD, fontsize));
+<FONT ID="LN">286 </FONT><A NAME="286"></A>        tmp.setText(text);
+<FONT ID="LN">287 </FONT><A NAME="287"></A>        tmp.setBackground(Color.WHITE);
+<FONT ID="LN">288 </FONT><A NAME="288"></A>        tmp.setForeground(Color.DARK_GRAY);
+<FONT ID="LN">289 </FONT><A NAME="289"></A>        tmp.setBorder(<FONT ID="New">new</FONT> LineBorder(Color.GRAY, <FONT ID="IntegerLiteral">1</FONT>, <FONT ID="True">true</FONT>));
+<FONT ID="LN">290 </FONT><A NAME="290"></A>        tmp.setFocusable(<FONT ID="False">false</FONT>);
+<FONT ID="LN">291 </FONT><A NAME="291"></A>        tmp.setFocusPainted(<FONT ID="False">false</FONT>);
+<FONT ID="LN">292 </FONT><A NAME="292"></A>        <FONT ID="Return">return</FONT> tmp;
+<FONT ID="LN">293 </FONT><A NAME="293"></A>    }
+<FONT ID="LN">294 </FONT><A NAME="294"></A>
+<FONT ID="LN">295 </FONT><A NAME="295"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setFollowersCount(<FONT ID="Int">int</FONT> count) {
+<FONT ID="LN">296 </FONT><A NAME="296"></A>        followersBtn.setText(<FONT ID="StringLiteral">"&lt;html&gt;&lt;center&gt;&lt;font size=6&gt;"</FONT> + count
+<FONT ID="LN">297 </FONT><A NAME="297"></A>                + <FONT ID="StringLiteral">"&lt;/font&gt;&lt;br&gt;&lt;i&gt;Followers&lt;/i&gt;&lt;/center&gt;&lt;/html&gt;"</FONT>);
+<FONT ID="LN">298 </FONT><A NAME="298"></A>    }
+<FONT ID="LN">299 </FONT><A NAME="299"></A>
+<FONT ID="LN">300 </FONT><A NAME="300"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setFollowingCount(<FONT ID="Int">int</FONT> count) {
+<FONT ID="LN">301 </FONT><A NAME="301"></A>        followingBtn.setText(<FONT ID="StringLiteral">"&lt;html&gt;&lt;center&gt;&lt;font size=6&gt;"</FONT> + count
+<FONT ID="LN">302 </FONT><A NAME="302"></A>                + <FONT ID="StringLiteral">"&lt;/font&gt;&lt;br&gt;&lt;i&gt;Following&lt;/i&gt;&lt;/center&gt;&lt;/html&gt;"</FONT>);
+<FONT ID="LN">303 </FONT><A NAME="303"></A>    }
+<FONT ID="LN">304 </FONT><A NAME="304"></A>
+<FONT ID="LN">305 </FONT><A NAME="305"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> setTweetCount(<FONT ID="Int">int</FONT> count) {
+<FONT ID="LN">306 </FONT><A NAME="306"></A>        tweetsBtn.setText(<FONT ID="StringLiteral">"&lt;html&gt;&lt;center&gt;&lt;font size=6&gt;"</FONT> + count
+<FONT ID="LN">307 </FONT><A NAME="307"></A>                + <FONT ID="StringLiteral">"&lt;/font&gt;&lt;br&gt;&lt;i&gt;Tweets&lt;/i&gt;&lt;/center&gt;&lt;/html&gt;"</FONT>);
+<FONT ID="LN">308 </FONT><A NAME="308"></A>    }
+<FONT ID="LN">309 </FONT><A NAME="309"></A>
+<FONT ID="LN">310 </FONT><A NAME="310"></A>    <FONT ID="Protected">protected</FONT> <FONT ID="Void">void</FONT> paintComponent(<FONT ID="Final">final</FONT> Graphics g) {
+<FONT ID="LN">311 </FONT><A NAME="311"></A>        g.drawImage(<FONT ID="New">new</FONT> ImageIcon(<FONT ID="StringLiteral">"src/background.jpeg"</FONT>).getImage(), <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="IntegerLiteral">0</FONT>, <FONT ID="Null">null</FONT>);
+<FONT ID="LN">312 </FONT><A NAME="312"></A>        <FONT ID="Super">super</FONT>.paintComponent(g);
+<FONT ID="LN">313 </FONT><A NAME="313"></A>    }
+<FONT ID="LN">314 </FONT><A NAME="314"></A>
+<FONT ID="LN">315 </FONT><A NAME="315"></A>    @Override
+<FONT ID="LN">316 </FONT><A NAME="316"></A>    <FONT ID="Public">public</FONT> <FONT ID="Void">void</FONT> actionPerformed(ActionEvent arg0) {
+<FONT ID="LN">317 </FONT><A NAME="317"></A>        Object source = arg0.getSource();
+<FONT ID="LN">318 </FONT><A NAME="318"></A>        JTabbedPane tabbedPane = TwitterGUI.tabbedPane;
+<FONT ID="LN">319 </FONT><A NAME="319"></A>
+<FONT ID="LN">320 </FONT><A NAME="320"></A>        <FONT ID="If">if</FONT> (controller != <FONT ID="Null">null</FONT> &amp;&amp; source == followersBtn) {
+<FONT ID="LN">321 </FONT><A NAME="321"></A>            tabbedPane.setSelectedComponent(TwitterGUI.followersPanel);
+<FONT ID="LN">322 </FONT><A NAME="322"></A>        }
+<FONT ID="LN">323 </FONT><A NAME="323"></A>
+<FONT ID="LN">324 </FONT><A NAME="324"></A>        <FONT ID="If">if</FONT> (controller != <FONT ID="Null">null</FONT> &amp;&amp; source == followingBtn) {
+<FONT ID="LN">325 </FONT><A NAME="325"></A>            tabbedPane.setSelectedComponent(TwitterGUI.followingPanel);
+<FONT ID="LN">326 </FONT><A NAME="326"></A>        }
+<FONT ID="LN">327 </FONT><A NAME="327"></A>
+<FONT ID="LN">328 </FONT><A NAME="328"></A>        <FONT ID="If">if</FONT> (controller != <FONT ID="Null">null</FONT> &amp;&amp; source == tweetsBtn) {
+<FONT ID="LN">329 </FONT><A NAME="329"></A>            <A HREF="../view/DialogTweets.java.html">DialogTweets</A> x = <FONT ID="New">new</FONT> <A HREF="../view/DialogTweets.java.html">DialogTweets</A>(TwitterGUI.frame,
+<FONT ID="LN">330 </FONT><A NAME="330"></A>                    controller.getUserTimeline());
+<FONT ID="LN">331 </FONT><A NAME="331"></A>            <FONT ID="For">for</FONT> (<FONT ID="Long">long</FONT> l : x.getRemoveList()) {
+<FONT ID="LN">332 </FONT><A NAME="332"></A>                controller.destroyStatus(l);
+<FONT ID="LN">333 </FONT><A NAME="333"></A>            }
+<FONT ID="LN">334 </FONT><A NAME="334"></A>            setTweetCount(controller.getTweetCount());
+<FONT ID="LN">335 </FONT><A NAME="335"></A>            TwitterGUI.tweetTotal.setText(controller.getTweetCount()
+<FONT ID="LN">336 </FONT><A NAME="336"></A>                    + <FONT ID="StringLiteral">" Tweets"</FONT>);
+<FONT ID="LN">337 </FONT><A NAME="337"></A>        }
+<FONT ID="LN">338 </FONT><A NAME="338"></A>    }
+<FONT ID="LN">339 </FONT><A NAME="339"></A>}
+<FONT ID="LN">340 </FONT><A NAME="340"></A></pre>
+</BODY>
+</HTML>

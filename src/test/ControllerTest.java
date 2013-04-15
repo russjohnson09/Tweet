@@ -1,12 +1,12 @@
 package test;
 
-import static org.junit.Assert.*;
 import controller.TwitterController;
-import view.TwitterGUI;
 
 import org.easymock.EasyMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,37 +16,47 @@ import twitter4j.User;
 
 /**
  * Tests the controller for twitter.
- * 
- * @author Corey
- * 
  */
 public class ControllerTest {
 
-	private TwitterController c;
+    /** twitter Controller. */
+    private TwitterController c;
 
-	private User user;
+    /** user. */
+    private User user;
 
-	private Twitter t;
+    /** twitter. */
+    private Twitter t;
 
-	@Before
-	public void setUp() throws Exception {
-		t = EasyMock.createMock(Twitter.class);
-		user = EasyMock.createMock(User.class);
-		c = new TwitterController();
-	}
+    /************************************************************
+     * Set up.
+     * @throws Exception exception
+     ***********************************************************/
+    @Before
+    public final void setUp() throws Exception {
+        t = EasyMock.createMock(Twitter.class);
+        user = EasyMock.createMock(User.class);
+        c = new TwitterController();
+    }
 
-	@Test
-	public void displayName() {
-		expect(user.getName()).andReturn("Carl");
-		replay(user);
-		assertEquals(c.getDisplayName(), "Carl");
-	}
+    /************************************************************
+     * display name.
+     ***********************************************************/
+    @Test
+    public final void displayName() {
+        expect(user.getName()).andReturn("Carl");
+        replay(user);
+        assertEquals(c.getDisplayName(), "Carl");
+    }
 
-	@Test
-	public void twitterName() {
-		expect(user.getScreenName()).andReturn("carl");
-		replay(user);
-		assertEquals(c.getTwitterName(), "@carl");
-	}
+     /************************************************************
+     * twitter name.
+     ***********************************************************/
+    @Test
+    public final void twitterName() {
+        expect(user.getScreenName()).andReturn("carl");
+        replay(user);
+        assertEquals(c.getTwitterName(), "@carl");
+    }
 
 }
