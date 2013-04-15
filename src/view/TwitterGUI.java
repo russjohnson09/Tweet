@@ -847,10 +847,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
             private void viewMessage(int row) {
                 mlPanel.setVisible(false);
-                long messageId = (long) messages[row][3];
+                //long messageId = (long) messages[row][3];
 
-                DirectMessage directMessage = controller
-                        .showDirectMessage(messageId);
+                //DirectMessage directMessage = controller
+                 //       .showDirectMessage(messageId);
 
                 // Display Message
                 JPanel msgPanel = new JPanel();
@@ -866,12 +866,12 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 msgPanel.add(created, gbc);
 
                 // Picture
-                ImageIcon icon = controller
-                        .getSmallerProfileImage((long) messages[row][4]);
+                //ImageIcon icon = controller
+                //        .getSmallerProfileImage((long) messages[row][4]);
                 gbc.gridx = 0;
                 gbc.gridy = 1;
                 JButton pic = new JButton();
-                pic.setIcon(icon);
+                //pic.setIcon(icon);
                 pic.setPreferredSize(new Dimension(SMALL_PROFILE_IMAGE,
                         SMALL_PROFILE_IMAGE));
                 msgPanel.add(pic, gbc);

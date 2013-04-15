@@ -1,0 +1,557 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../stylesheet.css" TITLE="Style">
+<META NAME="GENERATOR" CONTENT="Java2HTML Version 1.5">
+<TITLE>model.TwitterModel (Java2HTML)</TITLE>
+</HEAD>
+<BODY><TABLE id="Header" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+<td colspan="2" width="33%">&nbsp;</td>
+<td align="center" colspan="2" width="33%">
+<font size="4">TwitterModel.java</font>
+</td>
+<td align="right" colspan="2" width="33%">&nbsp;</td>
+</tr>
+</TABLE>
+<pre ID="Classes">
+<FONT ID="LN">1   </FONT><A NAME="1"></A><FONT ID="Package">package</FONT> model;
+<FONT ID="LN">2   </FONT><A NAME="2"></A>
+<FONT ID="LN">3   </FONT><A NAME="3"></A><FONT ID="Import">import</FONT> java.awt.Image;
+<FONT ID="LN">4   </FONT><A NAME="4"></A><FONT ID="Import">import</FONT> java.io.File;
+<FONT ID="LN">5   </FONT><A NAME="5"></A><FONT ID="Import">import</FONT> java.net.InetAddress;
+<FONT ID="LN">6   </FONT><A NAME="6"></A><FONT ID="Import">import</FONT> java.net.MalformedURLException;
+<FONT ID="LN">7   </FONT><A NAME="7"></A><FONT ID="Import">import</FONT> java.net.URL;
+<FONT ID="LN">8   </FONT><A NAME="8"></A><FONT ID="Import">import</FONT> java.util.ArrayList;
+<FONT ID="LN">9   </FONT><A NAME="9"></A><FONT ID="Import">import</FONT> java.util.List;
+<FONT ID="LN">10  </FONT><A NAME="10"></A>
+<FONT ID="LN">11  </FONT><A NAME="11"></A><FONT ID="Import">import</FONT> javax.swing.ImageIcon;
+<FONT ID="LN">12  </FONT><A NAME="12"></A>
+<FONT ID="LN">13  </FONT><A NAME="13"></A><FONT ID="Import">import</FONT> twitter4j.DirectMessage;
+<FONT ID="LN">14  </FONT><A NAME="14"></A><FONT ID="Import">import</FONT> twitter4j.GeoQuery;
+<FONT ID="LN">15  </FONT><A NAME="15"></A><FONT ID="Import">import</FONT> twitter4j.ResponseList;
+<FONT ID="LN">16  </FONT><A NAME="16"></A><FONT ID="Import">import</FONT> twitter4j.Status;
+<FONT ID="LN">17  </FONT><A NAME="17"></A><FONT ID="Import">import</FONT> twitter4j.StatusUpdate;
+<FONT ID="LN">18  </FONT><A NAME="18"></A><FONT ID="Import">import</FONT> twitter4j.Trends;
+<FONT ID="LN">19  </FONT><A NAME="19"></A><FONT ID="Import">import</FONT> twitter4j.Twitter;
+<FONT ID="LN">20  </FONT><A NAME="20"></A><FONT ID="Import">import</FONT> twitter4j.TwitterException;
+<FONT ID="LN">21  </FONT><A NAME="21"></A><FONT ID="Import">import</FONT> twitter4j.User;
+<FONT ID="LN">22  </FONT><A NAME="22"></A>
+<FONT ID="LN">23  </FONT><A NAME="23"></A><FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">24  </FONT><A NAME="24"></A> * Twitter model.
+<FONT ID="LN">25  </FONT><A NAME="25"></A> ***************************************************/</FONT>
+<FONT ID="LN">26  </FONT><A NAME="26"></A><FONT ID="Public">public</FONT> <FONT ID="Class">class</FONT> TwitterModel {
+<FONT ID="LN">27  </FONT><A NAME="27"></A>
+<FONT ID="LN">28  </FONT><A NAME="28"></A>    <FONT ID="FormalComment">/** Twitter. */</FONT>
+<FONT ID="LN">29  </FONT><A NAME="29"></A>    <FONT ID="Private">private</FONT> Twitter t;
+<FONT ID="LN">30  </FONT><A NAME="30"></A>
+<FONT ID="LN">31  </FONT><A NAME="31"></A>    <FONT ID="FormalComment">/** name. */</FONT>
+<FONT ID="LN">32  </FONT><A NAME="32"></A>    <FONT ID="Private">private</FONT> String name;
+<FONT ID="LN">33  </FONT><A NAME="33"></A>
+<FONT ID="LN">34  </FONT><A NAME="34"></A>    <FONT ID="FormalComment">/**  screen name. */</FONT>
+<FONT ID="LN">35  </FONT><A NAME="35"></A>    <FONT ID="Private">private</FONT> String screenName;
+<FONT ID="LN">36  </FONT><A NAME="36"></A>
+<FONT ID="LN">37  </FONT><A NAME="37"></A>    <FONT ID="FormalComment">/** description. */</FONT>
+<FONT ID="LN">38  </FONT><A NAME="38"></A>    <FONT ID="Private">private</FONT> String description;
+<FONT ID="LN">39  </FONT><A NAME="39"></A>
+<FONT ID="LN">40  </FONT><A NAME="40"></A>    <FONT ID="FormalComment">/** url. */</FONT>
+<FONT ID="LN">41  </FONT><A NAME="41"></A>    <FONT ID="Private">private</FONT> String url;
+<FONT ID="LN">42  </FONT><A NAME="42"></A>
+<FONT ID="LN">43  </FONT><A NAME="43"></A>    <FONT ID="FormalComment">/** location. */</FONT>
+<FONT ID="LN">44  </FONT><A NAME="44"></A>    <FONT ID="Private">private</FONT> String location;
+<FONT ID="LN">45  </FONT><A NAME="45"></A>
+<FONT ID="LN">46  </FONT><A NAME="46"></A>    <FONT ID="FormalComment">/** profileImage. */</FONT>
+<FONT ID="LN">47  </FONT><A NAME="47"></A>    <FONT ID="Private">private</FONT> ImageIcon profileImage;
+<FONT ID="LN">48  </FONT><A NAME="48"></A>
+<FONT ID="LN">49  </FONT><A NAME="49"></A>    <FONT ID="FormalComment">/** smaller image. */</FONT>
+<FONT ID="LN">50  </FONT><A NAME="50"></A>    <FONT ID="Private">private</FONT> ImageIcon smallerProfileImage;
+<FONT ID="LN">51  </FONT><A NAME="51"></A>
+<FONT ID="LN">52  </FONT><A NAME="52"></A>    <FONT ID="FormalComment">/** profile banner. */</FONT>
+<FONT ID="LN">53  </FONT><A NAME="53"></A>    <FONT ID="Private">private</FONT> Image profileBanner;
+<FONT ID="LN">54  </FONT><A NAME="54"></A>
+<FONT ID="LN">55  </FONT><A NAME="55"></A>    <FONT ID="FormalComment">/** tweet Count. */</FONT>
+<FONT ID="LN">56  </FONT><A NAME="56"></A>    <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> tweetCount = <FONT ID="IntegerLiteral">0</FONT>;
+<FONT ID="LN">57  </FONT><A NAME="57"></A>
+<FONT ID="LN">58  </FONT><A NAME="58"></A>    <FONT ID="FormalComment">/** friends ID. */</FONT>
+<FONT ID="LN">59  </FONT><A NAME="59"></A>    <FONT ID="Private">private</FONT> <FONT ID="Long">long</FONT>[] friendsIDs;
+<FONT ID="LN">60  </FONT><A NAME="60"></A>
+<FONT ID="LN">61  </FONT><A NAME="61"></A>    <FONT ID="FormalComment">/** followers. */</FONT>
+<FONT ID="LN">62  </FONT><A NAME="62"></A>    <FONT ID="Private">private</FONT> List&lt;User&gt; followers;
+<FONT ID="LN">63  </FONT><A NAME="63"></A>
+<FONT ID="LN">64  </FONT><A NAME="64"></A>    <FONT ID="FormalComment">/** following. */</FONT>
+<FONT ID="LN">65  </FONT><A NAME="65"></A>    <FONT ID="Private">private</FONT> List&lt;User&gt; following;
+<FONT ID="LN">66  </FONT><A NAME="66"></A>
+<FONT ID="LN">67  </FONT><A NAME="67"></A>    <FONT ID="FormalComment">/** followers count. */</FONT>
+<FONT ID="LN">68  </FONT><A NAME="68"></A>    <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> followersCount;
+<FONT ID="LN">69  </FONT><A NAME="69"></A>
+<FONT ID="LN">70  </FONT><A NAME="70"></A>    <FONT ID="FormalComment">/** friends Count. */</FONT>
+<FONT ID="LN">71  </FONT><A NAME="71"></A>    <FONT ID="Private">private</FONT> <FONT ID="Int">int</FONT> friendsCount;
+<FONT ID="LN">72  </FONT><A NAME="72"></A>
+<FONT ID="LN">73  </FONT><A NAME="73"></A>    <FONT ID="FormalComment">/** trending. */</FONT>
+<FONT ID="LN">74  </FONT><A NAME="74"></A>    <FONT ID="Private">private</FONT> Trends trending;
+<FONT ID="LN">75  </FONT><A NAME="75"></A>
+<FONT ID="LN">76  </FONT><A NAME="76"></A>    <FONT ID="FormalComment">/** homeTimeline. */</FONT>
+<FONT ID="LN">77  </FONT><A NAME="77"></A>    <FONT ID="Private">private</FONT> <A HREF="../model/Tweets.java.html">Tweets</A> homeTimeline;
+<FONT ID="LN">78  </FONT><A NAME="78"></A>
+<FONT ID="LN">79  </FONT><A NAME="79"></A>    <FONT ID="FormalComment">/** userTimeline. */</FONT>
+<FONT ID="LN">80  </FONT><A NAME="80"></A>    <FONT ID="Private">private</FONT> <A HREF="../model/Tweets.java.html">Tweets</A> userTimeline;
+<FONT ID="LN">81  </FONT><A NAME="81"></A>
+<FONT ID="LN">82  </FONT><A NAME="82"></A>    <FONT ID="FormalComment">/** message. */</FONT>
+<FONT ID="LN">83  </FONT><A NAME="83"></A>    <FONT ID="Private">private</FONT> List&lt;DirectMessage&gt; messages;
+<FONT ID="LN">84  </FONT><A NAME="84"></A>
+<FONT ID="LN">85  </FONT><A NAME="85"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">86  </FONT><A NAME="86"></A>     * Twitter model.
+<FONT ID="LN">87  </FONT><A NAME="87"></A>     * @param twitter Twitter
+<FONT ID="LN">88  </FONT><A NAME="88"></A>     ***************************************************/</FONT>
+<FONT ID="LN">89  </FONT><A NAME="89"></A>    <FONT ID="Public">public</FONT> TwitterModel(<FONT ID="Final">final</FONT> Twitter twitter) {
+<FONT ID="LN">90  </FONT><A NAME="90"></A>        t = twitter;
+<FONT ID="LN">91  </FONT><A NAME="91"></A>        refresh();
+<FONT ID="LN">92  </FONT><A NAME="92"></A>
+<FONT ID="LN">93  </FONT><A NAME="93"></A>    }
+<FONT ID="LN">94  </FONT><A NAME="94"></A>
+<FONT ID="LN">95  </FONT><A NAME="95"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">96  </FONT><A NAME="96"></A>     * Refresh.
+<FONT ID="LN">97  </FONT><A NAME="97"></A>     ***************************************************/</FONT>
+<FONT ID="LN">98  </FONT><A NAME="98"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Void">void</FONT> refresh() {
+<FONT ID="LN">99  </FONT><A NAME="99"></A>        List&lt;Status&gt; statuses;
+<FONT ID="LN">100 </FONT><A NAME="100"></A>        followers = <FONT ID="New">new</FONT> ArrayList&lt;User&gt;();
+<FONT ID="LN">101 </FONT><A NAME="101"></A>        following = <FONT ID="New">new</FONT> ArrayList&lt;User&gt;();
+<FONT ID="LN">102 </FONT><A NAME="102"></A>        homeTimeline = <FONT ID="New">new</FONT> <A HREF="../model/Tweets.java.html">Tweets</A>(t);
+<FONT ID="LN">103 </FONT><A NAME="103"></A>        userTimeline = <FONT ID="New">new</FONT> <A HREF="../model/Tweets.java.html">Tweets</A>(t);
+<FONT ID="LN">104 </FONT><A NAME="104"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">105 </FONT><A NAME="105"></A>            User u = t.showUser(t.getId());
+<FONT ID="LN">106 </FONT><A NAME="106"></A>            name = u.getName();
+<FONT ID="LN">107 </FONT><A NAME="107"></A>            screenName = <FONT ID="StringLiteral">"@"</FONT> + u.getScreenName();
+<FONT ID="LN">108 </FONT><A NAME="108"></A>            description = u.getDescription();
+<FONT ID="LN">109 </FONT><A NAME="109"></A>            url = u.getURL();
+<FONT ID="LN">110 </FONT><A NAME="110"></A>            location = u.getLocation();
+<FONT ID="LN">111 </FONT><A NAME="111"></A>            tweetCount = u.getStatusesCount();
+<FONT ID="LN">112 </FONT><A NAME="112"></A>            friendsCount = u.getFriendsCount();
+<FONT ID="LN">113 </FONT><A NAME="113"></A>            followersCount = u.getFollowersCount();
+<FONT ID="LN">114 </FONT><A NAME="114"></A>            trending = t.getPlaceTrends(<FONT ID="IntegerLiteral">1</FONT>);
+<FONT ID="LN">115 </FONT><A NAME="115"></A>
+<FONT ID="LN">116 </FONT><A NAME="116"></A>            statuses = t.getHomeTimeline();
+<FONT ID="LN">117 </FONT><A NAME="117"></A>            <FONT ID="If">if</FONT> (statuses != <FONT ID="Null">null</FONT>) {
+<FONT ID="LN">118 </FONT><A NAME="118"></A>                <FONT ID="For">for</FONT> (Status s : statuses) {
+<FONT ID="LN">119 </FONT><A NAME="119"></A>                    homeTimeline.add(s);
+<FONT ID="LN">120 </FONT><A NAME="120"></A>                }
+<FONT ID="LN">121 </FONT><A NAME="121"></A>            }
+<FONT ID="LN">122 </FONT><A NAME="122"></A>            statuses = t.getUserTimeline();
+<FONT ID="LN">123 </FONT><A NAME="123"></A>            <FONT ID="If">if</FONT> (statuses != <FONT ID="Null">null</FONT>) {
+<FONT ID="LN">124 </FONT><A NAME="124"></A>                <FONT ID="For">for</FONT> (Status s : statuses) {
+<FONT ID="LN">125 </FONT><A NAME="125"></A>                    userTimeline.add(s);
+<FONT ID="LN">126 </FONT><A NAME="126"></A>                }
+<FONT ID="LN">127 </FONT><A NAME="127"></A>            }
+<FONT ID="LN">128 </FONT><A NAME="128"></A>
+<FONT ID="LN">129 </FONT><A NAME="129"></A>            friendsIDs = t.getFriendsIDs(-<FONT ID="IntegerLiteral">1</FONT>).getIDs();
+<FONT ID="LN">130 </FONT><A NAME="130"></A>
+<FONT ID="LN">131 </FONT><A NAME="131"></A>            <FONT ID="Long">long</FONT>[] list = t.getFollowersIDs(-<FONT ID="IntegerLiteral">1</FONT>).getIDs();
+<FONT ID="LN">132 </FONT><A NAME="132"></A>            <FONT ID="For">for</FONT> (<FONT ID="Long">long</FONT> l : list) {
+<FONT ID="LN">133 </FONT><A NAME="133"></A>                followers.add(t.showUser(l));
+<FONT ID="LN">134 </FONT><A NAME="134"></A>            }
+<FONT ID="LN">135 </FONT><A NAME="135"></A>            list = t.getFriendsIDs(-<FONT ID="IntegerLiteral">1</FONT>).getIDs();
+<FONT ID="LN">136 </FONT><A NAME="136"></A>            <FONT ID="For">for</FONT> (<FONT ID="Long">long</FONT> l : list) {
+<FONT ID="LN">137 </FONT><A NAME="137"></A>                following.add(t.showUser(l));
+<FONT ID="LN">138 </FONT><A NAME="138"></A>            }
+<FONT ID="LN">139 </FONT><A NAME="139"></A>            messages = t.getDirectMessages();
+<FONT ID="LN">140 </FONT><A NAME="140"></A>
+<FONT ID="LN">141 </FONT><A NAME="141"></A>            refreshImage(u);
+<FONT ID="LN">142 </FONT><A NAME="142"></A>
+<FONT ID="LN">143 </FONT><A NAME="143"></A>        } <FONT ID="Catch">catch</FONT> (IllegalStateException e) {
+<FONT ID="LN">144 </FONT><A NAME="144"></A>            e.printStackTrace();
+<FONT ID="LN">145 </FONT><A NAME="145"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">146 </FONT><A NAME="146"></A>            e.printStackTrace();
+<FONT ID="LN">147 </FONT><A NAME="147"></A>        }
+<FONT ID="LN">148 </FONT><A NAME="148"></A>
+<FONT ID="LN">149 </FONT><A NAME="149"></A>    }
+<FONT ID="LN">150 </FONT><A NAME="150"></A>
+<FONT ID="LN">151 </FONT><A NAME="151"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">152 </FONT><A NAME="152"></A>     * Refresh Image.
+<FONT ID="LN">153 </FONT><A NAME="153"></A>     * @param u User
+<FONT ID="LN">154 </FONT><A NAME="154"></A>     ***************************************************/</FONT>
+<FONT ID="LN">155 </FONT><A NAME="155"></A>    <FONT ID="Private">private</FONT> <FONT ID="Void">void</FONT> refreshImage(<FONT ID="Final">final</FONT> User u) {
+<FONT ID="LN">156 </FONT><A NAME="156"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">157 </FONT><A NAME="157"></A>            profileImage = <FONT ID="New">new</FONT> ImageIcon(<FONT ID="New">new</FONT> URL(u.getBiggerProfileImageURL()));
+<FONT ID="LN">158 </FONT><A NAME="158"></A>            smallerProfileImage = <FONT ID="New">new</FONT> ImageIcon(
+<FONT ID="LN">159 </FONT><A NAME="159"></A>                    <FONT ID="New">new</FONT> URL(u.getProfileImageURL()));
+<FONT ID="LN">160 </FONT><A NAME="160"></A>            profileBanner = (<FONT ID="New">new</FONT> ImageIcon(<FONT ID="New">new</FONT> URL(u.getProfileBannerURL()))
+<FONT ID="LN">161 </FONT><A NAME="161"></A>                    .getImage());
+<FONT ID="LN">162 </FONT><A NAME="162"></A>        } <FONT ID="Catch">catch</FONT> (MalformedURLException e) {
+<FONT ID="LN">163 </FONT><A NAME="163"></A>            <FONT ID="SingleLineComment">// TODO Auto-generated catch block
+<FONT ID="LN">164 </FONT><A NAME="164"></A></FONT>            <FONT ID="SingleLineComment">// e.printStackTrace();
+<FONT ID="LN">165 </FONT><A NAME="165"></A></FONT>            System.out.println();
+<FONT ID="LN">166 </FONT><A NAME="166"></A>        } <FONT ID="Catch">catch</FONT> (IllegalStateException e) {
+<FONT ID="LN">167 </FONT><A NAME="167"></A>            <FONT ID="SingleLineComment">// TODO Auto-generated catch block
+<FONT ID="LN">168 </FONT><A NAME="168"></A></FONT>            e.printStackTrace();
+<FONT ID="LN">169 </FONT><A NAME="169"></A>        }
+<FONT ID="LN">170 </FONT><A NAME="170"></A>
+<FONT ID="LN">171 </FONT><A NAME="171"></A>        <FONT ID="If">if</FONT> (profileBanner == <FONT ID="Null">null</FONT>) {
+<FONT ID="LN">172 </FONT><A NAME="172"></A>            profileBanner = (<FONT ID="New">new</FONT> ImageIcon(<FONT ID="StringLiteral">"src/banner.jpeg"</FONT>)).getImage();
+<FONT ID="LN">173 </FONT><A NAME="173"></A>        }
+<FONT ID="LN">174 </FONT><A NAME="174"></A>
+<FONT ID="LN">175 </FONT><A NAME="175"></A>    }
+<FONT ID="LN">176 </FONT><A NAME="176"></A>
+<FONT ID="LN">177 </FONT><A NAME="177"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">178 </FONT><A NAME="178"></A>     * getName.
+<FONT ID="LN">179 </FONT><A NAME="179"></A>     * @return name
+<FONT ID="LN">180 </FONT><A NAME="180"></A>     ***************************************************/</FONT>
+<FONT ID="LN">181 </FONT><A NAME="181"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> String getName() {
+<FONT ID="LN">182 </FONT><A NAME="182"></A>        <FONT ID="Return">return</FONT> name;
+<FONT ID="LN">183 </FONT><A NAME="183"></A>    }
+<FONT ID="LN">184 </FONT><A NAME="184"></A>
+<FONT ID="LN">185 </FONT><A NAME="185"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">186 </FONT><A NAME="186"></A>     * get Screen Name.
+<FONT ID="LN">187 </FONT><A NAME="187"></A>     * @return screenName
+<FONT ID="LN">188 </FONT><A NAME="188"></A>     ***************************************************/</FONT>
+<FONT ID="LN">189 </FONT><A NAME="189"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> String getScreenName() {
+<FONT ID="LN">190 </FONT><A NAME="190"></A>        <FONT ID="Return">return</FONT> screenName;
+<FONT ID="LN">191 </FONT><A NAME="191"></A>    }
+<FONT ID="LN">192 </FONT><A NAME="192"></A>
+<FONT ID="LN">193 </FONT><A NAME="193"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">194 </FONT><A NAME="194"></A>     * get Screen Name.
+<FONT ID="LN">195 </FONT><A NAME="195"></A>     * @param l long
+<FONT ID="LN">196 </FONT><A NAME="196"></A>     * @return name
+<FONT ID="LN">197 </FONT><A NAME="197"></A>     ***************************************************/</FONT>
+<FONT ID="LN">198 </FONT><A NAME="198"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> String getScreenName(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> l) {
+<FONT ID="LN">199 </FONT><A NAME="199"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">200 </FONT><A NAME="200"></A>            <FONT ID="Return">return</FONT> <FONT ID="StringLiteral">"@"</FONT> + t.showUser(l).getScreenName();
+<FONT ID="LN">201 </FONT><A NAME="201"></A>        } <FONT ID="Catch">catch</FONT> (IllegalStateException e) {
+<FONT ID="LN">202 </FONT><A NAME="202"></A>            e.printStackTrace();
+<FONT ID="LN">203 </FONT><A NAME="203"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">204 </FONT><A NAME="204"></A>            e.printStackTrace();
+<FONT ID="LN">205 </FONT><A NAME="205"></A>        }
+<FONT ID="LN">206 </FONT><A NAME="206"></A>        <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<FONT ID="LN">207 </FONT><A NAME="207"></A>    }
+<FONT ID="LN">208 </FONT><A NAME="208"></A>
+<FONT ID="LN">209 </FONT><A NAME="209"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">210 </FONT><A NAME="210"></A>     * get Description.
+<FONT ID="LN">211 </FONT><A NAME="211"></A>     * @return description
+<FONT ID="LN">212 </FONT><A NAME="212"></A>     ***************************************************/</FONT>
+<FONT ID="LN">213 </FONT><A NAME="213"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> String getDescription() {
+<FONT ID="LN">214 </FONT><A NAME="214"></A>        <FONT ID="Return">return</FONT> description;
+<FONT ID="LN">215 </FONT><A NAME="215"></A>    }
+<FONT ID="LN">216 </FONT><A NAME="216"></A>
+<FONT ID="LN">217 </FONT><A NAME="217"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">218 </FONT><A NAME="218"></A>     * get URL.
+<FONT ID="LN">219 </FONT><A NAME="219"></A>     * @return url
+<FONT ID="LN">220 </FONT><A NAME="220"></A>     ***************************************************/</FONT>
+<FONT ID="LN">221 </FONT><A NAME="221"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> String getURL() {
+<FONT ID="LN">222 </FONT><A NAME="222"></A>        <FONT ID="Return">return</FONT> url;
+<FONT ID="LN">223 </FONT><A NAME="223"></A>    }
+<FONT ID="LN">224 </FONT><A NAME="224"></A>
+<FONT ID="LN">225 </FONT><A NAME="225"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">226 </FONT><A NAME="226"></A>     * get Location.
+<FONT ID="LN">227 </FONT><A NAME="227"></A>     * @return location
+<FONT ID="LN">228 </FONT><A NAME="228"></A>     ***************************************************/</FONT>
+<FONT ID="LN">229 </FONT><A NAME="229"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> String getLocation() {
+<FONT ID="LN">230 </FONT><A NAME="230"></A>        <FONT ID="Return">return</FONT> location;
+<FONT ID="LN">231 </FONT><A NAME="231"></A>    }
+<FONT ID="LN">232 </FONT><A NAME="232"></A>
+<FONT ID="LN">233 </FONT><A NAME="233"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">234 </FONT><A NAME="234"></A>     * get profile Image.
+<FONT ID="LN">235 </FONT><A NAME="235"></A>     * @return image
+<FONT ID="LN">236 </FONT><A NAME="236"></A>     ***************************************************/</FONT>
+<FONT ID="LN">237 </FONT><A NAME="237"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> ImageIcon getProfileImage() {
+<FONT ID="LN">238 </FONT><A NAME="238"></A>        <FONT ID="Return">return</FONT> profileImage;
+<FONT ID="LN">239 </FONT><A NAME="239"></A>    }
+<FONT ID="LN">240 </FONT><A NAME="240"></A>
+<FONT ID="LN">241 </FONT><A NAME="241"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">242 </FONT><A NAME="242"></A>     * get small image.
+<FONT ID="LN">243 </FONT><A NAME="243"></A>     * @return smaller image
+<FONT ID="LN">244 </FONT><A NAME="244"></A>     ***************************************************/</FONT>
+<FONT ID="LN">245 </FONT><A NAME="245"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> ImageIcon getSmallerProfileImage() {
+<FONT ID="LN">246 </FONT><A NAME="246"></A>        <FONT ID="Return">return</FONT> smallerProfileImage;
+<FONT ID="LN">247 </FONT><A NAME="247"></A>    }
+<FONT ID="LN">248 </FONT><A NAME="248"></A>
+<FONT ID="LN">249 </FONT><A NAME="249"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">250 </FONT><A NAME="250"></A>     * get smaller image.
+<FONT ID="LN">251 </FONT><A NAME="251"></A>     * @param userId long
+<FONT ID="LN">252 </FONT><A NAME="252"></A>     * @return smaller image
+<FONT ID="LN">253 </FONT><A NAME="253"></A>     ***************************************************/</FONT>
+<FONT ID="LN">254 </FONT><A NAME="254"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> ImageIcon getSmallerProfileImage(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> userId) {
+<FONT ID="LN">255 </FONT><A NAME="255"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">256 </FONT><A NAME="256"></A>            <FONT ID="Return">return</FONT> <FONT ID="New">new</FONT> ImageIcon(<FONT ID="New">new</FONT> URL(t.showUser(userId)
+<FONT ID="LN">257 </FONT><A NAME="257"></A>                    .getProfileImageURL()));
+<FONT ID="LN">258 </FONT><A NAME="258"></A>        } <FONT ID="Catch">catch</FONT> (MalformedURLException e) {
+<FONT ID="LN">259 </FONT><A NAME="259"></A>            <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<FONT ID="LN">260 </FONT><A NAME="260"></A>        } <FONT ID="Catch">catch</FONT> (IllegalStateException e) {
+<FONT ID="LN">261 </FONT><A NAME="261"></A>            e.printStackTrace();
+<FONT ID="LN">262 </FONT><A NAME="262"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">263 </FONT><A NAME="263"></A>            e.printStackTrace();
+<FONT ID="LN">264 </FONT><A NAME="264"></A>        }
+<FONT ID="LN">265 </FONT><A NAME="265"></A>
+<FONT ID="LN">266 </FONT><A NAME="266"></A>        <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<FONT ID="LN">267 </FONT><A NAME="267"></A>    }
+<FONT ID="LN">268 </FONT><A NAME="268"></A>
+<FONT ID="LN">269 </FONT><A NAME="269"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">270 </FONT><A NAME="270"></A>     * get profile banner.
+<FONT ID="LN">271 </FONT><A NAME="271"></A>     * @return banner
+<FONT ID="LN">272 </FONT><A NAME="272"></A>     ***************************************************/</FONT>
+<FONT ID="LN">273 </FONT><A NAME="273"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> Image getProfileBanner() {
+<FONT ID="LN">274 </FONT><A NAME="274"></A>        <FONT ID="Return">return</FONT> profileBanner;
+<FONT ID="LN">275 </FONT><A NAME="275"></A>    }
+<FONT ID="LN">276 </FONT><A NAME="276"></A>
+<FONT ID="LN">277 </FONT><A NAME="277"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">278 </FONT><A NAME="278"></A>     * update status.
+<FONT ID="LN">279 </FONT><A NAME="279"></A>     * @param str string
+<FONT ID="LN">280 </FONT><A NAME="280"></A>     * @return boolean
+<FONT ID="LN">281 </FONT><A NAME="281"></A>     ***************************************************/</FONT>
+<FONT ID="LN">282 </FONT><A NAME="282"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> updateStatus(<FONT ID="Final">final</FONT> String str) {
+<FONT ID="LN">283 </FONT><A NAME="283"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">284 </FONT><A NAME="284"></A>            t.updateStatus(str);
+<FONT ID="LN">285 </FONT><A NAME="285"></A>            tweetCount++;
+<FONT ID="LN">286 </FONT><A NAME="286"></A>            <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<FONT ID="LN">287 </FONT><A NAME="287"></A>
+<FONT ID="LN">288 </FONT><A NAME="288"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">289 </FONT><A NAME="289"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<FONT ID="LN">290 </FONT><A NAME="290"></A>        }
+<FONT ID="LN">291 </FONT><A NAME="291"></A>    }
+<FONT ID="LN">292 </FONT><A NAME="292"></A>
+<FONT ID="LN">293 </FONT><A NAME="293"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">294 </FONT><A NAME="294"></A>     * tweetImage.
+<FONT ID="LN">295 </FONT><A NAME="295"></A>     * @param img File
+<FONT ID="LN">296 </FONT><A NAME="296"></A>     * @param message String
+<FONT ID="LN">297 </FONT><A NAME="297"></A>     * @return description
+<FONT ID="LN">298 </FONT><A NAME="298"></A>     ***************************************************/</FONT>
+<FONT ID="LN">299 </FONT><A NAME="299"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> tweetImage(<FONT ID="Final">final</FONT> File img, <FONT ID="Final">final</FONT> String message) {
+<FONT ID="LN">300 </FONT><A NAME="300"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">301 </FONT><A NAME="301"></A>            StatusUpdate status = <FONT ID="New">new</FONT> StatusUpdate(message);
+<FONT ID="LN">302 </FONT><A NAME="302"></A>            GeoQuery gq = <FONT ID="New">new</FONT> GeoQuery(InetAddress.getLocalHost()
+<FONT ID="LN">303 </FONT><A NAME="303"></A>                    .getHostAddress());
+<FONT ID="LN">304 </FONT><A NAME="304"></A>            status.setLocation(gq.getLocation());
+<FONT ID="LN">305 </FONT><A NAME="305"></A>            System.out.println(gq);
+<FONT ID="LN">306 </FONT><A NAME="306"></A>            status.setMedia(img);
+<FONT ID="LN">307 </FONT><A NAME="307"></A>            t.updateStatus(status);
+<FONT ID="LN">308 </FONT><A NAME="308"></A>            tweetCount++;
+<FONT ID="LN">309 </FONT><A NAME="309"></A>            <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<FONT ID="LN">310 </FONT><A NAME="310"></A>        } <FONT ID="Catch">catch</FONT> (Exception e) {
+<FONT ID="LN">311 </FONT><A NAME="311"></A>            e.printStackTrace();
+<FONT ID="LN">312 </FONT><A NAME="312"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<FONT ID="LN">313 </FONT><A NAME="313"></A>        }
+<FONT ID="LN">314 </FONT><A NAME="314"></A>    }
+<FONT ID="LN">315 </FONT><A NAME="315"></A>
+<FONT ID="LN">316 </FONT><A NAME="316"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">317 </FONT><A NAME="317"></A>     * get tweet count.
+<FONT ID="LN">318 </FONT><A NAME="318"></A>     * @return tweet count
+<FONT ID="LN">319 </FONT><A NAME="319"></A>     ***************************************************/</FONT>
+<FONT ID="LN">320 </FONT><A NAME="320"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> getTweetCount() {
+<FONT ID="LN">321 </FONT><A NAME="321"></A>        <FONT ID="Return">return</FONT> tweetCount;
+<FONT ID="LN">322 </FONT><A NAME="322"></A>    }
+<FONT ID="LN">323 </FONT><A NAME="323"></A>
+<FONT ID="LN">324 </FONT><A NAME="324"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">325 </FONT><A NAME="325"></A>     * get Friends ID.
+<FONT ID="LN">326 </FONT><A NAME="326"></A>     * @return friends ID
+<FONT ID="LN">327 </FONT><A NAME="327"></A>     ***************************************************/</FONT>
+<FONT ID="LN">328 </FONT><A NAME="328"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT>[] getFriendsIDs() {
+<FONT ID="LN">329 </FONT><A NAME="329"></A>        <FONT ID="Return">return</FONT> friendsIDs;
+<FONT ID="LN">330 </FONT><A NAME="330"></A>    }
+<FONT ID="LN">331 </FONT><A NAME="331"></A>
+<FONT ID="LN">332 </FONT><A NAME="332"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">333 </FONT><A NAME="333"></A>     * get Friends Count.
+<FONT ID="LN">334 </FONT><A NAME="334"></A>     * @return friend Count
+<FONT ID="LN">335 </FONT><A NAME="335"></A>     ***************************************************/</FONT>
+<FONT ID="LN">336 </FONT><A NAME="336"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> getFriendsCount() {
+<FONT ID="LN">337 </FONT><A NAME="337"></A>        <FONT ID="Return">return</FONT> friendsCount;
+<FONT ID="LN">338 </FONT><A NAME="338"></A>    }
+<FONT ID="LN">339 </FONT><A NAME="339"></A>
+<FONT ID="LN">340 </FONT><A NAME="340"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">341 </FONT><A NAME="341"></A>     * get followers.
+<FONT ID="LN">342 </FONT><A NAME="342"></A>     * @return followers
+<FONT ID="LN">343 </FONT><A NAME="343"></A>     ***************************************************/</FONT>
+<FONT ID="LN">344 </FONT><A NAME="344"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> List&lt;User&gt; getFollowers() {
+<FONT ID="LN">345 </FONT><A NAME="345"></A>        <FONT ID="Return">return</FONT> followers;
+<FONT ID="LN">346 </FONT><A NAME="346"></A>    }
+<FONT ID="LN">347 </FONT><A NAME="347"></A>
+<FONT ID="LN">348 </FONT><A NAME="348"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">349 </FONT><A NAME="349"></A>     * get following.
+<FONT ID="LN">350 </FONT><A NAME="350"></A>     * @return following
+<FONT ID="LN">351 </FONT><A NAME="351"></A>     ***************************************************/</FONT>
+<FONT ID="LN">352 </FONT><A NAME="352"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> List&lt;User&gt; getFollowing() {
+<FONT ID="LN">353 </FONT><A NAME="353"></A>        <FONT ID="Return">return</FONT> following;
+<FONT ID="LN">354 </FONT><A NAME="354"></A>    }
+<FONT ID="LN">355 </FONT><A NAME="355"></A>
+<FONT ID="LN">356 </FONT><A NAME="356"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">357 </FONT><A NAME="357"></A>     * unfollow.
+<FONT ID="LN">358 </FONT><A NAME="358"></A>     * @param l long
+<FONT ID="LN">359 </FONT><A NAME="359"></A>     * @return boolean
+<FONT ID="LN">360 </FONT><A NAME="360"></A>     ***************************************************/</FONT>
+<FONT ID="LN">361 </FONT><A NAME="361"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> unfollow(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> l) {
+<FONT ID="LN">362 </FONT><A NAME="362"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">363 </FONT><A NAME="363"></A>            t.destroyFriendship(l);
+<FONT ID="LN">364 </FONT><A NAME="364"></A>            friendsCount--;
+<FONT ID="LN">365 </FONT><A NAME="365"></A>            <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<FONT ID="LN">366 </FONT><A NAME="366"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">367 </FONT><A NAME="367"></A>            e.printStackTrace();
+<FONT ID="LN">368 </FONT><A NAME="368"></A>        }
+<FONT ID="LN">369 </FONT><A NAME="369"></A>        <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<FONT ID="LN">370 </FONT><A NAME="370"></A>    }
+<FONT ID="LN">371 </FONT><A NAME="371"></A>
+<FONT ID="LN">372 </FONT><A NAME="372"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">373 </FONT><A NAME="373"></A>     * get Description.
+<FONT ID="LN">374 </FONT><A NAME="374"></A>     * @param l long
+<FONT ID="LN">375 </FONT><A NAME="375"></A>     * @return discription
+<FONT ID="LN">376 </FONT><A NAME="376"></A>     ***************************************************/</FONT>
+<FONT ID="LN">377 </FONT><A NAME="377"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> User showUser(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> l) {
+<FONT ID="LN">378 </FONT><A NAME="378"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">379 </FONT><A NAME="379"></A>            <FONT ID="Return">return</FONT> t.showUser(l);
+<FONT ID="LN">380 </FONT><A NAME="380"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">381 </FONT><A NAME="381"></A>            e.printStackTrace();
+<FONT ID="LN">382 </FONT><A NAME="382"></A>        }
+<FONT ID="LN">383 </FONT><A NAME="383"></A>        <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<FONT ID="LN">384 </FONT><A NAME="384"></A>    }
+<FONT ID="LN">385 </FONT><A NAME="385"></A>
+<FONT ID="LN">386 </FONT><A NAME="386"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">387 </FONT><A NAME="387"></A>     * get Followers count.
+<FONT ID="LN">388 </FONT><A NAME="388"></A>     * @return followersCount
+<FONT ID="LN">389 </FONT><A NAME="389"></A>     ***************************************************/</FONT>
+<FONT ID="LN">390 </FONT><A NAME="390"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> getFollowersCount() {
+<FONT ID="LN">391 </FONT><A NAME="391"></A>        <FONT ID="Return">return</FONT> followersCount;
+<FONT ID="LN">392 </FONT><A NAME="392"></A>    }
+<FONT ID="LN">393 </FONT><A NAME="393"></A>
+<FONT ID="LN">394 </FONT><A NAME="394"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">395 </FONT><A NAME="395"></A>     * get Description.
+<FONT ID="LN">396 </FONT><A NAME="396"></A>     * @param l long
+<FONT ID="LN">397 </FONT><A NAME="397"></A>     * @return boolean
+<FONT ID="LN">398 </FONT><A NAME="398"></A>     ***************************************************/</FONT>
+<FONT ID="LN">399 </FONT><A NAME="399"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> destroyStatus(<FONT ID="Final">final</FONT> Long l) {
+<FONT ID="LN">400 </FONT><A NAME="400"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">401 </FONT><A NAME="401"></A>            t.destroyStatus(l);
+<FONT ID="LN">402 </FONT><A NAME="402"></A>            tweetCount--;
+<FONT ID="LN">403 </FONT><A NAME="403"></A>            <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<FONT ID="LN">404 </FONT><A NAME="404"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">405 </FONT><A NAME="405"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<FONT ID="LN">406 </FONT><A NAME="406"></A>        }
+<FONT ID="LN">407 </FONT><A NAME="407"></A>    }
+<FONT ID="LN">408 </FONT><A NAME="408"></A>
+<FONT ID="LN">409 </FONT><A NAME="409"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">410 </FONT><A NAME="410"></A>     * get Trending.
+<FONT ID="LN">411 </FONT><A NAME="411"></A>     * @param woeid int
+<FONT ID="LN">412 </FONT><A NAME="412"></A>     * @return trending
+<FONT ID="LN">413 </FONT><A NAME="413"></A>     ***************************************************/</FONT>
+<FONT ID="LN">414 </FONT><A NAME="414"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> Trends getTrending(<FONT ID="Final">final</FONT> <FONT ID="Int">int</FONT> woeid) {
+<FONT ID="LN">415 </FONT><A NAME="415"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">416 </FONT><A NAME="416"></A>            trending = t.getPlaceTrends(woeid);
+<FONT ID="LN">417 </FONT><A NAME="417"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">418 </FONT><A NAME="418"></A>            e.printStackTrace();
+<FONT ID="LN">419 </FONT><A NAME="419"></A>        }
+<FONT ID="LN">420 </FONT><A NAME="420"></A>        <FONT ID="Return">return</FONT> trending;
+<FONT ID="LN">421 </FONT><A NAME="421"></A>    }
+<FONT ID="LN">422 </FONT><A NAME="422"></A>
+<FONT ID="LN">423 </FONT><A NAME="423"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">424 </FONT><A NAME="424"></A>     * get Home timeline.
+<FONT ID="LN">425 </FONT><A NAME="425"></A>     * @return home timeline
+<FONT ID="LN">426 </FONT><A NAME="426"></A>     ***************************************************/</FONT>
+<FONT ID="LN">427 </FONT><A NAME="427"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <A HREF="../model/Tweets.java.html">Tweets</A> getHomeTimeline() {
+<FONT ID="LN">428 </FONT><A NAME="428"></A>        <FONT ID="Return">return</FONT> homeTimeline;
+<FONT ID="LN">429 </FONT><A NAME="429"></A>    }
+<FONT ID="LN">430 </FONT><A NAME="430"></A>
+<FONT ID="LN">431 </FONT><A NAME="431"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">432 </FONT><A NAME="432"></A>     * get user timeline.
+<FONT ID="LN">433 </FONT><A NAME="433"></A>     * @return user timeline
+<FONT ID="LN">434 </FONT><A NAME="434"></A>     ***************************************************/</FONT>
+<FONT ID="LN">435 </FONT><A NAME="435"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <A HREF="../model/Tweets.java.html">Tweets</A> getUserTimeline() {
+<FONT ID="LN">436 </FONT><A NAME="436"></A>        <FONT ID="Return">return</FONT> userTimeline;
+<FONT ID="LN">437 </FONT><A NAME="437"></A>    }
+<FONT ID="LN">438 </FONT><A NAME="438"></A>
+<FONT ID="LN">439 </FONT><A NAME="439"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">440 </FONT><A NAME="440"></A>     * get Description.
+<FONT ID="LN">441 </FONT><A NAME="441"></A>     * @return discription
+<FONT ID="LN">442 </FONT><A NAME="442"></A>     ***************************************************/</FONT>
+<FONT ID="LN">443 </FONT><A NAME="443"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> List&lt;DirectMessage&gt; getAllMessages() {
+<FONT ID="LN">444 </FONT><A NAME="444"></A>        <FONT ID="Return">return</FONT> messages;
+<FONT ID="LN">445 </FONT><A NAME="445"></A>    }
+<FONT ID="LN">446 </FONT><A NAME="446"></A>
+<FONT ID="LN">447 </FONT><A NAME="447"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">448 </FONT><A NAME="448"></A>     * get Description.
+<FONT ID="LN">449 </FONT><A NAME="449"></A>     * @param messageId long
+<FONT ID="LN">450 </FONT><A NAME="450"></A>     * @return description
+<FONT ID="LN">451 </FONT><A NAME="451"></A>     ***************************************************/</FONT>
+<FONT ID="LN">452 </FONT><A NAME="452"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> DirectMessage showDirectMessage(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> messageId) {
+<FONT ID="LN">453 </FONT><A NAME="453"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">454 </FONT><A NAME="454"></A>            <FONT ID="Return">return</FONT> t.showDirectMessage(messageId);
+<FONT ID="LN">455 </FONT><A NAME="455"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">456 </FONT><A NAME="456"></A>            System.out.println(<FONT ID="StringLiteral">"Error"</FONT>);
+<FONT ID="LN">457 </FONT><A NAME="457"></A>        }
+<FONT ID="LN">458 </FONT><A NAME="458"></A>        <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<FONT ID="LN">459 </FONT><A NAME="459"></A>
+<FONT ID="LN">460 </FONT><A NAME="460"></A>    }
+<FONT ID="LN">461 </FONT><A NAME="461"></A>
+<FONT ID="LN">462 </FONT><A NAME="462"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">463 </FONT><A NAME="463"></A>     * get Description.
+<FONT ID="LN">464 </FONT><A NAME="464"></A>     * @param userId long
+<FONT ID="LN">465 </FONT><A NAME="465"></A>     * @param text String
+<FONT ID="LN">466 </FONT><A NAME="466"></A>     * @return description
+<FONT ID="LN">467 </FONT><A NAME="467"></A>     ***************************************************/</FONT>
+<FONT ID="LN">468 </FONT><A NAME="468"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Boolean">boolean</FONT> sendDirectMessage(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> userId,
+<FONT ID="LN">469 </FONT><A NAME="469"></A>            <FONT ID="Final">final</FONT> String text) {
+<FONT ID="LN">470 </FONT><A NAME="470"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">471 </FONT><A NAME="471"></A>            t.sendDirectMessage(userId, text);
+<FONT ID="LN">472 </FONT><A NAME="472"></A>            <FONT ID="Return">return</FONT> <FONT ID="True">true</FONT>;
+<FONT ID="LN">473 </FONT><A NAME="473"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">474 </FONT><A NAME="474"></A>            <FONT ID="Return">return</FONT> <FONT ID="False">false</FONT>;
+<FONT ID="LN">475 </FONT><A NAME="475"></A>        }
+<FONT ID="LN">476 </FONT><A NAME="476"></A>    }
+<FONT ID="LN">477 </FONT><A NAME="477"></A>
+<FONT ID="LN">478 </FONT><A NAME="478"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">479 </FONT><A NAME="479"></A>     * get CurrentUser ID.
+<FONT ID="LN">480 </FONT><A NAME="480"></A>     * @return userId
+<FONT ID="LN">481 </FONT><A NAME="481"></A>     ***************************************************/</FONT>
+<FONT ID="LN">482 </FONT><A NAME="482"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> getCurrentUserID() {
+<FONT ID="LN">483 </FONT><A NAME="483"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">484 </FONT><A NAME="484"></A>            <FONT ID="Return">return</FONT> t.getId();
+<FONT ID="LN">485 </FONT><A NAME="485"></A>        } <FONT ID="Catch">catch</FONT> (IllegalStateException e) {
+<FONT ID="LN">486 </FONT><A NAME="486"></A>            System.out.println(<FONT ID="StringLiteral">"Error"</FONT>);
+<FONT ID="LN">487 </FONT><A NAME="487"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">488 </FONT><A NAME="488"></A>            System.out.println(<FONT ID="StringLiteral">"Error"</FONT>);
+<FONT ID="LN">489 </FONT><A NAME="489"></A>        }
+<FONT ID="LN">490 </FONT><A NAME="490"></A>        <FONT ID="Return">return</FONT> <FONT ID="IntegerLiteral">0</FONT>;
+<FONT ID="LN">491 </FONT><A NAME="491"></A>    }
+<FONT ID="LN">492 </FONT><A NAME="492"></A>
+<FONT ID="LN">493 </FONT><A NAME="493"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">494 </FONT><A NAME="494"></A>     * get Description.
+<FONT ID="LN">495 </FONT><A NAME="495"></A>     * @param id Long
+<FONT ID="LN">496 </FONT><A NAME="496"></A>     * @return discription
+<FONT ID="LN">497 </FONT><A NAME="497"></A>     ***************************************************/</FONT>
+<FONT ID="LN">498 </FONT><A NAME="498"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> User getUser(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> id) {
+<FONT ID="LN">499 </FONT><A NAME="499"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">500 </FONT><A NAME="500"></A>            <FONT ID="Return">return</FONT> t.showUser(id);
+<FONT ID="LN">501 </FONT><A NAME="501"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">502 </FONT><A NAME="502"></A>            System.out.println(<FONT ID="StringLiteral">"Error"</FONT>);
+<FONT ID="LN">503 </FONT><A NAME="503"></A>        }
+<FONT ID="LN">504 </FONT><A NAME="504"></A>        <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<FONT ID="LN">505 </FONT><A NAME="505"></A>    }
+<FONT ID="LN">506 </FONT><A NAME="506"></A>
+<FONT ID="LN">507 </FONT><A NAME="507"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">508 </FONT><A NAME="508"></A>     * follow.
+<FONT ID="LN">509 </FONT><A NAME="509"></A>     * @param l long
+<FONT ID="LN">510 </FONT><A NAME="510"></A>     * @return discription
+<FONT ID="LN">511 </FONT><A NAME="511"></A>     ***************************************************/</FONT>
+<FONT ID="LN">512 </FONT><A NAME="512"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> User follow(<FONT ID="Final">final</FONT> <FONT ID="Long">long</FONT> l) {
+<FONT ID="LN">513 </FONT><A NAME="513"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">514 </FONT><A NAME="514"></A>            User u = t.createFriendship(l);
+<FONT ID="LN">515 </FONT><A NAME="515"></A>            friendsCount++;
+<FONT ID="LN">516 </FONT><A NAME="516"></A>            <FONT ID="Return">return</FONT> u;
+<FONT ID="LN">517 </FONT><A NAME="517"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">518 </FONT><A NAME="518"></A>            e.printStackTrace();
+<FONT ID="LN">519 </FONT><A NAME="519"></A>        }
+<FONT ID="LN">520 </FONT><A NAME="520"></A>        <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<FONT ID="LN">521 </FONT><A NAME="521"></A>    }
+<FONT ID="LN">522 </FONT><A NAME="522"></A>
+<FONT ID="LN">523 </FONT><A NAME="523"></A>    <FONT ID="FormalComment">/****************************************************
+<FONT ID="LN">524 </FONT><A NAME="524"></A>     * search Users.
+<FONT ID="LN">525 </FONT><A NAME="525"></A>     * @param text String
+<FONT ID="LN">526 </FONT><A NAME="526"></A>     * @return discription
+<FONT ID="LN">527 </FONT><A NAME="527"></A>     ***************************************************/</FONT>
+<FONT ID="LN">528 </FONT><A NAME="528"></A>    <FONT ID="Public">public</FONT> <FONT ID="Final">final</FONT> ResponseList&lt;User&gt; searchUsers(<FONT ID="Final">final</FONT> String text) {
+<FONT ID="LN">529 </FONT><A NAME="529"></A>        <FONT ID="Try">try</FONT> {
+<FONT ID="LN">530 </FONT><A NAME="530"></A>            <FONT ID="Return">return</FONT> t.searchUsers(text, <FONT ID="IntegerLiteral">1</FONT>);
+<FONT ID="LN">531 </FONT><A NAME="531"></A>        } <FONT ID="Catch">catch</FONT> (TwitterException e) {
+<FONT ID="LN">532 </FONT><A NAME="532"></A>            System.out.println(<FONT ID="StringLiteral">"Error"</FONT>);
+<FONT ID="LN">533 </FONT><A NAME="533"></A>        }
+<FONT ID="LN">534 </FONT><A NAME="534"></A>        <FONT ID="Return">return</FONT> <FONT ID="Null">null</FONT>;
+<FONT ID="LN">535 </FONT><A NAME="535"></A>    }
+<FONT ID="LN">536 </FONT><A NAME="536"></A>
+<FONT ID="LN">537 </FONT><A NAME="537"></A>}
+<FONT ID="LN">538 </FONT><A NAME="538"></A></pre>
+</BODY>
+</HTML>
