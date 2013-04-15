@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 import twitter4j.DirectMessage;
+import twitter4j.GeoLocation;
 import twitter4j.GeoQuery;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -301,12 +302,11 @@ public class TwitterModel {
     public final boolean tweetImage(final File img, final String message) {
         try {
             StatusUpdate status = new StatusUpdate(message);
-            GeoQuery gq = new GeoQuery(InetAddress.getLocalHost()
-                    .getHostAddress());
-            status.setLocation(gq.getLocation());
-            System.out.println(gq);
+            double[] location = getCoords();
+            GeoLocation gl = new GeoLocation(location[0], location[1]);
+            status.setLocation(gl);
             status.setMedia(img);
-            //t.updateStatus(status);
+            t.updateStatus(status);
             tweetCount++;
             return true;
         } catch (Exception e) {
@@ -314,19 +314,28 @@ public class TwitterModel {
             return false;
         }
     }
-    
-    public String getIP() {
-        // Get external IP by going through Vincenzo's server
+    /**
+     * Gets the GPS coordinates based on external script.
+     * @return double[] GPS coordinates
+     */
+    public final double[] getCoords() {
+        // Determine coordinates based on a script on Vincenzo's server
         String ip = "";
+        double[] location = new double[2];
         try {
             URL ipURL = new URL("http://www.vincenzopavano.com/ip.php");
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(ipURL.openStream()));
             ip = br.readLine();
+            String[] coords = ip.split(",");
+            for (int i = 0; i < coords.length; i++) {
+                location[i] = Double.parseDouble(coords[i]);
+            }
+            return location;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ip;
+        return location;
     }
 
     /****************************************************

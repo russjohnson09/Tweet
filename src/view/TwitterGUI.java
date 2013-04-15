@@ -840,65 +840,56 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent evt) {
+            public void mouseClicked(final MouseEvent evt) {
                 int row = table.rowAtPoint(evt.getPoint());
                 viewMessage(row);
             }
 
-            private void viewMessage(int row) {
+            private void viewMessage(final int row) {
                 mlPanel.setVisible(false);
-                //long messageId = (long) messages[row][3];
+                final int three = 3;
+                long messageId = (long) messages[row][three];
 
-                //DirectMessage directMessage = controller
-                 //       .showDirectMessage(messageId);
+                DirectMessage directMessage = controller
+                        .showDirectMessage(messageId);
 
                 // Display Message
                 JPanel msgPanel = new JPanel();
                 msgPanel.setLayout(new GridBagLayout());
-                msgPanel.setSize(300, 500);
+                final int fh = 500;
+                msgPanel.setSize(TIMELINE_HEIGHT, fh);
                 GridBagConstraints gbc = new GridBagConstraints();
                 gbc.fill = GridBagConstraints.HORIZONTAL;
 
-                // Date
-                JLabel created = new JLabel(messages[row][0].toString());
-                gbc.gridx = 1; /* Right */
-                gbc.gridy = 0; /* Below */
-                msgPanel.add(created, gbc);
-
                 // Picture
-                //ImageIcon icon = controller
-                //        .getSmallerProfileImage((long) messages[row][4]);
-                gbc.gridx = 0;
-                gbc.gridy = 1;
-<<<<<<< HEAD
-                JButton pic = ((ProfilePanel) profilePanel).getCountButton(0, null);
+                final int four = 4;
+                ImageIcon icon = controller
+                        .getSmallerProfileImage((long) messages[row][four]);
+                gbc.gridx = 0; /* Right */
+                gbc.gridy = 0; /* Below */
+                JButton pic = ((ProfilePanel) profilePanel).
+                        getCountButton(0, null);
                 pic.setIcon(icon);
-                
-                pic.setPreferredSize(new Dimension(icon.getIconWidth() + 2, 
+                pic.setPreferredSize(new Dimension(icon.getIconWidth() + 2,
                         icon.getIconHeight() + 2));
-=======
-                JButton pic = new JButton();
-                //pic.setIcon(icon);
-                pic.setPreferredSize(new Dimension(SMALL_PROFILE_IMAGE,
-                        SMALL_PROFILE_IMAGE));
->>>>>>> 7317d3c5f7604595f646369e999e09f866ba513c
                 msgPanel.add(pic, gbc);
 
-                // Text
+                // Date
+                JLabel created = new JLabel(messages[row][0].toString());
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                msgPanel.add(created, gbc);
+
+                // Message
                 JTextArea text = new JTextArea();
+                text.setEditable(false);
                 text.setText(messages[row][2].toString());
-                gbc.gridx = 2;
+                gbc.gridx = 0;
                 gbc.gridy = 1;
+                gbc.gridwidth = 2;
                 msgPanel.add(text, gbc);
 
-                // Reply stuff
-                tweetSubmit = new JButton("Send Message");
-                tweetSubmit.setFocusable(false);
-                // tweetSubmit.addActionListener(tweetListener);
-                gbc.gridx = 0;
-                gbc.gridy = 3;
-                msgPanel.add(tweetSubmit, gbc);
-
+                // Reply
                 tweetText = new JTextArea();
                 // tweetText.addKeyListener(this);
                 tweetText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -910,15 +901,24 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 tweetText.setRows(row2);
                 tweetText.setLineWrap(true);
                 gbc.gridx = 0;
-                gbc.gridy = 3;
+                gbc.gridy = 2;
                 final int w = 2;
                 gbc.gridwidth = w;
                 msgPanel.add(tweetText, gbc);
 
+                // Chars remaining
                 charsRemaining = new JLabel("140", JLabel.RIGHT);
                 gbc.gridx = 2;
-                gbc.gridy = 3;
+                gbc.gridy = 2;
                 msgPanel.add(charsRemaining, gbc);
+
+                // Reply stuff
+                tweetSubmit = new JButton("Send Message");
+                tweetSubmit.setFocusable(false);
+                // tweetSubmit.addActionListener(tweetListener);
+                gbc.gridx = 0;
+                gbc.gridy = three;
+                msgPanel.add(tweetSubmit, gbc);
 
                 messagesPanel.add(msgPanel);
             }
@@ -930,20 +930,10 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         // mlPanel.add(view);
 
         messagesPanel.add(mlPanel);
-
-        /*
-         * // Build 2D array for the list for (int i = 0; i < rl.size(); i++) {
-         * DirectMessage dm = rl.get(i);
-         * 
-         * // Cast everything as a string to make it fit in the array // Is
-         * there a better way to do this? Maybe a struct-like object for Java?
-         * messages[i][0] = "" + dm.getCreatedAt() + ""; messages[i][1] = "" +
-         * dm.getId() + ""; messages[i][2] = "" + dm.getSenderId() + "";
-         * messages[i][3] = dm.getSenderScreenName(); messages[i][4] =
-         * dm.getText(); }
-         */
     }
-
+    /**
+     * Create add following panel.
+     */
     private void createAddFollowingPanel() {
         addFollowingPanel = new JPanel() {
             @Override
