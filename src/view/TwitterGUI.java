@@ -64,7 +64,7 @@ import controller.TwitterController;
  * Twitter GUI.
  * 
  * @author Nick, Vincenzo, Corey, Russ
- * @date March 18, 2013
+ * @date April 15, 2013
  *********************************************************************/
 public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         MouseListener {
@@ -805,7 +805,6 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 super.paintComponent(g);
             }
         };
-        
         List<DirectMessage> rl = controller.getAllMessages();
 
         // EXAMPLE
@@ -881,13 +880,15 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 msgPanel.add(created, gbc);
 
                 // Message
-                JTextArea text = new JTextArea();
+                JTextArea text = new JTextArea(5, 20);
                 text.setEditable(false);
                 text.setText(messages[row][2].toString());
+                JScrollPane jsp = new JScrollPane(text);
+                
                 gbc.gridx = 0;
                 gbc.gridy = 1;
                 gbc.gridwidth = 2;
-                msgPanel.add(text, gbc);
+                msgPanel.add(jsp, gbc);
 
                 // Reply
                 tweetText = new JTextArea();
@@ -895,7 +896,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 tweetText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
                 // tweetText.setPreferredSize(new Dimension(300,195));
                 tweetText.setFocusable(true);
-                final int col = 30;
+                final int col = 20;
                 tweetText.setColumns(col);
                 final int row2 = 8;
                 tweetText.setRows(row2);
@@ -904,13 +905,13 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 gbc.gridy = 2;
                 final int w = 2;
                 gbc.gridwidth = w;
-                msgPanel.add(tweetText, gbc);
+                //msgPanel.add(tweetText, gbc);
 
                 // Chars remaining
                 charsRemaining = new JLabel("140", JLabel.RIGHT);
                 gbc.gridx = 2;
                 gbc.gridy = 2;
-                msgPanel.add(charsRemaining, gbc);
+                //msgPanel.add(charsRemaining, gbc);
 
                 // Reply stuff
                 tweetSubmit = new JButton("Send Message");
@@ -918,7 +919,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
                 // tweetSubmit.addActionListener(tweetListener);
                 gbc.gridx = 0;
                 gbc.gridy = three;
-                msgPanel.add(tweetSubmit, gbc);
+                //msgPanel.add(tweetSubmit, gbc);
 
                 messagesPanel.add(msgPanel);
             }
