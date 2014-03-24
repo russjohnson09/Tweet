@@ -403,7 +403,6 @@ public class TwitterController {
             Object obj = parser.parse(new FileReader("./auth.json"));
 
             JSONObject jsonObject = (JSONObject) obj;
-
             return (String) jsonObject.get("AccessToken");
 
         } catch (Throwable e) {
@@ -446,7 +445,7 @@ public class TwitterController {
         AccessToken accessToken = null;
         try {
             accessToken = twitter.getOAuthAccessToken(requestToken, pin);
-
+            
         } catch (TwitterException te) {
             te.printStackTrace();
         }
