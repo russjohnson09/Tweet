@@ -50,7 +50,10 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import model.NLA;
 import model.Tweets;
 import model.Users;
 import twitter4j.DirectMessage;
@@ -67,8 +70,10 @@ import controller.TwitterController;
  * @date April 15, 2013
  *********************************************************************/
 public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
-        MouseListener {
+        MouseListener, ListSelectionListener {
 
+    private NLA languageProcessor = new NLA();
+    
     /** serialVersionUID. */
     static final long serialVersionUID = 1L;
 
@@ -151,6 +156,9 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
     /** Timeline JScrollPane. */
     private JScrollPane TimelineScrollPane;
+    
+    /** Timeline tweet polarity label */
+    private JLabel polarityLabel;
 
     // Tweet Panel *********************************************************
     /** GBC Layout. */
@@ -311,7 +319,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             // fixes bug in linux
             String os = System.getProperty("os.name").toLowerCase();
             if (os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0
-                    || os.indexOf("aix") > 0) {
+                    || os.indexOf("aix") > 0 || 1 == 1) {
                 setVisible(false);
                 setVisible(true);
             }
@@ -324,6 +332,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
      * Sets up controller.
      ***************************************************/
     private void setUpController() {
+        System.out.println("setUpController");
         controller = new TwitterController();
         if (!controller.getIsSetUp()) {
             final String authUrl = controller.getAuthUrl();
@@ -386,6 +395,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
             authFrame.setTitle("Authorization");
             authFrame.setVisible(true);
         }
+        System.out.println("Done setting up controller");
     }
 
     
@@ -393,6 +403,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
      * Creates followers panel and its components.
      ***************************************************/
     private void createFollowersPanel() {
+        System.out.println("Creating follower panel");
         followersPanel = new JPanel() {
             @Override
             protected void paintComponent(final Graphics g) {
@@ -481,6 +492,7 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         fersgbc.fill = 0;
         fersgbc.anchor = GridBagConstraints.EAST;
         followersPanel.add(fersShowProfileBtn, fersgbc);
+        System.out.println("Done creating followers panel");
     }
 
     /****************************************************
@@ -739,21 +751,8 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
      * Creates Timeline panel and its components.
      ***************************************************/
     private void createTimelinePanel() {
-        timelinePanel = new JPanel() {
-            @Override
-            protected void paintComponent(final Graphics g) {
-                g.drawImage(backgroundImage, 0, 0, null);
-                super.paintComponent(g);
-            }
-        };
-
-        timelinePanel.setOpaque(false);
-        timelinePanel.setLayout(new GridBagLayout());
-        GridBagConstraints timelinePanelgbc = new GridBagConstraints();
-
-        // Button Panel
-        JPanel tlButtonPnl = new JPanel();
-        tlButtonPnl.setLayout(new GridLayout(1, 2));
+        timelinePanel = new JPanel();
+        
         homeTlBtn = new JButton("Home Timeline");
         homeTlBtn.setFocusPainted(false);
         homeTlBtn.setBackground(Color.CYAN);
@@ -762,36 +761,26 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
         userTlBtn.setBackground(Color.WHITE);
         homeTlBtn.addActionListener(this);
         userTlBtn.addActionListener(this);
-        tlButtonPnl.add(homeTlBtn);
-        tlButtonPnl.add(userTlBtn);
-
-        timelinePanelgbc.gridx = 0;
-        timelinePanelgbc.gridy = 0;
-        timelinePanel.add(tlButtonPnl, timelinePanelgbc);
-
-        // Timeline Panel
-        GridBagConstraints timelinegbc = new GridBagConstraints();
-
-        JPanel timelinePnl = new JPanel();
+        timelinePanel.add(homeTlBtn);
+        timelinePanel.add(userTlBtn);
+        
+        polarityLabel = new JLabel("Polarity: ");
+        timelinePanel.add(polarityLabel);
+        
         timelineTweets = (Tweets) controller.initTimeline();
         jlistTimeline = new JList<String>(timelineTweets);
+        jlistTimeline.addListSelectionListener(this);
 
         TimelineScrollPane = new JScrollPane(jlistTimeline);
         TimelineScrollPane.setPreferredSize(new Dimension(TIMELINE_WIDTH,
                 TIMELINE_HEIGHT));
-
-        timelinePnl.add(TimelineScrollPane);
-        timelinePanelgbc.gridy = 1;
-        timelinegbc.fill = GridBagConstraints.HORIZONTAL;
-        timelinePnl.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        timelinePanel.add(timelinePnl, timelinePanelgbc);
+        timelinePanel.add(TimelineScrollPane);
 
         favoriteBtn = new JButton("Favorite");
         favoriteBtn.setFocusPainted(false);
         favoriteBtn.setBackground(Color.WHITE);
         favoriteBtn.addActionListener(this);
-        timelinePanelgbc.gridy = 2;
-        timelinePanel.add(favoriteBtn, timelinePanelgbc);
+        timelinePanel.add(favoriteBtn);
     }
 
     /****************************************************
@@ -1373,5 +1362,16 @@ public class TwitterGUI extends JFrame implements ActionListener, KeyListener,
 
     @Override
     public void mouseReleased(MouseEvent arg0) {}
+
+
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        // TODO Auto-generated method stub
+        if (!e.getValueIsAdjusting()) {
+            String s = jlistTimeline.getSelectedValue().toString();
+            polarityLabel.setText("Polarity: " + Integer.toString(languageProcessor.evaluate(s)));
+        }
+    }
 
 }

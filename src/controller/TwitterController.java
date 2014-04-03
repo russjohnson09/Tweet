@@ -74,6 +74,7 @@ public class TwitterController {
      * Twitter Controller constructor.
      ***************************************************/
     public TwitterController() {
+        System.out.println("Making Twitter Controller");
         twitter = new TwitterFactory().getInstance();
         twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_KEY_SECRET);
 
@@ -93,6 +94,7 @@ public class TwitterController {
         }
 
         model = new TwitterModel(twitter);
+        System.out.println("Made Twitter Controller");
     }
 
     /****************************************************
@@ -403,7 +405,6 @@ public class TwitterController {
             Object obj = parser.parse(new FileReader("./auth.json"));
 
             JSONObject jsonObject = (JSONObject) obj;
-
             return (String) jsonObject.get("AccessToken");
 
         } catch (Throwable e) {
@@ -446,7 +447,7 @@ public class TwitterController {
         AccessToken accessToken = null;
         try {
             accessToken = twitter.getOAuthAccessToken(requestToken, pin);
-
+            
         } catch (TwitterException te) {
             te.printStackTrace();
         }

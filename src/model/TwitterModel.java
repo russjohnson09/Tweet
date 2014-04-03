@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -99,6 +100,7 @@ public class TwitterModel {
      * Refresh.
      ***************************************************/
     public final void refresh() {
+        System.out.println("Starting Refresh in Twitter Model");
         List<Status> statuses;
         followers = new ArrayList<User>();
         following = new ArrayList<User>();
@@ -132,10 +134,16 @@ public class TwitterModel {
             friendsIDs = t.getFriendsIDs(-1).getIDs();
 
             long[] list = t.getFollowersIDs(-1).getIDs();
+            
+            // We'll exceed the API rate limit if we showUser too many times
+            if (list.length > 5)
+                list = Arrays.copyOfRange(list, 0, 5);
             for (long l : list) {
                 followers.add(t.showUser(l));
             }
             list = t.getFriendsIDs(-1).getIDs();
+            if (list.length > 5)
+                list = Arrays.copyOfRange(list, 0, 5);
             for (long l : list) {
                 following.add(t.showUser(l));
             }
@@ -148,7 +156,7 @@ public class TwitterModel {
         } catch (TwitterException e) {
             e.printStackTrace();
         }
-
+        System.out.println("Done Refreshing");
     }
 
     /****************************************************
